@@ -11,12 +11,22 @@
       "url": "https://github.com/jpbourgeon"
     }
   ],
-  "devDependencies": {
+  "dependencies": {
     "@elysiajs/cors": "^1.0.2",
+    "@elysiajs/cron": "^1.0.3",
+    "@elysiajs/html": "^1.0.2",
+    "@elysiajs/static": "^1.0.3",
+    "@elysiajs/stream": "^1.0.2",
+    "@gtramontina.com/elysia-tailwind": "github:jpbourgeon/elysia-tailwind#patch-1",
+    "elysia": "^1.0.20",
+    "elysia-helmet": "^1.0.2",
+    "elysia-htmx": "^1.0.9",
+    "htmx.org": "^1.9.12"
+  },
+  "devDependencies": {
     "@eslint/js": "^9.2.0",
     "@tailwindcss/typography": "^0.5.13",
     "@tsconfig/bun": "^1.0.5",
-    "@types/bun": "^1.1.2",
     "@types/eslint__js": "^8.42.3",
     "bun-types": "^1.1.8",
     "daisyui": "^4.11.1",
@@ -42,16 +52,5 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "test": "bun test"
-  },
-  "dependencies": {
-    "@elysiajs/cron": "^1.0.3",
-    "@elysiajs/html": "^1.0.2",
-    "@elysiajs/static": "^1.0.3",
-    "@elysiajs/stream": "^1.0.2",
-    "@gtramontina.com/elysia-tailwind": "github:jpbourgeon/elysia-tailwind#patch-1",
-    "elysia": "^1.0.20",
-    "elysia-helmet": "^1.0.2",
-    "elysia-htmx": "^1.0.9",
-    "htmx.org": "^1.9.12"
   }
 }
