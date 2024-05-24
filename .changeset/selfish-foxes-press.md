@@ -2,7 +2,7 @@
 "echo.cdg71.fr": patch
 ---
 
-This changeset includes the initial setup and configuration for the frontend, backend, and development environment, ensuring a solid foundation for the project.
+This release includes the initial setup and configuration for the frontend, backend, and development environment, ensuring a solid foundation for the project.
 
 - Frontend:
 
