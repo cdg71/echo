@@ -1,0 +1,38 @@
+{
+  // dossiers de travail
+  "folders": [
+    {
+      "path": ".",
+    },
+  ],
+  "settings": {
+    // terminal
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    // format
+    "eslint.enable": true,
+    "eslint.format.enable": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnType": false,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "files.autoSave": "onFocusChange",
+    "editor.quickSuggestions": {
+      "strings": "on",
+    },
+    // files associations
+    "files.associations": {
+      "*.json": "jsonc",
+      "*.css": "tailwindcss",
+    },
+    "[ignore]": {
+      "editor.defaultFormatter": "foxundermoon.shell-format",
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+    },
+    "[dotenv]": {
+      "editor.defaultFormatter": "foxundermoon.shell-format",
+    },
+  },
+}
