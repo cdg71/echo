@@ -32,6 +32,15 @@ const children = (streamid: string) => (
           >
             Se connecter
           </button>
+          <div class="text-xs">
+            <a href="/create" class="link link-hover link-neutral">
+              Nouveau sondage
+            </a>
+            <span> | </span>
+            <a href="/admin" class="link link-hover link-neutral">
+              Administration
+            </a>
+          </div>
         </form>
       </div>
     </div>
