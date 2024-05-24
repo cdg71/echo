@@ -4,6 +4,7 @@
 
 - [x] cleanup général
 - [x] app shell
+- [ ] changeset
 
 ## Backlog
 
@@ -20,22 +21,24 @@
 
 ## Stack
 
-- [ ] System
-  - [x] [Github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
+- [ ] Environnement de production
   - [ ] Hôte : Docker compose
+- [ ] Environnement de développement
+  - [x] [Github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
   - [x] Runtime : bun (nodejs via pnpm)
   - [x] package manager : bun (pnpm)
   - [x] Transpiler typescript : bun (swc)
   - [x] Bundler : bun build (vite)
-- [ ] Environnement de développement
   - [ ] Versionning :
     - [x] Github repo and settings
-    - [ ] Changesets (Semantic versionning + keep a changelog)
-    - [ ] Use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) : feat:, fix:, build:, chore:, ci:, docs:, style:, refactor:, perf:, test:
+    - [x] [Semantic versionning](https://semver.org/)
+    - [x] Changesets ([keep a changelog](https://keepachangelog.com/en/1.0.0/))
+    - [x] Use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) : feat:, fix:, build:, chore:, ci:, docs:, style:, refactor:, perf:, test:
   - [ ] CI/CD
-    - [x] Forcer Github flow et règles de protection des déploiements
-    - [ ] Github actions
-    - [ ] Github release + ghcr.io
+    - [x] Github flow et règles de protection de la branche main
+    - [ ] Continuous Integration : Github actions : typecheck, lint, test, enforce conventional commit in the PR name
+    - [ ] Continuous delivery : Github release (changeset version and publish) + publish to ghcr.io
+    - [ ] On-Demand Deployment : docker compose
   - [ ] Tests
     - [x] Tests statiques : Eslint + prettier
     - [x] Tests unitaires / intégration : bun test (jest ou vitest)
