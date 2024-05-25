@@ -47,6 +47,7 @@ export const htmlTemplate = (props: Props) => {
       <body>{children}</body>
       <script src="/public/scripts/htmx.js"></script>
       <script src="/public/scripts/sse.js"></script>
+      {import.meta.env.NODE_ENV !== "production" ? <></> : <></>}
     </html>
   );
 };

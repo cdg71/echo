@@ -29,4 +29,4 @@ new Elysia()
   .use(homepageService)
   .use(streamsService)
   .use(editSurveyService)
-  .listen(process.env["PORT"]);
+  .listen(import.meta.env["PORT"]);
