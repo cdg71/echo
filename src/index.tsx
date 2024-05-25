@@ -7,6 +7,7 @@ import { streamsStore } from "@src/services/streams/store";
 import { htmxPlugin } from "@src/plugins/htmx";
 import { homepageService } from "@src/services/homepage";
 import { streamsService } from "@src/services/streams";
+import { editSurveyService } from "./services/editSurvey";
 
 new Elysia()
   .use(streamsStore)
@@ -27,4 +28,5 @@ new Elysia()
   )
   .use(homepageService)
   .use(streamsService)
+  .use(editSurveyService)
   .listen(process.env["PORT"]);
