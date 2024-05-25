@@ -7,7 +7,7 @@ const defaultProps: Props = {
   children: <></>,
 };
 
-export const appshellComponent = (props: Props) => {
+export const htmlTemplate = (props: Props) => {
   const { title, children } = { ...defaultProps, ...props };
   return (
     <html data-theme="winter" lang="fr">

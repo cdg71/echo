@@ -1,9 +1,9 @@
 import { Elysia } from "elysia";
 import { randomUUID } from "crypto";
 import { chatComponent } from "../streams/components/chat";
-import { appshellComponent } from "@src/components/appshell";
+import { htmlTemplate } from "@src/components/htmlTemplate";
 
-const children = (streamid: string) => (
+const homepageComponent = (streamid: string) => (
   <div class="hero min-h-screen bg-base-100 flex flex-col justify-center items-center">
     <div class="hero-content w-full max-w-xl text-center flex flex-col sm:flex-row items-center">
       <div class="flex flex-col items-center space-y-2 space-x-3">
@@ -50,7 +50,7 @@ const children = (streamid: string) => (
 
 export const homepageService = new Elysia().get("/", () => {
   const streamid = randomUUID();
-  return appshellComponent({
-    children: children(streamid),
+  return htmlTemplate({
+    children: homepageComponent(streamid),
   });
 });
