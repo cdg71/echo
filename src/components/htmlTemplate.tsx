@@ -1,19 +1,21 @@
 interface Props {
-  title?: string;
-  children?: JSX.Element;
+  content?: JSX.Element;
 }
 const defaultProps: Props = {
-  title: "Echo",
-  children: <></>,
+  content: <></>,
 };
 
 export const htmlTemplate = (props: Props) => {
-  const { title, children } = { ...defaultProps, ...props };
+  const { content } = { ...defaultProps, ...props };
   return (
     <html data-theme="winter" lang="fr">
       <head>
-        <title>{title}</title>
+        <title>écho</title>
         <meta charset="UTF-8" />
+        <meta
+          name="description"
+          content="Outil d'analyse du sentiment assisté par l'intelligence artificielle."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
           rel="apple-touch-icon"
@@ -44,10 +46,9 @@ export const htmlTemplate = (props: Props) => {
           type="text/css"
         />
       </head>
-      <body>{children}</body>
+      <body>{content}</body>
       <script src="/public/scripts/htmx.js"></script>
       <script src="/public/scripts/sse.js"></script>
-      {import.meta.env.NODE_ENV !== "production" ? <></> : <></>}
     </html>
   );
 };

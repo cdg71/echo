@@ -4,20 +4,19 @@
 
 ## sprintlog
 
-- [-] feat(backend): appshell
+- [x] feat(backend): appshell
 - [x] feat(backend): heroicons loader
 - [x] feat(frontend): navbar
 - [-] feat: "administrer un sondage" (Fonctionnalité principale du sprint)
   - [-] "Nouveau sondage"
-    - [ ] Page
-    - [ ] Formulaire
-    - [ ] Validation client
-    - [ ] Validation serveur
+    - [x] Page
+    - [x] Formulaire
+    - [-] Validation serveur
     - [ ] Enregistrement en base et redirection vers page d'administration avec affichage du "code de sécurité"
   - [ ] "configurer un sondage"
   - [ ] "supprimer un sondage"
 - [ ] backend: bun sqlite
-- [ ] backend: rendre la Base de données accessible par le store Elysia
+- [ ] backend: survey model
 
 ## Backlog
 
