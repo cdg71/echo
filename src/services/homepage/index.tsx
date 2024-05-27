@@ -33,7 +33,7 @@ const homepageComponent = (streamid: string) => (
             Se connecter
           </button>
           <div class="text-xs">
-            <a href="/create" class="link link-hover link-neutral">
+            <a href="/new" class="link link-hover link-neutral">
               Nouveau sondage
             </a>
             <span> | </span>
@@ -51,6 +51,6 @@ const homepageComponent = (streamid: string) => (
 export const homepageService = new Elysia().get("/", () => {
   const streamid = randomUUID();
   return htmlTemplate({
-    children: homepageComponent(streamid),
+    content: homepageComponent(streamid),
   });
 });
