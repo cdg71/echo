@@ -1,12 +1,12 @@
-import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
-import { helmet } from "elysia-helmet";
-import { tailwind } from "@gtramontina.com/elysia-tailwind";
 import { staticPlugin } from "@elysiajs/static";
+import { tailwind } from "@gtramontina.com/elysia-tailwind";
 import { htmxPlugin } from "@src/plugins/htmx";
 import { homepageService } from "@src/services/homepage";
 import { streamsService } from "@src/services/streams";
-import { editSurveyService } from "./services/editSurvey";
+import { Elysia } from "elysia";
+import { helmet } from "elysia-helmet";
+import { editSurveyService } from "./services/survey";
 
 new Elysia()
   .use(cors())

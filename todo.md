@@ -11,7 +11,7 @@
   - [-] "Nouveau sondage"
     - [x] Page
     - [x] Formulaire
-    - [-] Validation serveur
+    - [x] Validation serveur
     - [ ] Enregistrement en base et redirection vers page d'administration avec affichage du "code de sécurité"
   - [ ] "configurer un sondage"
   - [ ] "supprimer un sondage"

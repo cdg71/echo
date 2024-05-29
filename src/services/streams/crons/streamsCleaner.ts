@@ -1,6 +1,6 @@
 import { Patterns, cron } from "@elysiajs/cron";
-import { Elysia } from "elysia";
 import { streamsStore } from "@src/services/streams/store";
+import { Elysia } from "elysia";
 
 export const streamCleanerCron = new Elysia().use(streamsStore).use(
   cron({

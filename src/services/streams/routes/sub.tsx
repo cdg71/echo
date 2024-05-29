@@ -1,6 +1,6 @@
+import { Stream } from "@elysiajs/stream";
 import { Elysia } from "elysia";
 import { streamsStore } from "../store";
-import { Stream } from "@elysiajs/stream";
 
 export const subRoute = new Elysia()
   .use(streamsStore)

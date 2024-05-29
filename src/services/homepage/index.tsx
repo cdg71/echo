@@ -1,7 +1,7 @@
-import { Elysia } from "elysia";
-import { randomUUID } from "crypto";
-import { chatComponent } from "../streams/components/chat";
 import { htmlTemplate } from "@src/components/htmlTemplate";
+import { randomUUID } from "crypto";
+import { Elysia } from "elysia";
+import { chatComponent } from "../streams/components/chat";
 
 const homepageComponent = (streamid: string) => (
   <div class="hero min-h-screen bg-base-100 flex flex-col justify-center items-center">

@@ -1,5 +1,5 @@
-import { Elysia } from "elysia";
 import type ElysiaStream from "@elysiajs/stream";
+import { Elysia } from "elysia";
 
 export type Stream = {
   id: string;
