@@ -9,7 +9,7 @@
     - [x] Page
     - [x] Formulaire
     - [x] Validation serveur
-    - [x] backend: survey model
+    - [x] Survey model
     - [ ] Enregistrement en base et redirection vers page d'administration avec affichage du "code de sécurité"
   - [ ] configurer un sondage
   - [ ] supprimer un sondage
