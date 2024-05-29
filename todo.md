@@ -1,28 +1,28 @@
 # Todo
 
-- categories: feat: feature, feat(backend): backend feature, feat(frontend): frontend feature, fix: bugfix, docs: documentation, dev: developer environment, refactor: refactoring, perf: performance, test: test
+- categories: feat: feature, feat(backend): backend only feature, feat(frontend): frontend only feature, fix: bugfix, docs: documentation, dev: developer environment, refactor: refactoring, perf: performance, test: test
 
 ## sprintlog
 
-- [x] feat(backend): appshell
-- [x] feat(backend): heroicons loader
-- [x] feat(frontend): navbar
-- [-] feat: "administrer un sondage" (Fonctionnalité principale du sprint)
-  - [-] "Nouveau sondage"
+- [-] feat: administrer un sondage (Fonctionnalité principale du sprint)
+  - [-] Nouveau sondage
     - [x] Page
     - [x] Formulaire
     - [x] Validation serveur
+    - [x] backend: survey model
     - [ ] Enregistrement en base et redirection vers page d'administration avec affichage du "code de sécurité"
-  - [ ] "configurer un sondage"
-  - [ ] "supprimer un sondage"
+  - [ ] configurer un sondage
+  - [ ] supprimer un sondage
+- [x] feat(backend): appshell
+- [x] feat(backend): heroicons loader
+- [x] feat(frontend): create survey navbar
 - [ ] backend: bun sqlite
-- [ ] backend: survey model
 
 ## Backlog
 
 - Frontend
 
-  - [ ] Authentification : utiliser cookies / JWT signés pour identifier la session, l'utilisateur via son profil et gérer les ressources dynamiquement (streams, styles, etc.)
+  - [ ] Identification : utiliser cookies signés pour identifier la session, l'utilisateur via son profil et gérer les ressources dynamiquement (streams, styles, etc.)
   - [ ] Mentions légales : politique de confidentialité
   - [ ] Page : personnaliser un sondage
   - [ ] Page : participer à un sondage - accueil : si absence de profil = page profil ; si profil mais pas de résultat = sondage et commentaires ; si profil et résultat = page résultat
@@ -33,10 +33,18 @@
 
 - Backend
 
-  - [ ] Architecture applicative : Effect + grokking simplicity
+  - [ ] génération et exploitation des résultats de l'IA
+  - [ ] cron: backup
+  - [ ] cron: purge des sondages expirés
+
+- IA
+
+  - [ ] formats de données attendus en entrée et en sortie
+  - [ ] fournir un compte AWS à WhatsNext
 
 - Environnement de développement
 
+  - [ ] Architecture applicative : Effect + grokking simplicity
   - [ ] dev: Live Reload backend / frontend pour une meilleur expérience de développement (NODE_ENV = development + bun --watch + xh header + SSE Trigger Server Callbacks(script nonce + location.reload()))
   - [ ] CI/CD
     - [ ] Continuous Integration : Github actions : typecheck, lint, test, enforce conventional commit in the PR name and new changesets
@@ -44,8 +52,8 @@
     - [ ] On-Demand Deployment : docker compose
   - [ ] Tests
     - [ ] Tests unitaires / intégration : bun test (jest ou vitest)
-    - [ ] tests E2E (?) : playwright
+    - [ ] tests E2E : playwright
 
 - Environnement de production
 
-  - [ ] Hôte : Docker compose
+  - [ ] CDG : vm hôte
