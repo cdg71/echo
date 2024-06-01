@@ -28,12 +28,12 @@ export const surveyAdminComponent = async (props: Survey) => {
       <pre>
         <code>{JSON.stringify(survey, null, 2)}</code>
       </pre>
-      <dialog id="securityCodeModal" class="modal modal-middle modal-open">
+      <dialog id="securityCodeModal" class="modal modal-open">
         <div class="modal-box prose">
-          <h3>{clipboardIcon} Copiez le d'administration</h3>
+          <h3>{clipboardIcon} Copiez le code d'administration</h3>
           <p>
-            Conservez précieusement le code de sécurité ci-dessous pour gérer le
-            sondage. Il ne vous sera affiché qu'une seule fois.
+            Conservez précieusement le code de sécurité ci-dessous pour pouvoir
+            gérer le sondage. Il ne vous sera affiché qu'une seule fois.
           </p>
           <div role="alert" class="alert alert-info">
             <label id="copyBtn" class="swap hover:text-gray-600">

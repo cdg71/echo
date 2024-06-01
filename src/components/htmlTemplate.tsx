@@ -5,7 +5,7 @@ const defaultProps: Props = {
   content: <></>,
 };
 
-export const htmlTemplate = (props: Props) => {
+export const htmlTemplate = (props?: Props) => {
   const { content } = { ...defaultProps, ...props };
   return (
     <html data-theme="winter" lang="fr">

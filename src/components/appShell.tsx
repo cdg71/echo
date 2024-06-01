@@ -10,7 +10,7 @@ const defaultProps: Props = {
   content: <></>,
 };
 
-export const appShell = async (props: Props) => {
+export const appShell = async (props?: Props) => {
   const { title, content } = { ...defaultProps, ...props };
   const arrowLeftIcon = await loadHeroIcons({
     iconName: "arrow-left",
@@ -23,6 +23,9 @@ export const appShell = async (props: Props) => {
             <a
               class="btn btn-ghost btn-circle primary-content"
               hx-boost="true"
+              hx-swap="outerHTML"
+              hx-target="body"
+              hx-push-url="true"
               href="/"
             >
               {arrowLeftIcon}
