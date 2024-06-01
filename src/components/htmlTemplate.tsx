@@ -20,7 +20,7 @@ export const htmlTemplate = (props: Props) => {
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/public/images/apple-touch-icon.png"
+          href="/static/images/apple-touch-icon.png"
         />
         <meta name="apple-mobile-web-app-title" content="Echo" />
         <meta name="application-name" content="Echo" />
@@ -30,25 +30,25 @@ export const htmlTemplate = (props: Props) => {
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="/public/images/favicon-32x32.png"
+          href="/static/images/favicon-32x32.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href="/public/images/favicon-16x16.png"
+          href="/static/images/favicon-16x16.png"
         />
-        <link rel="manifest" href="/public/site.webmanifest" />
-        <link rel="mask-icon" href="/public/images/safari-pinned-tab.svg" />
+        <link rel="manifest" href="/static/site.webmanifest" />
+        <link rel="mask-icon" href="/static/images/safari-pinned-tab.svg" />
         <link
-          href="/public/styles/globals.css"
+          href="/static/styles/globals.css"
           rel="stylesheet"
           type="text/css"
         />
       </head>
+      <script src="/static/scripts/htmx.js"></script>
+      <script src="/static/scripts/sse.js"></script>
       <body>{content}</body>
-      <script src="/public/scripts/htmx.js"></script>
-      <script src="/public/scripts/sse.js"></script>
     </html>
   );
 };

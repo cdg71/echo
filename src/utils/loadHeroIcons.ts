@@ -1,4 +1,5 @@
-import fs from "fs";
+import { neverTypeGuard } from "@src/utils/neverTypeGuard";
+import { readFile } from "fs/promises";
 
 interface Props {
   iconName: string;
@@ -12,7 +13,7 @@ const defaultProps = {
 };
 
 // Function to load SVG file and replace class attribute with provided className
-export const heroIconsLoader = (props: Props): string => {
+export const loadHeroIcons = async (props: Props) => {
   const { iconName, family, className } = { ...defaultProps, ...props };
   let familyPath = "";
   switch (family) {
@@ -32,16 +33,16 @@ export const heroIconsLoader = (props: Props): string => {
       familyPath = "24/solid";
       break;
 
-    default:
-      const _exhaustiveCheck = family as never;
-      throw new Error(`Unhandled family: ${_exhaustiveCheck}`);
+    default: {
+      neverTypeGuard(familyPath as never);
+    }
   }
   // Define the path to the SVG file based on the family
   const filePath = `${process.cwd()}/node_modules/heroicons/${familyPath}/${iconName}.svg`; // Adjust the path as needed
 
   try {
     // Load SVG file as string
-    let svgContent = fs.readFileSync(filePath, "utf8");
+    let svgContent = await readFile(filePath, "utf8");
 
     // Replace class attribute with provided className, or append it if className is provided
     if (className) {

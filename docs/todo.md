@@ -5,37 +5,63 @@
 ## sprintlog
 
 - [-] feat: administrer un sondage (Fonctionnalité principale du sprint)
-  - [-] Nouveau sondage
-    - [x] Page
+  - [-] Créer un nouveau sondage
+    - [x] Route /new
     - [x] Formulaire
     - [x] Validation serveur
-    - [x] Survey model
-    - [ ] Enregistrement en base et redirection vers page d'administration avec affichage du "code de sécurité"
-  - [ ] configurer un sondage
-  - [ ] supprimer un sondage
+    - [x] Entité survey
+    - [x] Enregistrement en base
+    - [ ] Redirection vers /admin avec cookie sécurisé
+    - [x] Affichage unique du code d'administration à la première visite
+  - [ ] gérer un sondage
+    - [ ] route /admin
+    - [ ] configurer un sondage : horaire
+    - [ ] questionnaire
+    - [ ] supprimer un sondage
 - [x] feat(backend): appshell
+- [-] feat(backend): cookies HTTP signés
 - [x] feat(backend): heroicons loader
 - [x] feat(frontend): create survey navbar
-- [ ] backend: bun sqlite
+- [x] feat(backend): bun sqlite
+- [x] perf: use async (bun.password, heroicons)
+- [x] dev: enable client side javascript
 
 ## Backlog
 
+- Fixes
+
 - Frontend
 
-  - [ ] Identification : utiliser cookies signés pour identifier la session, l'utilisateur via son profil et gérer les ressources dynamiquement (streams, styles, etc.)
+  - [x] /
+  - [x] /new
+  - [-] /admin
+    - [ ] component : settings
+    - [ ] component : quiz
+    - [ ] component : snapshots
+  - [ ] /:survey
+    - [ ] component : homepage
+    - [ ] component : profile
+    - [ ] component : comments
+    - [ ] component : results
+  - [ ] /result-webhook
+  - [ ] Autoriser markdown <https://github.com/micromark/micromark> (safe: text formatting, lists, blockquotes, horizontal rules) pour personnaliser les sondages (description du sondage, description des questions) et les résultats
   - [ ] Mentions légales : politique de confidentialité
-  - [ ] Page : personnaliser un sondage
-  - [ ] Page : participer à un sondage - accueil : si absence de profil = page profil ; si profil mais pas de résultat = sondage et commentaires ; si profil et résultat = page résultat
-  - [ ] Page : participer à un sondage - profil personnalisé
-  - [ ] Page : participer à un sondage - sondage
-  - [ ] Page : participer à un sondage - commentaire
-  - [ ] Page : participer à un sondage - résultat
+  - [ ] Téléchargement des résultats en PDF
 
 - Backend
 
+  - [-] entité survey
+    - [x] DTO : createSurvey
+    - [x] DTO : surveySettings
+  - [ ] entité respondent
+  - [ ] entité response
+  - [ ] entité comment
+  - [ ] entité result
   - [ ] génération et exploitation des résultats de l'IA
-  - [ ] cron: backup
+  - [ ] cron: backup (data folder : database dump + assets)
   - [ ] cron: purge des sondages expirés
+  - [ ] error handling
+  - [ ] logging
 
 - IA
 

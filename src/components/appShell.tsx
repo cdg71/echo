@@ -1,5 +1,5 @@
-import { heroIconsLoader } from "@src/libs/heroIconsLoader";
-import { htmlTemplate } from "./htmlTemplate";
+import { htmlTemplate } from "@src/components/htmlTemplate";
+import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 
 interface Props {
   title?: string;
@@ -10,13 +10,11 @@ const defaultProps: Props = {
   content: <></>,
 };
 
-const arrowLeftIcon = heroIconsLoader({
-  iconName: "arrow-left",
-});
-
-export const appShell = (props: Props) => {
+export const appShell = async (props: Props) => {
   const { title, content } = { ...defaultProps, ...props };
-
+  const arrowLeftIcon = await loadHeroIcons({
+    iconName: "arrow-left",
+  });
   const shell = (
     <div class="min-h-screen flex justify-center bg-base-100">
       <div class="w-11/12 lg:w-10/12 xl:w-8/12 bg-base-100">

@@ -51,8 +51,7 @@
     "serve": "NODE_ENV=production bun run dist/index.js",
     "start": "bun run build && bun run serve",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noemit",
     "test": "bun test"
   }
 }

@@ -1,7 +1,7 @@
+import { heartbeatRoute } from "@src/services/streams/routes/heartbeat";
+import { pubRoute } from "@src/services/streams/routes/pub";
+import { subRoute } from "@src/services/streams/routes/sub";
 import { Elysia } from "elysia";
-import { heartbeatRoute } from "./routes/heartbeat";
-import { pubRoute } from "./routes/pub";
-import { subRoute } from "./routes/sub";
 
 export const streamsService = new Elysia()
   .use(subRoute)

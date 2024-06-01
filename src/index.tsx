@@ -1,21 +1,28 @@
 import { cors } from "@elysiajs/cors";
 import { staticPlugin } from "@elysiajs/static";
 import { tailwind } from "@gtramontina.com/elysia-tailwind";
-import { htmxPlugin } from "@src/plugins/htmx";
+import { htmxPlugin } from "@src/config/htmx";
+import { editSurveyService } from "@src/services/adminSurvey";
 import { homepageService } from "@src/services/homepage";
 import { streamsService } from "@src/services/streams";
 import { Elysia } from "elysia";
 import { helmet } from "elysia-helmet";
-import { editSurveyService } from "./services/survey";
 
 new Elysia()
   .use(cors())
   .use(helmet())
-  .use(staticPlugin())
+  .use(staticPlugin({ prefix: "/static", assets: "src/static" }))
+  .use(
+    staticPlugin({
+      prefix: "/assets",
+      assets: "data/assets",
+      ignorePatterns: [".gitkeep"],
+    })
+  )
   .use(htmxPlugin)
   .use(
     tailwind({
-      path: "/public/styles/globals.css",
+      path: "/static/styles/globals.css",
       source: "./src/styles/globals.css",
       config: "./tailwind.config.js",
       options: {
@@ -27,4 +34,5 @@ new Elysia()
   .use(homepageService)
   .use(streamsService)
   .use(editSurveyService)
-  .listen(import.meta.env["PORT"]);
+  .get("/empty", () => <></>)
+  .listen(import.meta.env.PORT);

@@ -6,10 +6,14 @@ export const htmxPlugin = new Elysia()
   .use(html())
   .use(htmx())
   .get(
-    "/public/scripts/htmx.js",
+    "/static/scripts/htmx.js",
     Bun.file("node_modules/htmx.org/dist/htmx.min.js")
   )
   .get(
-    "/public/scripts/sse.js",
+    "/static/scripts/head-support.js",
+    Bun.file("node_modules/htmx.org/dist/ext/head-support.js")
+  )
+  .get(
+    "/static/scripts/sse.js",
     Bun.file("node_modules/htmx.org/dist/ext/sse.js")
   );

@@ -1,4 +1,4 @@
-import { heartbeatComponent } from "./heartbeat";
+import { heartbeatComponent } from "@src/services/streams/components/heartbeat";
 
 export const chatComponent = (streamid: string) => (
   <div class="max-w-md pt-5" hx-ext="sse" sse-connect={`/sub/${streamid}`}>
