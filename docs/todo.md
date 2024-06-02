@@ -11,15 +11,14 @@
     - [x] Validation serveur
     - [x] Entité survey
     - [x] Enregistrement en base
-    - [ ] Redirection vers /admin avec cookie sécurisé
     - [x] Affichage unique du code d'administration à la première visite
+    - [-] Accès sécurisé par un JWT à la page d'administration
   - [ ] gérer un sondage
-    - [ ] route /admin
-    - [ ] configurer un sondage : horaire
-    - [ ] questionnaire
+    - [ ] configuration : settings
+    - [ ] configuration : quiz
+    - [ ] configuration : snapshots
     - [ ] supprimer un sondage
 - [x] feat(backend): appshell
-- [-] feat(backend): cookies HTTP signés
 - [x] feat(backend): heroicons loader
 - [x] feat(frontend): create survey navbar
 - [x] feat(backend): bun sqlite
@@ -32,8 +31,6 @@
 
 - Frontend
 
-  - [x] /
-  - [x] /new
   - [-] /admin
     - [ ] component : settings
     - [ ] component : quiz
@@ -66,6 +63,9 @@
 - IA
 
   - [ ] formats de données attendus en entrée et en sortie
+    - [ ] Markdown accepté pour formater la réponse de l'IA
+    - [ ] Définition du contexte du sondage pour augmenter la génération
+    - [ ] Minimiser les coûts : bucket S3 24h
   - [ ] fournir un compte AWS à WhatsNext
 
 - Environnement de développement
@@ -77,8 +77,10 @@
     - [ ] Continuous delivery : Github release (changeset version and publish) + publish to ghcr.io
     - [ ] On-Demand Deployment : docker compose
   - [ ] Tests
-    - [ ] Tests unitaires / intégration : bun test (jest ou vitest)
-    - [ ] tests E2E : playwright
+    - [ ] Tests unitaires
+    - [ ] Tests d'intégration
+    - [ ] Snapshots
+    - [ ] tests E2E
 
 - Environnement de production
 

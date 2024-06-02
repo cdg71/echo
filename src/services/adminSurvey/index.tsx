@@ -15,6 +15,23 @@ export const editSurveyService = new Elysia()
     return await transpileForBrowsers(`${__dirname}/scripts/general.ts`);
   })
   .get("/admin", async () => {
+    // Validate survey and security codes from the form
+    // If authorized, create the session JWT, render surveyAdminComponent + HX-Replace-Url header (/admin/:id)
+    // If not authorized, throw an error : HX-Push-Url header (false)
+    const survey = {
+      id: "Mon sondage",
+      name: "sondage",
+      description: "Le plus réussi !",
+      securityCode: "AWA9Q-PMNSJ-LA4F3-QY78L",
+      created: 1717165982427,
+      updated: 1717165982427,
+    };
+    return await surveyAdminComponent(survey as unknown as Survey);
+  })
+  .get("/admin/:id", async () => {
+    // Validate the session JWT
+    // If authorized render surveyAdminComponent
+    // If not authorized, throw an error : redirect to /  + HX-Replace-Url header (/)
     const survey = {
       id: "Mon sondage",
       name: "sondage",

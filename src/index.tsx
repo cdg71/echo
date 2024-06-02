@@ -7,8 +7,12 @@ import { homepageService } from "@src/services/homepage";
 import { streamsService } from "@src/services/streams";
 import { Elysia } from "elysia";
 import { helmet } from "elysia-helmet";
+import { getJwtSecret } from "./config/jwtSecret";
+
+const jwtSecret = await getJwtSecret();
 
 new Elysia()
+  .state("jwtSecret", jwtSecret)
   .use(cors())
   .use(helmet())
   .use(staticPlugin({ prefix: "/static", assets: "src/static" }))

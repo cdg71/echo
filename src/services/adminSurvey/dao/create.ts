@@ -3,7 +3,7 @@ import { getSurveyById } from "@src/entities/survey/dao";
 import type { Survey } from "@src/entities/survey/schema";
 import { isCreateSurveyDTO } from "@src/services/adminSurvey/dto/create";
 import { flattenTypebox } from "@src/utils/flattenTypebox";
-import { createSecurityCode } from "@src/utils/securityCodesManagement";
+import { createSecurityCode } from "@src/utils/securityCodeManagement";
 
 // Create a new survey
 export const createSurvey = async (createSurveyDTO: unknown) => {

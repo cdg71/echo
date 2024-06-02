@@ -1,5 +1,8 @@
 import { password } from "bun";
-import { randomBytes } from "crypto";
+import { randomBytes as randomBytesSync } from "crypto";
+import { promisify } from "util";
+
+const randomBytes = promisify(randomBytesSync);
 
 // Define a URL-safe and user-friendly character set
 const charset = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789";
@@ -7,7 +10,8 @@ const charset = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789";
 export const createSecurityCode = async () => {
   const accumulator = [];
   for (let i = 0; i < 20; i++) {
-    const randomIndex = randomBytes(1)[0] % charset.length;
+    const bytes = await randomBytes(1);
+    const randomIndex = bytes[0] % charset.length;
     accumulator.push(charset[randomIndex]);
   }
   // Format the code into groups of 5 characters
