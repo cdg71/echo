@@ -24,7 +24,6 @@ export const getJwtSecret = async (): Promise<string> => {
     const secret = await fs.readFile(JWT_SECRET_PATH, "utf-8");
 
     if (secret) {
-      console.log({ status: "loaded", secret });
       return secret;
     }
 
@@ -37,7 +36,6 @@ export const getJwtSecret = async (): Promise<string> => {
     await fs.mkdir(path.dirname(JWT_SECRET_PATH), { recursive: true });
     await fs.writeFile(JWT_SECRET_PATH, secret, "utf-8");
 
-    console.log({ status: "created", secret });
     return secret;
   }
 };

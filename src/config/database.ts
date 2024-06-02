@@ -1,18 +1,25 @@
-import { surveyTable } from "@src/entities/survey/sql.ts";
+import {
+  getSurveyTestDatasetStatement,
+  surveyTable,
+} from "@src/entities/survey/sql.ts";
 import { Database } from "bun:sqlite";
-
-const dbSetup = [surveyTable];
 
 export const db =
   import.meta.env.NODE_ENV === "production"
     ? new Database(`${process.cwd()}/storage/db.sqlite`, { create: true })
     : new Database(":memory:");
 
-const setupDB = db.transaction((creationStatements: string[]) => {
-  for (const statement of creationStatements) {
+const executeTransaction = db.transaction((statements: string[]) => {
+  for (const statement of statements) {
     const query = db.prepare(statement);
     query.run();
   }
 });
 
-setupDB.exclusive(dbSetup);
+const dbSetup = [surveyTable];
+executeTransaction.exclusive(dbSetup);
+
+if (import.meta.env.NODE_ENV !== "production") {
+  const testDataset = [await getSurveyTestDatasetStatement()];
+  executeTransaction.exclusive(testDataset);
+}
