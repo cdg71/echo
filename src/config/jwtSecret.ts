@@ -39,3 +39,5 @@ export const getJwtSecret = async (): Promise<string> => {
     return secret;
   }
 };
+
+export const jwtSecret = await getJwtSecret();

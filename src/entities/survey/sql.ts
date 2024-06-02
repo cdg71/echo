@@ -15,8 +15,8 @@ export const getSurveyTestDatasetStatement = async () => {
   return `
     INSERT INTO Survey (id, name, description, securityCode, created, updated)
     VALUES (
-        'Sondage de test',
         'test',
+        'Sondage de test',
         'Description du sondage',
         '${hash}',
         '1717165982427',

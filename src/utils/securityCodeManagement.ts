@@ -27,7 +27,7 @@ export const createSecurityCode = async () => {
   };
 };
 
-export const verifySecurityCode = async (props: {
+export const validateSecurityCode = async (props: {
   code: string;
   hash: string;
 }) => await password.verify(props.code, props.hash);

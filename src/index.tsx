@@ -2,17 +2,13 @@ import { cors } from "@elysiajs/cors";
 import { staticPlugin } from "@elysiajs/static";
 import { tailwind } from "@gtramontina.com/elysia-tailwind";
 import { htmxPlugin } from "@src/config/htmx";
-import { editSurveyService } from "@src/services/adminSurvey";
+import { adminService } from "@src/services/admin";
 import { homepageService } from "@src/services/homepage";
 import { streamsService } from "@src/services/streams";
 import { Elysia } from "elysia";
 import { helmet } from "elysia-helmet";
-import { getJwtSecret } from "./config/jwtSecret";
-
-const jwtSecret = await getJwtSecret();
 
 new Elysia()
-  .state("jwtSecret", jwtSecret)
   .use(cors())
   .use(helmet())
   .use(staticPlugin({ prefix: "/static", assets: "src/static" }))
@@ -35,8 +31,8 @@ new Elysia()
       },
     })
   )
+  .get("/empty", () => <></>)
   .use(homepageService)
   .use(streamsService)
-  .use(editSurveyService)
-  .get("/empty", () => <></>)
+  .use(adminService)
   .listen(import.meta.env.PORT);

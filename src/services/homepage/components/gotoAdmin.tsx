@@ -1,30 +1,30 @@
-export const gotoAdminComponent = (
-  <form id="gotoForm" class="card-body">
+interface Props {
+  id: string;
+}
+export const gotoAdminComponent = (props?: Props) => (
+  <form id="gotoForm" class="card-body" hx-post="/admin/auth" hx-target="body">
     <div class="form-control">
       <input
+        id="id"
+        name="id"
         type="text"
         placeholder="Code du sondage"
         class="input input-bordered"
         required
+        value={`${props?.id ?? ""}`}
       />
     </div>
     <div class="form-control">
       <input
+        id="securityCode"
+        name="securityCode"
         type="password"
         placeholder="Code d'administration"
         class="input input-bordered"
         required
       />
     </div>
-    <button
-      hx-get="/admin"
-      hx-trigger="click"
-      hx-boost="true"
-      hx-swap="outerHTML"
-      hx-target="body"
-      hx-push-url="true"
-      class="btn btn-primary"
-    >
+    <button class="btn btn-primary" type="submit">
       Se connecter
     </button>
     <div class="text-xs">
@@ -34,9 +34,10 @@ export const gotoAdminComponent = (
       <span> | </span>
       <a
         class="link link-hover link-neutral"
-        hx-get="/goto/survey"
+        hx-get={`/goto/survey/${props?.id ? `${props.id}` : ""}`}
         hx-target="#gotoForm"
         hx-push-url="false"
+        hx-boost="true"
         hx-swap="outerHTML"
       >
         Participer

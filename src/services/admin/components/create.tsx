@@ -55,7 +55,7 @@ export const createSurveyComponent = async (props: Props) => {
       </div>
       <form
         class="space-y-4"
-        hx-post="/admin"
+        hx-post="/create-survey"
         hx-boost="true"
         hx-target="body"
         hx-push-url="true"

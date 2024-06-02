@@ -5,19 +5,20 @@
 ## sprintlog
 
 - [-] feat: administrer un sondage (Fonctionnalité principale du sprint)
-  - [-] Créer un nouveau sondage
+  - [x] Créer un nouveau sondage
     - [x] Route /new
     - [x] Formulaire
     - [x] Validation serveur
     - [x] Entité survey
     - [x] Enregistrement en base
     - [x] Affichage unique du code d'administration à la première visite
-    - [-] Accès sécurisé par un JWT à la page d'administration
-  - [ ] gérer un sondage
-    - [ ] configuration : settings
-    - [ ] configuration : quiz
-    - [ ] configuration : snapshots
+  - [-] gérer un sondage
+    - [x] Accès sécurisé par un JWT à la page d'administration
+    - [ ] Settings
+    - [ ] Quiz
+    - [ ] Snapshots
     - [ ] supprimer un sondage
+    - [ ] Déconnexion
 - [x] feat(backend): appshell
 - [x] feat(backend): heroicons loader
 - [x] feat(frontend): create survey navbar

@@ -1,7 +1,7 @@
 import { db } from "@src/config/database";
 import { getSurveyById } from "@src/entities/survey/dao";
 import type { Survey } from "@src/entities/survey/schema";
-import { isCreateSurveyDTO } from "@src/services/adminSurvey/dto/create";
+import { isCreateSurveyDTO } from "@src/services/admin/dto/create";
 import { flattenTypebox } from "@src/utils/flattenTypebox";
 import { createSecurityCode } from "@src/utils/securityCodeManagement";
 

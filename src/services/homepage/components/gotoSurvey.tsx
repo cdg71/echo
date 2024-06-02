@@ -1,10 +1,15 @@
-export const gotoSurveyComponent = (
+interface Props {
+  id: string;
+}
+
+export const gotoSurveyComponent = (props?: Props) => (
   <form id="gotoForm" class="card-body">
     <div class="form-control">
       <input
         type="text"
         placeholder="Code du sondage"
         class="input input-bordered"
+        value={`${props?.id ?? ""}`}
         required
       />
     </div>
@@ -26,9 +31,10 @@ export const gotoSurveyComponent = (
       <span> | </span>
       <a
         class="link link-hover link-neutral"
-        hx-get="/goto/admin"
+        hx-get={`/goto/admin/${props?.id ? `${props.id}` : ""}`}
         hx-target="#gotoForm"
         hx-push-url="false"
+        hx-boost="true"
         hx-swap="outerHTML"
       >
         Administration
