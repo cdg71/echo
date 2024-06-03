@@ -14,11 +14,11 @@
     - [x] Affichage unique du code d'administration à la première visite
   - [-] gérer un sondage
     - [x] Accès sécurisé par un JWT à la page d'administration
+    - [x] Déconnexion
     - [ ] Settings
     - [ ] Quiz
     - [ ] Snapshots
     - [ ] supprimer un sondage
-    - [ ] Déconnexion
 - [x] feat(backend): appshell
 - [x] feat(backend): heroicons loader
 - [x] feat(frontend): create survey navbar
@@ -29,6 +29,8 @@
 ## Backlog
 
 - Fixes
+
+  - [ ] Les types Typebox composants devraient être utilisés systématiquement lorsque c'est possible. la fonction getStaticType devrait être réservées aux functions d'origine tierce dont le type ne peut pas être personnalisé, par exemple dans les DAOs juste avant l'accès en base
 
 - Frontend
 

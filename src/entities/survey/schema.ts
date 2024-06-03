@@ -4,8 +4,8 @@ import { t } from "elysia";
 export type Survey = typeof SurveySchema;
 
 export const SurveySchema = t.Object({
-  id: t.String({ pattern: surveyCodeString }),
-  name: t.String({ pattern: notEmptyString }),
+  id: t.String({ pattern: surveyCodeString, default: "" }),
+  name: t.String({ pattern: notEmptyString, default: "" }),
   description: t.String({ default: "" }),
   securityCode: t.String(),
   created: t.Number(),
