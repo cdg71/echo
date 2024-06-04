@@ -1,9 +1,10 @@
 import { appShell } from "@src/components/appShell";
 import type { Survey } from "@src/entities/survey/schema";
+import { getStaticType } from "@src/utils/getStaticType";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 
 export const surveyAdminComponent = async (props: Survey) => {
-  const { securityCode, ...survey } = props;
+  const { securityCode, ...survey } = getStaticType(props);
   const clipboardIcon = loadHeroIcons({
     iconName: "clipboard",
     family: "Outline",
@@ -18,16 +19,8 @@ export const surveyAdminComponent = async (props: Survey) => {
     family: "Outline",
     className: "size-5 float-left",
   });
-  const content = (
-    <>
-      <script
-        src="/static/scripts/general.js"
-        type="text/javascript"
-        defer
-      ></script>
-      <pre>
-        <code>{JSON.stringify(survey, null, 2)}</code>
-      </pre>
+  const getDialogComponent = (securityCode: string) =>
+    securityCode ? (
       <dialog id="securityCodeModal" class="modal modal-open">
         <div class="modal-box prose">
           <h3>{clipboardIcon} Copiez le code d'administration</h3>
@@ -59,7 +52,31 @@ export const surveyAdminComponent = async (props: Survey) => {
           </div>
         </div>
       </dialog>
-    </>
+    ) : (
+      <></>
+    );
+  const content = (
+    <div hx-history="false">
+      <script
+        src="/static/scripts/general.js"
+        type="text/javascript"
+        defer
+      ></script>
+      <main>
+        <pre>
+          <code>{JSON.stringify(survey, null, 2)}</code>
+        </pre>
+        <button
+          class="btn"
+          hx-get="/admin/logout"
+          hx-boost="true"
+          hx-target="body"
+        >
+          Logout
+        </button>
+      </main>
+      {getDialogComponent(securityCode)}
+    </div>
   );
-  return await appShell({ title: "Gérer un sondage", content });
+  return await appShell({ title: { name: "Gérer un sondage" }, content });
 };

@@ -1,30 +1,26 @@
 # Todo
 
-- categories: feat: feature, feat(backend): backend only feature, feat(frontend): frontend only feature, fix: bugfix, docs: documentation, dev: developer environment, refactor: refactoring, perf: performance, test: test
+- categories: feat(epic): , feat: feature, feat(backend): backend only feature, feat(frontend): frontend only feature, fix: bugfix, docs: documentation, dev: developer environment, refactor: refactoring, perf: performance, test: test
 
 ## sprintlog
 
 - [-] feat: administrer un sondage (Fonctionnalité principale du sprint)
-  - [x] Créer un nouveau sondage
-    - [x] Route /new
-    - [x] Formulaire
-    - [x] Validation serveur
-    - [x] Entité survey
-    - [x] Enregistrement en base
-    - [x] Affichage unique du code d'administration à la première visite
-  - [-] gérer un sondage
-    - [x] Accès sécurisé par un JWT à la page d'administration
-    - [x] Déconnexion
+  - [x] /new: Créer un nouveau sondage
+  - [-] /admin: gérer un sondage
+    - [x] login
+    - [x] logout
     - [ ] Settings
     - [ ] Quiz
     - [ ] Snapshots
-    - [ ] supprimer un sondage
+    - [ ] Delete survey
+- [x] feat(backend): enable auth jwt
 - [x] feat(backend): appshell
 - [x] feat(backend): heroicons loader
-- [x] feat(frontend): create survey navbar
-- [x] feat(backend): bun sqlite
-- [x] perf: use async (bun.password, heroicons)
+- [x] feat(frontend): navbar
+- [x] feat(backend): bun sqlite setup
+- [x] refactor: don't use sync (bun.password, heroicons)
 - [x] dev: enable client side javascript
+- [x] feat(backend): entité survey
 
 ## Backlog
 
@@ -50,9 +46,6 @@
 
 - Backend
 
-  - [-] entité survey
-    - [x] DTO : createSurvey
-    - [x] DTO : surveySettings
   - [ ] entité respondent
   - [ ] entité response
   - [ ] entité comment
@@ -62,6 +55,7 @@
   - [ ] cron: purge des sondages expirés
   - [ ] error handling
   - [ ] logging
+  - [ ] jwtSecret rotation
 
 - IA
 

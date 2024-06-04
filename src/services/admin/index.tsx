@@ -1,5 +1,4 @@
 import jwt from "@elysiajs/jwt";
-import { htmlTemplate } from "@src/components/htmlTemplate";
 import { jwtSecret } from "@src/config/jwtSecret";
 import { getSurveyById } from "@src/entities/survey/dao";
 import {
@@ -9,21 +8,26 @@ import {
 import { getStaticType } from "@src/utils/getStaticType";
 import { validateSecurityCode } from "@src/utils/securityCodeManagement";
 import { transpileForBrowsers } from "@src/utils/transpileForBrowsers";
-import { Elysia } from "elysia";
+import { Elysia, t } from "elysia";
 import { gotoAdminComponent } from "../homepage/components/gotoAdmin";
-import { gotoSurveyComponent } from "../homepage/components/gotoSurvey";
 import { homepageLayoutComponent } from "../homepage/components/layout";
-import { surveyAdminComponent } from "./components/general";
+import { surveyAdminComponent } from "./components/admin";
 import { createSurvey } from "./dao/create";
 import { authSurveyModel } from "./dto/auth";
 import { createSurveyModel } from "./dto/create";
 
+const AuthJwtSchema = t.Cookie({
+  id: t.String(),
+});
+const AuthCookie = t.Cookie({ auth: t.String() });
+
 export const adminService = new Elysia()
   .use(
     jwt({
-      name: "jwt",
+      name: "authJwt",
       secret: jwtSecret,
       exp: "1d",
+      schema: AuthJwtSchema,
     })
   )
   .use(createSurveyModel)
@@ -67,7 +71,7 @@ export const adminService = new Elysia()
 
   .post(
     "/admin/login",
-    async ({ body, cookie: { auth }, jwt, set }) => {
+    async ({ body, cookie: { auth }, authJwt, set }) => {
       const { id, securityCode: code } = body;
       // Validate survey id and security code from the form
       const survey = getSurveyById(id);
@@ -79,35 +83,19 @@ export const adminService = new Elysia()
       if (isValidCredentials) {
         // If authorized, create the session JWT and redirect to /admin/:id
         auth.set({
-          value: await jwt.sign({ id }),
+          value: await authJwt.sign({ id }),
           httpOnly: true,
           maxAge: 86400, // 1 day
         });
         set.headers["HX-Push-Url"] = `/admin/${id}`;
-        return htmlTemplate({
-          content: (
-            <div>
-              <pre>
-                <code hx-history="false">
-                  {JSON.stringify(survey, null, 2)}
-                </code>
-              </pre>
-              <button
-                class="btn"
-                hx-get="/admin/logout"
-                hx-boost="true"
-                hx-target="body"
-              >
-                Logout
-              </button>
-            </div>
-          ),
-        });
+        const survey = getSurveyById(id);
+        return await surveyAdminComponent({ ...survey, securityCode: "" });
       }
       throw new Error("Invalid credentials");
     },
     {
       body: "authSurveyDTO",
+      cookie: AuthCookie,
       error({ body, set, cookie: { auth } }) {
         const { id } = body;
         auth.remove();
@@ -120,44 +108,41 @@ export const adminService = new Elysia()
     }
   )
 
-  .get("/admin/logout", ({ set, cookie: { auth } }) => {
-    auth.remove();
-    set.status = 200;
-    set.headers["HX-Push-Url"] = `/`;
-    return homepageLayoutComponent({
-      content: gotoSurveyComponent(),
-    });
-  })
-
-  .get("/admin/:id", async ({ cookie: { auth }, jwt, params }) => {
-    // Validate the session JWT
-    const claim = await jwt.verify(auth.value as string);
-    if (claim && claim["id"] === params.id) {
-      return htmlTemplate({
-        content: (
-          <div>
-            <pre>
-              <code hx-history="false">
-                {JSON.stringify({ claim }, null, 2)}
-              </code>
-            </pre>
-            <button
-              class="btn"
-              hx-get="/admin/logout"
-              hx-boost="true"
-              hx-target="body"
-            >
-              Logout
-            </button>
-          </div>
-        ),
-      });
-    } else {
+  .get(
+    "/admin/logout",
+    async ({ set, cookie: { auth }, authJwt }) => {
+      const claim = await authJwt.verify(auth.value);
+      const id = claim ? claim.id : "";
+      auth.remove();
+      set.status = 200;
+      set.headers["HX-Push-Url"] = `/admin/${id}`;
       return homepageLayoutComponent({
-        content: gotoAdminComponent({ id: params.id }),
+        content: gotoAdminComponent({ id: id }),
       });
+    },
+    {
+      cookie: AuthCookie,
     }
-    //   // If authorized render surveyAdminComponent + HX-Replace-Url header (/admin/:id)
-    //   // If not authorized, throw an error : redirect to / + HX-Replace-Url header (/)
-    //   return await surveyAdminComponent(survey as unknown as Survey);
-  });
+  )
+
+  .get(
+    "/admin/:id",
+    async ({ cookie: { auth }, authJwt, params }) => {
+      // Validate the session JWT
+      const claim = await authJwt.verify(auth.value);
+      if (claim && claim.id === params.id) {
+        //   // If authorized render surveyAdminComponent + HX-Replace-Url header (/admin/:id)
+        //   // If not authorized, throw an error : redirect to / + HX-Replace-Url header (/)
+        const survey = getSurveyById(params.id);
+        return await surveyAdminComponent({ ...survey, securityCode: "" });
+      } else {
+        auth.remove();
+        return homepageLayoutComponent({
+          content: gotoAdminComponent({ id: params.id }),
+        });
+      }
+    },
+    {
+      cookie: AuthCookie,
+    }
+  );

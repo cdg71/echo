@@ -3,8 +3,6 @@ import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 import type { ValidationError } from "elysia";
 
 export interface Props {
-  surveyId?: string;
-  adminToken?: string;
   formData?: {
     id?: string;
     name?: string;
@@ -15,8 +13,6 @@ export interface Props {
 }
 
 export const createSurveyComponent = async (props: Props) => {
-  const createNewSurvey = props.adminToken ? true : false;
-  const title = createNewSurvey ? props.surveyId : "Nouveau sondage";
   const isError = !!props.errorCode;
   const fieldHasError = (fieldName: string) =>
     props.validationErrors?.all.find(
@@ -96,7 +92,7 @@ export const createSurveyComponent = async (props: Props) => {
             {props.formData?.description}
           </textarea>
         </label>
-        <div class=" space-x-4">
+        <div class=" space-x-2">
           <button type="submit" class="btn btn-primary">
             Créer un sondage
           </button>
@@ -113,5 +109,10 @@ export const createSurveyComponent = async (props: Props) => {
       </form>
     </div>
   );
-  return await appShell({ title, content });
+  return await appShell({
+    title: {
+      name: "Nouveau sondage",
+    },
+    content,
+  });
 };
