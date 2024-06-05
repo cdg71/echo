@@ -9,8 +9,7 @@
   - [-] /admin: gérer un sondage
     - [x] login
     - [x] logout
-    - [ ] Settings
-    - [ ] Quiz
+    - [ ] JSON Settings
     - [ ] Snapshots
     - [ ] Delete survey
 - [x] feat(backend): enable auth jwt
@@ -30,10 +29,10 @@
 
 - Frontend
 
-  - [-] /admin
-    - [ ] component : settings
-    - [ ] component : quiz
-    - [ ] component : snapshots
+  - [ ] /admin/:id
+
+    - [ ] Form to handle settings
+
   - [ ] /:survey
     - [ ] component : homepage
     - [ ] component : profile
@@ -56,14 +55,6 @@
   - [ ] error handling
   - [ ] logging
   - [ ] jwtSecret rotation
-
-- IA
-
-  - [ ] formats de données attendus en entrée et en sortie
-    - [ ] Markdown accepté pour formater la réponse de l'IA
-    - [ ] Définition du contexte du sondage pour augmenter la génération
-    - [ ] Minimiser les coûts : bucket S3 24h
-  - [ ] fournir un compte AWS à WhatsNext
 
 - Environnement de développement
 

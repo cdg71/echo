@@ -80,7 +80,7 @@ export const appShell = async (props?: Props) => {
   const shell = (
     <div class="min-h-screen flex justify-center bg-base-100">
       <div class="w-11/12 lg:w-10/12 xl:w-8/12 bg-base-100">
-        <nav class="navbar border-b bg-base-100">
+        <nav class="navbar fixed top-0 left-0 right-0 w-full lg:w-10/12 xl:w-8/12 mx-auto border-b bg-base-100 z-10">
           <div class="navbar-start">
             {menu.mobilePosition === "start" ? menu.mobile : null}
             {title.mobilePosition === "start" ? getTitle("mobile") : null}
@@ -100,7 +100,7 @@ export const appShell = async (props?: Props) => {
             {title.desktopPosition === "end" ? getTitle("desktop") : null}
           </div>
         </nav>
-        <div class="flex justify-center pt-6">{content}</div>
+        <div class="flex justify-center pt-20">{content}</div>
       </div>
     </div>
   );
