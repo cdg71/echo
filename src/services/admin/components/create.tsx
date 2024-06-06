@@ -110,9 +110,7 @@ export const createSurveyComponent = async (props: Props) => {
     </div>
   );
   return await appShell({
-    title: {
-      name: "Nouveau sondage",
-    },
     content,
+    navbar: { center: <h1 class="text-2xl font-bold">Nouveau sondage</h1> },
   });
 };

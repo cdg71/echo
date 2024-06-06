@@ -9,8 +9,8 @@
   - [-] /admin: gérer un sondage
     - [x] login
     - [x] logout
-    - [ ] JSON Settings
     - [ ] Snapshots
+    - [ ] JSON Settings
     - [ ] Delete survey
 - [x] feat(backend): enable auth jwt
 - [x] feat(backend): appshell

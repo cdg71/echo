@@ -78,5 +78,7 @@ export const surveyAdminComponent = async (props: Survey) => {
       {getDialogComponent(securityCode)}
     </div>
   );
-  return await appShell({ title: { name: "Gérer un sondage" }, content });
+  return await appShell({
+    content,
+  });
 };
