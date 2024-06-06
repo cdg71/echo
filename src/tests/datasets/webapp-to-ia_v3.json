@@ -1,0 +1,328 @@
+{
+  "id": "ia-fpt-71",
+  "name": "L'IA au service des territoires",
+  "description": "En pleine transformation numérique, l'IA est un sujet d'actualité brûlant qui suscite de nombreuses interrogations. Comment cette technologie pourrait-elle accompagner la modernisation de nos services publics et l’optimisation de nos ressources de manière inédite ? Est-ce un atout ou au contraire une menace ?",
+  "context": "### Présentation des impacts des technologies liées à l'intelligence artificielle, notamment pour les collectivités territoriales\n\n**Idées clés :**\n- **Amélioration de l'efficacité des services publics :** L'IA permet une gestion optimisée des ressources, une meilleure allocation des budgets et une administration plus réactive.\n- **Amélioration de la prise de décision :** Les technologies d'IA fournissent des analyses de données avancées pour appuyer les décideurs dans les collectivités territoriales, offrant des insights sur les tendances et les besoins locaux.\n- **Personnalisation des services aux citoyens :** Grâce à l'IA, les services peuvent être adaptés de manière plus précise aux besoins des citoyens, améliorant ainsi leur qualité de vie et l'engagement communautaire.\n- **Gestion intelligente des infrastructures :** L'IA contribue à une gestion plus efficace des infrastructures urbaines (transports, énergie, eau), réduisant les coûts et augmentant la durabilité.\n- **Sécurité et surveillance :** L'utilisation de l'IA pour la surveillance et la sécurité permet une détection précoce des incidents et une réponse rapide, améliorant la sécurité publique.\n\n### Usages et limites des outils d'IA\n\n**Idées clés :**\n- **Applications diverses :** L'IA est utilisée dans divers domaines comme la santé, l'éducation, la gestion urbaine, et la sécurité. Elle facilite des tâches telles que la reconnaissance d'images, la prédiction des comportements et l'optimisation des processus.\n- **Limites éthiques :** L'utilisation de l'IA pose des questions éthiques concernant la vie privée, la discrimination algorithmique et la transparence des décisions prises par les systèmes automatisés.\n- **Fiabilité et biais :** Les outils d'IA peuvent être sujets à des biais dans les données et les algorithmes, ce qui peut conduire à des résultats erronés ou injustes.\n- **Dépendance technologique :** Une utilisation excessive de l'IA peut mener à une dépendance technologique, réduisant la capacité des humains à prendre des décisions autonomes.\n- **Coûts et complexité :** L'implémentation des technologies d'IA peut être coûteuse et complexe, nécessitant des investissements importants en formation et en infrastructure.\n\n### Adaptation de ces technologies au contexte territorial\n\n**Idées clés :**\n- **Approche contextualisée :** L'adoption de l'IA doit être adaptée aux spécificités locales, prenant en compte les particularités socio-économiques et culturelles de chaque territoire.\n- **Engagement communautaire :** La mise en œuvre de l'IA doit inclure une consultation et une participation active des citoyens pour assurer une acceptation et une légitimité des initiatives.\n- **Formation et sensibilisation :** Il est crucial de former les agents territoriaux et d'informer les citoyens sur les bénéfices et les limites de l'IA pour garantir une utilisation efficace et responsable.\n- **Développement d'infrastructures locales :** Les territoires doivent investir dans les infrastructures technologiques locales pour soutenir le déploiement et l'entretien des solutions d'IA.\n- **Évaluation continue :** Il est essentiel de mettre en place des mécanismes d'évaluation et d'ajustement pour assurer que les technologies d'IA restent pertinentes et bénéfiques pour les collectivités locales.",
+  "createdAt": 1672531200,
+  "positions": ["DGS", "DSI", "DRH"],
+  "areas": ["MBA", "Le Grand Chalon", "CUCM"],
+  "quiz": [
+    {
+      "id": "q1",
+      "label": "Les usages de l'IA dans la Fonction Publique Territoriale en général."
+    },
+    {
+      "id": "q2",
+      "label": "Les usages de l'IA dans l'éducation (gestion des écoles maternelles et primaires, organisation des activités périscolaires et de la restauration scolaire)."
+    },
+    {
+      "id": "q3",
+      "label": "Les usages de l'IA dans la sécurité (police municipale, prévention et gestion des risques, surveillance des équipements publics)."
+    },
+    {
+      "id": "q4",
+      "label": "Les usages de l'IA dans les services politiques (cabinet du maire, secrétariat général, conseil municipal, protocole)."
+    },
+    {
+      "id": "q5",
+      "label": "Le Centre de gestion comme mutualisateur de solutions d'IA au service du territoire."
+    }
+  ],
+  "snapshots": [1672531200, 1672533000, 1672534800],
+  "users": [
+    {
+      "id": "user1",
+      "surveyId": "ia-fpt-71",
+      "position": "DGS",
+      "area": "MBA",
+      "responses": [
+        {
+          "createdAt": 1672530900,
+          "values": [
+            {
+              "questionId": "q1",
+              "value": "Inquiétude",
+              "comment": "Je crains que l'IA prenne le contrôle de décisions critiques sans supervision humaine."
+            },
+            {
+              "questionId": "q2",
+              "value": "Inquiétude",
+              "comment": "L'impact de l'IA sur l'éducation pourrait être trop intrusif."
+            },
+            {
+              "questionId": "q3",
+              "value": "Prudence",
+              "comment": "Il est essentiel de garder un œil sur les applications de sécurité."
+            },
+            {
+              "questionId": "q4",
+              "value": "Prudence",
+              "comment": "L'IA dans la politique peut être sensible."
+            },
+            {
+              "questionId": "q5",
+              "value": "Inquiétude",
+              "comment": "L'IA pourrait centraliser trop de pouvoir au sein du Centre de gestion."
+            }
+          ]
+        },
+        {
+          "createdAt": 1672533600,
+          "values": [
+            {
+              "questionId": "q1",
+              "value": "Prudence",
+              "comment": "J'ai lu des études qui montrent des bénéfices potentiels."
+            },
+            {
+              "questionId": "q2",
+              "value": "Confiant",
+              "comment": "L'IA pourrait aider à personnaliser l'apprentissage."
+            },
+            {
+              "questionId": "q3",
+              "value": "",
+              "comment": "La sécurité renforcée est un avantage, mais elle doit être équilibrée."
+            },
+            {
+              "questionId": "q4",
+              "value": "Prudence",
+              "comment": "Il faut des régulations strictes pour l'usage de l'IA."
+            },
+            {
+              "questionId": "q5",
+              "value": "Prudence",
+              "comment": "Des systèmes d'IA bien gérés peuvent bénéficier aux territoires."
+            }
+          ]
+        },
+        {
+          "createdAt": 1672536300,
+          "values": [
+            {
+              "questionId": "q1",
+              "value": "Enthousiasme",
+              "comment": "Je vois beaucoup de potentiel pour améliorer l'efficacité."
+            },
+            {
+              "questionId": "q2",
+              "value": "Enthousiasme",
+              "comment": "L'IA pourrait vraiment transformer notre approche éducative."
+            },
+            {
+              "questionId": "q3",
+              "value": "Confiant",
+              "comment": "Les systèmes d'IA peuvent améliorer la sécurité publique."
+            },
+            {
+              "questionId": "q4",
+              "value": "Confiant",
+              "comment": "Je pense que l'IA peut aider à améliorer les processus décisionnels."
+            },
+            {
+              "questionId": "q5",
+              "value": "Enthousiasme",
+              "comment": "Le Centre de gestion pourrait devenir un leader en innovation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user2",
+      "surveyId": "ia-fpt-71",
+      "position": "DSI",
+      "area": "Le Grand Chalon",
+      "responses": [
+        {
+          "createdAt": 1672530900,
+          "values": [
+            {
+              "questionId": "q1",
+              "value": "Prudence",
+              "comment": "Il y a beaucoup d'incertitudes quant aux impacts à long terme."
+            },
+            {
+              "questionId": "q2",
+              "value": "Inquiétude",
+              "comment": "L'IA dans les écoles pourrait être trop intrusive."
+            },
+            {
+              "questionId": "q3",
+              "value": "Inquiétude",
+              "comment": "Les systèmes de surveillance peuvent porter atteinte à la vie privée."
+            },
+            {
+              "questionId": "q4",
+              "value": "Inquiétude",
+              "comment": "L'IA pourrait biaiser les processus politiques."
+            },
+            {
+              "questionId": "q5",
+              "value": "Prudence",
+              "comment": "Centraliser les solutions d'IA peut être risqué."
+            }
+          ]
+        },
+        {
+          "createdAt": 1672533600,
+          "values": [
+            {
+              "questionId": "q1",
+              "value": "Confiant",
+              "comment": "L'IA peut être un outil puissant pour la modernisation."
+            },
+            {
+              "questionId": "q2",
+              "value": "Prudence",
+              "comment": "Il faut surveiller comment l'IA est appliquée dans l'éducation."
+            },
+            {
+              "questionId": "q3",
+              "value": "Prudence",
+              "comment": "L'équilibre entre sécurité et liberté est crucial."
+            },
+            {
+              "questionId": "q4",
+              "value": "Confiant",
+              "comment": "Avec une bonne gouvernance, l'IA peut aider."
+            },
+            {
+              "questionId": "q5",
+              "value": "Confiant",
+              "comment": "Une gestion centralisée de l'IA peut améliorer l'efficacité."
+            }
+          ]
+        },
+        {
+          "createdAt": 1672536300,
+          "values": [
+            {
+              "questionId": "q1",
+              "value": "Enthousiasme",
+              "comment": "L'IA peut transformer les services publics de manière positive."
+            },
+            {
+              "questionId": "q2",
+              "value": "Enthousiasme",
+              "comment": "Elle peut améliorer l'éducation de manière significative."
+            },
+            {
+              "questionId": "q3",
+              "value": "Confiant",
+              "comment": "Les systèmes d'IA peuvent renforcer la sécurité efficacement."
+            },
+            {
+              "questionId": "q4",
+              "value": "Enthousiasme",
+              "comment": "L'IA peut offrir une transparence et une efficacité accrues dans les processus politiques."
+            },
+            {
+              "questionId": "q5",
+              "value": "Enthousiasme",
+              "comment": "Le Centre de gestion peut devenir un modèle d'innovation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user3",
+      "surveyId": "ia-fpt-71",
+      "position": "DRH",
+      "area": "CUCM",
+      "responses": [
+        {
+          "createdAt": 1672530900,
+          "values": [
+            {
+              "questionId": "q1",
+              "value": "Inquiétude",
+              "comment": "Les implications de l'IA sur l'emploi sont préoccupantes."
+            },
+            {
+              "questionId": "q2",
+              "value": "Inquiétude",
+              "comment": "L'impact de l'IA sur la relation élève-enseignant est inquiétant."
+            },
+            {
+              "questionId": "q3",
+              "value": "Inquiétude",
+              "comment": "La surveillance IA peut devenir oppressante."
+            },
+            {
+              "questionId": "q4",
+              "value": "Prudence",
+              "comment": "Il faut des garde-fous pour l'usage de l'IA en politique."
+            },
+            {
+              "questionId": "q5",
+              "value": "Inquiétude",
+              "comment": "Le monopole de l'IA par le Centre de gestion est inquiétant."
+            }
+          ]
+        },
+        {
+          "createdAt": 1672533600,
+          "values": [
+            {
+              "questionId": "q1",
+              "value": "Prudence",
+              "comment": "L'IA peut offrir des avantages si elle est correctement régulée."
+            },
+            {
+              "questionId": "q2",
+              "value": "Confiant",
+              "comment": "Elle pourrait apporter des bénéfices à l'éducation."
+            },
+            {
+              "questionId": "q3",
+              "value": "Prudent",
+              "comment": "Les avantages en matière de sécurité sont à considérer."
+            },
+            {
+              "questionId": "q4",
+              "value": "Confiant",
+              "comment": "L'IA peut améliorer l'efficacité politique."
+            },
+            {
+              "questionId": "q5",
+              "value": "Confiant",
+              "comment": "Le Centre de gestion peut rationaliser les ressources grâce à l'IA."
+            }
+          ]
+        },
+        {
+          "createdAt": 1672536300,
+          "values": [
+            {
+              "questionId": "q1",
+              "value": "Enthousiasme",
+              "comment": "Je suis convaincu que l'IA peut apporter de grandes améliorations."
+            },
+            {
+              "questionId": "q2",
+              "value": "Enthousiasme",
+              "comment": "L'éducation peut bénéficier énormément des technologies d'IA."
+            },
+            {
+              "questionId": "q3",
+              "value": "Enthousiasme",
+              "comment": "La sécurité publique peut être grandement renforcée."
+            },
+            {
+              "questionId": "q4",
+              "value": "Enthousiasme",
+              "comment": "L'IA peut offrir une nouvelle perspective sur la gestion publique."
+            },
+            {
+              "questionId": "q5",
+              "value": "Enthousiasme",
+              "comment": "Le Centre de gestion peut devenir une référence en matière d'innovation."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
