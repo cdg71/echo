@@ -5,21 +5,16 @@ import {
   createSurveyComponent,
   type Props as CreateSurveyComponentProps,
 } from "@src/services/admin/components/create";
+import { validatePassword } from "@src/utils/credentialManagement";
 import { getStaticType } from "@src/utils/getStaticType";
-import { validateSecurityCode } from "@src/utils/securityCodeManagement";
 import { transpileForBrowsers } from "@src/utils/transpileForBrowsers";
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 import { gotoAdminComponent } from "../homepage/components/gotoAdmin";
 import { homepageLayoutComponent } from "../homepage/components/layout";
 import { surveyAdminComponent } from "./components/admin";
 import { createSurvey } from "./dao/create";
-import { authSurveyModel } from "./dto/auth";
+import { AuthCookie, AuthJwtSchema, authSurveyModel } from "./dto/auth";
 import { createSurveyModel } from "./dto/create";
-
-const AuthJwtSchema = t.Cookie({
-  id: t.String(),
-});
-const AuthCookie = t.Cookie({ auth: t.String() });
 
 export const adminService = new Elysia()
   .use(
@@ -41,21 +36,28 @@ export const adminService = new Elysia()
 
   .get("/static/scripts/general.js", async ({ set }) => {
     set.headers["Content-Type"] = "text/javascript; charset=utf8";
-    return await transpileForBrowsers(`${__dirname}/scripts/general.ts`);
+    return await transpileForBrowsers(`${__dirname}/scripts/admin.ts`);
   })
 
   .get("/new", async () => await createSurveyComponent({}))
 
   .post(
-    "/create-survey",
-    async ({ body, set }) => {
-      const survey = await createSurvey(body);
+    "/admin/create",
+    async ({ body, cookie: { auth }, authJwt, set }) => {
+      const { password, survey } = await createSurvey(body);
       const { id } = getStaticType(survey);
-      set.headers["HX-Replace-Url"] = `/admin/${id}`;
-      return await surveyAdminComponent(survey);
+      auth.set({
+        value: await authJwt.sign({ id }),
+        httpOnly: true,
+        maxAge: 86400, // 1 day
+      });
+      set.headers["HX-Push-Url"] = `/admin/${survey["id"]}`;
+      set.headers["HX-Replace-Url"] = `/admin/${survey["id"]}`;
+      return await surveyAdminComponent({ password, survey });
     },
     {
       body: "createSurveyDTO",
+      cookie: AuthCookie,
       async error({ code, set, error, body }) {
         set.status = 200;
         set.headers["HX-Push-Url"] = "false";
@@ -72,12 +74,12 @@ export const adminService = new Elysia()
   .post(
     "/admin/login",
     async ({ body, cookie: { auth }, authJwt, set }) => {
-      const { id, securityCode: code } = body;
-      // Validate survey id and security code from the form
+      const { id, password } = body;
+      // Validate survey id and password from the form
       const survey = getSurveyById(id);
-      const { securityCode: hash } = getStaticType(survey);
-      const isValidCredentials = await validateSecurityCode({
-        code,
+      const { hash } = getStaticType(survey);
+      const isValidCredentials = await validatePassword({
+        password,
         hash,
       });
       if (isValidCredentials) {
@@ -89,7 +91,7 @@ export const adminService = new Elysia()
         });
         set.headers["HX-Push-Url"] = `/admin/${id}`;
         const survey = getSurveyById(id);
-        return await surveyAdminComponent({ ...survey, securityCode: "" });
+        return await surveyAdminComponent({ survey });
       }
       throw new Error("Invalid credentials");
     },
@@ -134,7 +136,7 @@ export const adminService = new Elysia()
         //   // If authorized render surveyAdminComponent + HX-Replace-Url header (/admin/:id)
         //   // If not authorized, throw an error : redirect to / + HX-Replace-Url header (/)
         const survey = getSurveyById(params.id);
-        return await surveyAdminComponent({ ...survey, securityCode: "" });
+        return await surveyAdminComponent({ survey });
       } else {
         auth.remove();
         return homepageLayoutComponent({

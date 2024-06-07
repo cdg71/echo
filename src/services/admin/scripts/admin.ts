@@ -1,9 +1,7 @@
 (function () {
   // Copy security code
   const copyBtn = document.getElementById("copyBtn");
-  const securityCodeContainer = document.getElementById(
-    "securityCodeContainer"
-  );
+  const securityCodeContainer = document.getElementById("passwordContainer");
   if (copyBtn && securityCodeContainer) {
     copyBtn.addEventListener("click", () => {
       copyBtn.classList.toggle("swap-active");

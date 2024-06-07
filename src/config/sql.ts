@@ -64,12 +64,10 @@ CREATE TABLE Result (
 export const getSurveyTestDatasetStatement = async () => {
   const hash = await password.hash("test");
   return `
-    INSERT INTO Survey (id, name, description, context, hash, createdAt)
+    INSERT INTO Survey (id, name, hash, createdAt)
     VALUES (
         'test',
         'Sondage de test',
-        'Description du sondage',
-        'Contexte du sondage',
         '${hash}',
         '1717165982427'
     );

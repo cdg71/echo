@@ -51,7 +51,7 @@ export const createSurveyComponent = async (props: Props) => {
       </div>
       <form
         class="space-y-4"
-        hx-post="/create-survey"
+        hx-post="/admin/create"
         hx-boost="true"
         hx-target="body"
         hx-push-url="true"
@@ -81,16 +81,6 @@ export const createSurveyComponent = async (props: Props) => {
               "-"
             </span>
           </div>
-        </label>
-        <label class="form-control">
-          <textarea
-            id="description"
-            name="description"
-            class={`textarea textarea-bordered h-36 ${fieldHasError("name")}`}
-            placeholder="Description du sondage"
-          >
-            {props.formData?.description}
-          </textarea>
         </label>
         <div class=" space-x-2">
           <button type="submit" class="btn btn-primary">

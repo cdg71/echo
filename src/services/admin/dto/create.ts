@@ -3,11 +3,7 @@ import { Elysia, getSchemaValidator, t } from "elysia";
 
 export type CreateSurveyDTO = typeof createSurveySchema;
 
-export const createSurveySchema = t.Pick(SurveySchema, [
-  "id",
-  "name",
-  "description",
-]);
+export const createSurveySchema = t.Pick(SurveySchema, ["id", "name"]);
 
 export const createSurveyModel = new Elysia().model({
   createSurveyDTO: createSurveySchema,

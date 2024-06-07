@@ -16,8 +16,8 @@ export const gotoAdminComponent = (props?: Props) => (
     </div>
     <div class="form-control">
       <input
-        id="securityCode"
-        name="securityCode"
+        id="password"
+        name="password"
         type="password"
         placeholder="Code d'administration"
         class="input input-bordered"

@@ -1,9 +1,16 @@
-import { SurveySchema } from "@src/entities/survey/schema";
 import { Elysia, getSchemaValidator, t } from "elysia";
 
 export type AuthSurveyDTO = typeof authSurveySchema;
 
-export const authSurveySchema = t.Pick(SurveySchema, ["id", "securityCode"]);
+export const authSurveySchema = t.Object({
+  id: t.String(),
+  password: t.String(),
+});
+
+export const AuthJwtSchema = t.Cookie({
+  id: t.String(),
+});
+export const AuthCookie = t.Cookie({ auth: t.String() });
 
 export const authSurveyModel = new Elysia().model({
   authSurveyDTO: authSurveySchema,

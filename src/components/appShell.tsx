@@ -47,7 +47,6 @@ export const appShell = async (props?: Props) => {
       ? { ...defaultProps.navbar, ...props.navbar }
       : defaultProps.navbar,
   };
-  console.log({ content, navbar });
   const shell = (
     <div class="min-h-screen flex justify-center bg-base-100">
       <div class="w-11/12 lg:w-10/12 xl:w-8/12 bg-base-100">

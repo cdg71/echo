@@ -1,10 +1,14 @@
 import { appShell } from "@src/components/appShell";
 import type { Survey } from "@src/entities/survey/schema";
-import { getStaticType } from "@src/utils/getStaticType";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 
-export const surveyAdminComponent = async (props: Survey) => {
-  const { securityCode, ...survey } = getStaticType(props);
+interface Props {
+  survey: Survey;
+  password?: string;
+}
+
+export const surveyAdminComponent = async (props: Props) => {
+  const { password, survey } = props;
   const clipboardIcon = loadHeroIcons({
     iconName: "clipboard",
     family: "Outline",
@@ -19,9 +23,9 @@ export const surveyAdminComponent = async (props: Survey) => {
     family: "Outline",
     className: "size-5 float-left",
   });
-  const getDialogComponent = (securityCode: string) =>
-    securityCode ? (
-      <dialog id="securityCodeModal" class="modal modal-open">
+  const getDialogComponent = (password: string) =>
+    password ? (
+      <dialog id="passwordModal" class="modal modal-open">
         <div class="modal-box prose">
           <h3>{clipboardIcon} Copiez le code d'administration</h3>
           <p>
@@ -34,8 +38,8 @@ export const surveyAdminComponent = async (props: Survey) => {
               <div class="swap-off">{clipboardDocumentIcon}</div>
             </label>
             <div>
-              <div id="securityCodeContainer" class="font-mono w-full">
-                {securityCode}
+              <div id="passwordContainer" class="font-mono w-full">
+                {password}
               </div>
             </div>
           </div>
@@ -45,7 +49,7 @@ export const surveyAdminComponent = async (props: Survey) => {
               hx-get="/empty"
               hx-swap="delete"
               hx-push-url="false"
-              hx-target="#securityCodeModal"
+              hx-target="#passwordModal"
             >
               J'ai compris
             </button>
@@ -75,7 +79,7 @@ export const surveyAdminComponent = async (props: Survey) => {
           Logout
         </button>
       </main>
-      {getDialogComponent(securityCode)}
+      {password ? getDialogComponent(password) : <></>}
     </div>
   );
   return await appShell({
