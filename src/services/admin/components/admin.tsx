@@ -9,6 +9,11 @@ interface Props {
 
 export const surveyAdminComponent = async (props: Props) => {
   const { password, survey } = props;
+  const powerIcon = loadHeroIcons({
+    iconName: "power",
+    family: "Outline",
+    className: "size-6",
+  });
   const clipboardIcon = loadHeroIcons({
     iconName: "clipboard",
     family: "Outline",
@@ -70,19 +75,28 @@ export const surveyAdminComponent = async (props: Props) => {
         <pre>
           <code>{JSON.stringify(survey, null, 2)}</code>
         </pre>
-        <button
-          class="btn"
-          hx-get="/admin/logout"
-          hx-boost="true"
-          hx-target="body"
-        >
-          Logout
-        </button>
       </main>
       {password ? getDialogComponent(password) : <></>}
     </div>
   );
+  const logoutNavButton = (
+    <div class="btn btn-ghost btn-circle">
+      <a
+        class="btn btn-ghost btn-circle primary-content"
+        hx-boost="true"
+        hx-swap="outerHTML"
+        hx-target="body"
+        hx-push-url="true"
+        href="/"
+      >
+        {powerIcon}
+      </a>
+    </div>
+  );
   return await appShell({
     content,
+    navbar: {
+      end: logoutNavButton,
+    },
   });
 };
