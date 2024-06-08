@@ -1,11 +1,14 @@
 import jwt from "@elysiajs/jwt";
 import { jwtSecret } from "@src/config/jwtSecret";
-import { getSurveyById } from "@src/entities/survey/dao";
+import { getHashById, getSurveyById } from "@src/entities/survey/dao";
 import {
   createSurveyComponent,
   type Props as CreateSurveyComponentProps,
 } from "@src/services/admin/components/create";
-import { validatePassword } from "@src/utils/credentialManagement";
+import {
+  createCredential,
+  validatePassword,
+} from "@src/utils/credentialManagement";
 import { getStaticType } from "@src/utils/getStaticType";
 import { transpileForBrowsers } from "@src/utils/transpileForBrowsers";
 import { Elysia } from "elysia";
@@ -44,7 +47,11 @@ export const adminService = new Elysia()
   .post(
     "/admin/create",
     async ({ body, cookie: { auth }, authJwt, set }) => {
-      const { password, survey } = await createSurvey(body);
+      const { password, hash } = await createCredential();
+      const survey = createSurvey({
+        createSurveyDTO: body,
+        hash,
+      });
       const { id } = getStaticType(survey);
       auth.set({
         value: await authJwt.sign({ id }),
@@ -76,8 +83,7 @@ export const adminService = new Elysia()
     async ({ body, cookie: { auth }, authJwt, set }) => {
       const { id, password } = body;
       // Validate survey id and password from the form
-      const survey = getSurveyById(id);
-      const { hash } = getStaticType(survey);
+      const hash = getHashById(id);
       const isValidCredentials = await validatePassword({
         password,
         hash,
