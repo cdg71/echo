@@ -1,14 +1,24 @@
 import { appShell } from "@src/components/appShell";
 import type { Survey } from "@src/entities/survey/schema";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
+import type { ValidationError } from "elysia";
+import { editFormComponent } from "./editForm";
 
 interface Props {
   survey: Survey;
+  formData?: {
+    id?: string;
+    name?: string;
+    settings?: string;
+  };
   password?: string;
+  errorCode?: string;
+  validationErrors?: Readonly<ValidationError>;
 }
 
 export const surveyAdminComponent = async (props: Props) => {
   const { password, survey } = props;
+
   const powerIcon = loadHeroIcons({
     iconName: "power",
     family: "Outline",
@@ -28,6 +38,7 @@ export const surveyAdminComponent = async (props: Props) => {
     family: "Outline",
     className: "size-5 float-left",
   });
+
   const logoutNavButton = (
     <div class="btn btn-ghost btn-circle">
       <a
@@ -36,12 +47,13 @@ export const surveyAdminComponent = async (props: Props) => {
         hx-swap="outerHTML"
         hx-target="body"
         hx-push-url="true"
-        href="/"
+        href="/admin/logout"
       >
         {powerIcon}
       </a>
     </div>
   );
+
   const getDialogComponent = (password: string) =>
     password ? (
       <dialog id="passwordModal" class="modal modal-open">
@@ -78,9 +90,11 @@ export const surveyAdminComponent = async (props: Props) => {
     ) : (
       <></>
     );
-  const form = <></>;
+
+  const form = editFormComponent(props);
+
   const content = (
-    <div hx-history="false">
+    <div class="w-full max-w-lg space-y-4">
       <script
         src="/static/scripts/general.js"
         type="text/javascript"
@@ -95,6 +109,7 @@ export const surveyAdminComponent = async (props: Props) => {
       {password ? getDialogComponent(password) : <></>}
     </div>
   );
+
   return await appShell({
     content,
     navbar: {

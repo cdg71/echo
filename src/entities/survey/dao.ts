@@ -8,7 +8,7 @@ export const getSurveyById = (id: string) => {
   const selectQuery = db.prepare("SELECT * FROM Survey WHERE id = $id");
   const res = selectQuery.get({ $id: id }) as Survey;
   selectQuery.finalize();
-  delete res["hash"];
+  if (res) delete res["hash"];
   return res;
 };
 // Get a survey by id

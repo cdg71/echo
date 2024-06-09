@@ -1,10 +1,7 @@
 import jwt from "@elysiajs/jwt";
 import { jwtSecret } from "@src/config/jwtSecret";
 import { getHashById, getSurveyById } from "@src/entities/survey/dao";
-import {
-  createSurveyComponent,
-  type Props as CreateSurveyComponentProps,
-} from "@src/services/admin/components/create";
+import { type Props as CreateSurveyComponentProps } from "@src/services/admin/components/new";
 import {
   createCredential,
   validatePassword,
@@ -15,6 +12,7 @@ import { Elysia } from "elysia";
 import { gotoAdminComponent } from "../homepage/components/gotoAdmin";
 import { homepageLayoutComponent } from "../homepage/components/layout";
 import { surveyAdminComponent } from "./components/admin";
+import { newSurveyComponent } from "./components/new";
 import { createSurvey } from "./dao/create";
 import { AuthCookie, AuthJwtSchema, authSurveyModel } from "./dto/auth";
 import { createSurveyModel } from "./dto/create";
@@ -42,7 +40,7 @@ export const adminService = new Elysia()
     return await transpileForBrowsers(`${__dirname}/scripts/admin.ts`);
   })
 
-  .get("/new", async () => await createSurveyComponent({}))
+  .get("/new", async () => await newSurveyComponent({}))
 
   .post(
     "/admin/create",
@@ -73,7 +71,7 @@ export const adminService = new Elysia()
           errorCode: code,
         };
         if (code === "VALIDATION") props.validationErrors = error;
-        return await createSurveyComponent(props);
+        return await newSurveyComponent(props);
       },
     }
   )

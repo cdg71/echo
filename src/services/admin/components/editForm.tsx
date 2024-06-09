@@ -1,4 +1,3 @@
-import { appShell } from "@src/components/appShell";
 import { fieldHasError } from "@src/utils/fieldHasErrors";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 import type { ValidationError } from "elysia";
@@ -7,30 +6,29 @@ export interface Props {
   formData?: {
     id?: string;
     name?: string;
-    description?: string;
   };
   errorCode?: string;
   validationErrors?: Readonly<ValidationError>;
 }
 
-export const createSurveyComponent = async (props: Props) => {
+export const editFormComponent = async (props: Props) => {
   const { formData, errorCode, validationErrors } = props;
   const isError = !!errorCode;
 
   const errorIcon = await loadHeroIcons({
     iconName: "exclamation-triangle",
   });
-
   const dismissIcon = await loadHeroIcons({
     iconName: "x-mark",
     className: "size-6",
   });
-  const content = (
-    <div class="w-full max-w-lg space-y-4">
+
+  return (
+    <div hx-history="false">
       <div
         id="dismiss"
         role="alert"
-        class={`relative alert alert-error ${!isError ? "hidden" : ""}`}
+        class={`relative alert alert-error mb-4 ${!isError ? "hidden" : ""}`}
       >
         <button
           class="absolute top-0 right-0 p-2 text-gray-600 hover:text-gray-800"
@@ -55,21 +53,10 @@ export const createSurveyComponent = async (props: Props) => {
       >
         <label class="form-control">
           <input
-            id="name"
-            name="name"
-            type="text"
-            placeholder="Nom du sondage *"
-            class={`input input-bordered ${fieldHasError({ fieldName: "name", validationErrors })}`}
-            value={formData?.name}
-            required
-          />
-        </label>
-        <label class="form-control">
-          <input
             id="id"
             name="id"
             type="text"
-            placeholder="Code du sondage *"
+            placeholder="code-du-sondage *"
             class={`input input-bordered ${fieldHasError({ fieldName: "id", validationErrors })}`}
             value={formData?.id}
             required
@@ -80,6 +67,23 @@ export const createSurveyComponent = async (props: Props) => {
               "-"
             </span>
           </div>
+        </label>
+        <label class="form-control">
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Nom du sondage *"
+            class={`input input-bordered ${fieldHasError({ fieldName: "name", validationErrors })}`}
+            value={formData?.name}
+            required
+          />
+        </label>
+        <label class="form-control">
+          <textarea
+            class="textarea textarea-bordered h-48"
+            placeholder={`{\n  "description": "...",\n  "context": "...",\n  "positions": ["..."],\n  "areas": ["..."]\n}`}
+          ></textarea>
         </label>
         <div class=" space-x-2">
           <button type="submit" class="btn btn-primary">
@@ -98,8 +102,4 @@ export const createSurveyComponent = async (props: Props) => {
       </form>
     </div>
   );
-  return await appShell({
-    content,
-    navbar: { center: <h1 class="text-2xl font-bold">Nouveau sondage</h1> },
-  });
 };

@@ -9,9 +9,14 @@
   - [-] /admin: gérer un sondage
     - [x] login
     - [x] logout
-    - [ ] Snapshots
-    - [ ] JSON Settings
+    - [ ] JSON Settings to database rows
+    - [ ] Show settings
+    - [ ] Update settings
+    - [ ] Create snapshot
+    - [ ] Show snapshots
+    - [ ] Delete snapshot
     - [ ] Delete survey
+    - [ ] open / close quiz
 - [x] feat(backend): enable auth jwt
 - [x] feat(backend): appshell
 - [x] feat(backend): heroicons loader
@@ -28,10 +33,6 @@
   - [ ] Les types Typebox composants devraient être utilisés systématiquement lorsque c'est possible. la fonction getStaticType devrait être réservées aux functions d'origine tierce dont le type ne peut pas être personnalisé, par exemple dans les DAOs juste avant l'accès en base
 
 - Frontend
-
-  - [ ] /admin/:id
-
-    - [ ] Form to handle settings
 
   - [ ] /:survey
     - [ ] component : homepage
