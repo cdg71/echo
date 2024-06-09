@@ -16,7 +16,7 @@ CREATE TABLE Survey (
 CREATE TABLE Snapshot (
   surveyId TEXT,
   createdAt INTEGER NOT NULL,
-  FOREIGN KEY (surveyId) REFERENCES Survey(id)
+  FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
 );
 
 -- Table for User
@@ -25,7 +25,7 @@ CREATE TABLE User (
   surveyId TEXT,
   position TEXT NOT NULL,
   area TEXT NOT NULL,
-  FOREIGN KEY (surveyId) REFERENCES Survey(id)
+  FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
 );
 
 -- Table for Question
@@ -33,7 +33,7 @@ CREATE TABLE Question (
   id TEXT PRIMARY KEY,
   surveyId TEXT,
   label TEXT NOT NULL,
-  FOREIGN KEY (surveyId) REFERENCES Survey(id)
+  FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
 );
 
 -- Table for Response
@@ -44,8 +44,8 @@ CREATE TABLE Response (
   value TEXT NOT NULL,
   comment TEXT,
   createdAt INTEGER NOT NULL,
-  FOREIGN KEY (questionId) REFERENCES Question(id),
-  FOREIGN KEY (userId) REFERENCES User(id)
+  FOREIGN KEY (questionId) REFERENCES Question(id) ON DELETE CASCADE,
+  FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
 );
 
 -- Table for Result
@@ -56,8 +56,8 @@ CREATE TABLE Result (
   data TEXT NOT NULL,
   createdAt INTEGER NOT NULL,
   completedAt INTEGER NOT NULL,
-  FOREIGN KEY (surveyId) REFERENCES Survey(id),
-  FOREIGN KEY (snapshotId) REFERENCES Snapshot(surveyId)
+  FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE,
+  FOREIGN KEY (snapshotId) REFERENCES Snapshot(surveyId) ON DELETE CASCADE
 );
 `;
 
