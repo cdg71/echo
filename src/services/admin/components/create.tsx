@@ -1,4 +1,5 @@
 import { appShell } from "@src/components/appShell";
+import { fieldHasError } from "@src/utils/fieldHasErrors";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 import type { ValidationError } from "elysia";
 
@@ -13,13 +14,9 @@ export interface Props {
 }
 
 export const createSurveyComponent = async (props: Props) => {
-  const isError = !!props.errorCode;
-  const fieldHasError = (fieldName: string) =>
-    props.validationErrors?.all.find(
-      (x: { path?: string }) => x.path === `/${fieldName}`
-    ) ?? false
-      ? "input-error"
-      : "";
+  const { formData, errorCode, validationErrors } = props;
+  const isError = !!errorCode;
+
   const errorIcon = await loadHeroIcons({
     iconName: "exclamation-triangle",
   });
@@ -46,7 +43,7 @@ export const createSurveyComponent = async (props: Props) => {
         <span class="prose">
           <strong>{errorIcon} Échec de la création du sondage.</strong>
           <br />
-          <em>Astuce : Assurez-vous que le code du sondage soit unique.</em>
+          <em>Astuce : le code du sondage doit être unique.</em>
         </span>
       </div>
       <form
@@ -62,8 +59,9 @@ export const createSurveyComponent = async (props: Props) => {
             name="name"
             type="text"
             placeholder="Nom du sondage *"
-            class={`input input-bordered ${fieldHasError("name")}`}
-            value={props.formData?.name}
+            class={`input input-bordered ${fieldHasError({ fieldName: "name", validationErrors })}`}
+            value={formData?.name}
+            required
           />
         </label>
         <label class="form-control">
@@ -72,8 +70,9 @@ export const createSurveyComponent = async (props: Props) => {
             name="id"
             type="text"
             placeholder="Code du sondage *"
-            class={`input input-bordered ${fieldHasError("id")}`}
-            value={props.formData?.id}
+            class={`input input-bordered ${fieldHasError({ fieldName: "id", validationErrors })}`}
+            value={formData?.id}
+            required
           />
           <div class="label pt-0">
             <span class="label-text-alt">

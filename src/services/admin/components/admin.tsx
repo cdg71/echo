@@ -28,6 +28,20 @@ export const surveyAdminComponent = async (props: Props) => {
     family: "Outline",
     className: "size-5 float-left",
   });
+  const logoutNavButton = (
+    <div class="btn btn-ghost btn-circle">
+      <a
+        class="btn btn-ghost btn-circle primary-content"
+        hx-boost="true"
+        hx-swap="outerHTML"
+        hx-target="body"
+        hx-push-url="true"
+        href="/"
+      >
+        {powerIcon}
+      </a>
+    </div>
+  );
   const getDialogComponent = (password: string) =>
     password ? (
       <dialog id="passwordModal" class="modal modal-open">
@@ -64,6 +78,7 @@ export const surveyAdminComponent = async (props: Props) => {
     ) : (
       <></>
     );
+  const form = <></>;
   const content = (
     <div hx-history="false">
       <script
@@ -72,25 +87,12 @@ export const surveyAdminComponent = async (props: Props) => {
         defer
       ></script>
       <main>
+        {form}
         <pre>
           <code>{JSON.stringify(survey, null, 2)}</code>
         </pre>
       </main>
       {password ? getDialogComponent(password) : <></>}
-    </div>
-  );
-  const logoutNavButton = (
-    <div class="btn btn-ghost btn-circle">
-      <a
-        class="btn btn-ghost btn-circle primary-content"
-        hx-boost="true"
-        hx-swap="outerHTML"
-        hx-target="body"
-        hx-push-url="true"
-        href="/"
-      >
-        {powerIcon}
-      </a>
     </div>
   );
   return await appShell({
