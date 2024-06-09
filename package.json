@@ -19,6 +19,7 @@
     "@elysiajs/static": "^1.0.3",
     "@elysiajs/stream": "^1.0.2",
     "@gtramontina.com/elysia-tailwind": "github:jpbourgeon/elysia-tailwind#patch-1",
+    "@sinclair/typebox": "^0.32.31",
     "elysia": "^1.0.22",
     "elysia-helmet": "^1.0.2",
     "elysia-htmx": "^1.0.9",
@@ -53,6 +54,7 @@
     "start": "bun run build && bun run serve",
     "lint": "eslint .",
     "typecheck": "tsc --noemit",
-    "test": "bun test"
+    "test": "bun test",
+    "test:static": "bun lint && bun typecheck"
   }
 }

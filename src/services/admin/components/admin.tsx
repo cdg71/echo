@@ -1,23 +1,12 @@
 import { appShell } from "@src/components/appShell";
-import type { Survey } from "@src/entities/survey/schema";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
-import type { ValidationError } from "elysia";
+import type { EditFormValidationError, EditSurvey } from "../dto/edit";
 import { editFormComponent } from "./editForm";
 
-interface Props {
-  survey: Survey;
-  formData?: {
-    id?: string;
-    name?: string;
-    settings?: string;
-  };
-  password?: string;
-  errorCode?: string;
-  validationErrors?: Readonly<ValidationError>;
-}
+type Props = EditSurvey & EditFormValidationError & { password?: string };
 
-export const surveyAdminComponent = async (props: Props) => {
-  const { password, survey } = props;
+export const adminComponent = async (props: Props) => {
+  const { password } = props;
 
   const powerIcon = loadHeroIcons({
     iconName: "power",
@@ -100,12 +89,7 @@ export const surveyAdminComponent = async (props: Props) => {
         type="text/javascript"
         defer
       ></script>
-      <main>
-        {form}
-        <pre>
-          <code>{JSON.stringify(survey, null, 2)}</code>
-        </pre>
-      </main>
+      <main>{form}</main>
       {password ? getDialogComponent(password) : <></>}
     </div>
   );

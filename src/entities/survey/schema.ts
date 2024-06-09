@@ -1,15 +1,14 @@
+import { Type, type Static } from "@sinclair/typebox";
 import { notEmptyString, surveyCodeString } from "@src/utils/schemaPatterns";
-import { t } from "elysia";
 
-export type Survey = typeof SurveySchema;
-
-export const SurveySchema = t.Object({
-  id: t.String({ pattern: surveyCodeString, default: "" }),
-  name: t.String({ pattern: notEmptyString, default: "" }),
-  description: t.String(),
-  context: t.String(),
-  positions: t.String(),
-  areas: t.String(),
-  hash: t.String(),
-  createdAt: t.Number(),
+export const Survey = Type.Object({
+  id: Type.String({ pattern: surveyCodeString, default: "" }),
+  name: Type.String({ pattern: notEmptyString, default: "" }),
+  description: Type.Optional(Type.String()),
+  context: Type.Optional(Type.String()),
+  positions: Type.Optional(Type.String()),
+  areas: Type.Optional(Type.String()),
+  hash: Type.Optional(Type.String()),
+  createdAt: Type.Number(),
 });
+export type Survey = Static<typeof Survey>;

@@ -1,18 +1,9 @@
 import { appShell } from "@src/components/appShell";
-import type { ValidationError } from "elysia";
+import type { EditFormProps } from "../dto/edit";
 import { editFormComponent } from "./editForm";
 
-export interface Props {
-  formData?: {
-    id?: string;
-    name?: string;
-  };
-  errorCode?: string;
-  validationErrors?: Readonly<ValidationError>;
-}
-
-export const newSurveyComponent = async (props: Props) => {
-  const editForm = editFormComponent(props);
+export const newSurveyComponent = async (props: EditFormProps) => {
+  const editForm = await editFormComponent(props);
 
   const content = <div class="w-full max-w-lg space-y-4">{editForm}</div>;
 

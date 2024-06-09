@@ -1,27 +1,20 @@
-import { SurveySchema } from "@src/entities/survey/schema";
-import { Elysia, getSchemaValidator, t } from "elysia";
+import { Type, type Static } from "@sinclair/typebox";
+import { Survey } from "@src/entities/survey/schema";
+import { Elysia, t } from "elysia";
 
-export type AuthSurveyDTO = typeof authSurveySchema;
-
-export type HashDTO = typeof hashDTO;
-
-export const authSurveySchema = t.Object({
-  id: t.String(),
-  password: t.String(),
+export const Auth = Type.Object({
+  id: Type.String(),
+  password: Type.String(),
+});
+export type Auth = Static<typeof Auth>;
+export const AuthModel = new Elysia().model({
+  Auth,
 });
 
-export const AuthJwtSchema = t.Cookie({
-  id: t.String(),
+export const AuthJwt = t.Cookie({
+  id: Type.String(),
 });
-export const AuthCookie = t.Cookie({ auth: t.String() });
+export const AuthCookie = t.Cookie({ auth: Type.String() });
 
-export const authSurveyModel = new Elysia().model({
-  authSurveyDTO: authSurveySchema,
-});
-
-export const isAuthSurveyDTO = (obj: unknown): obj is AuthSurveyDTO => {
-  const validator = getSchemaValidator(authSurveySchema);
-  return validator.Check(obj);
-};
-
-export const hashDTO = t.Pick(SurveySchema, ["hash"]);
+export const Hash = Type.Pick(Survey, ["hash"]);
+export type Hash = Static<typeof Hash>;

@@ -1,18 +1,10 @@
 import { fieldHasError } from "@src/utils/fieldHasErrors";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
-import type { ValidationError } from "elysia";
+import type { EditFormProps } from "../dto/edit";
 
-export interface Props {
-  formData?: {
-    id?: string;
-    name?: string;
-  };
-  errorCode?: string;
-  validationErrors?: Readonly<ValidationError>;
-}
+export const editFormComponent = async (props: EditFormProps) => {
+  const { id, name, settings, errorCode, validationErrors } = props;
 
-export const editFormComponent = async (props: Props) => {
-  const { formData, errorCode, validationErrors } = props;
   const isError = !!errorCode;
 
   const errorIcon = await loadHeroIcons({
@@ -58,7 +50,7 @@ export const editFormComponent = async (props: Props) => {
             type="text"
             placeholder="code-du-sondage *"
             class={`input input-bordered ${fieldHasError({ fieldName: "id", validationErrors })}`}
-            value={formData?.id}
+            value={id}
             required
           />
           <div class="label pt-0">
@@ -75,15 +67,19 @@ export const editFormComponent = async (props: Props) => {
             type="text"
             placeholder="Nom du sondage *"
             class={`input input-bordered ${fieldHasError({ fieldName: "name", validationErrors })}`}
-            value={formData?.name}
+            value={name}
             required
           />
         </label>
         <label class="form-control">
           <textarea
-            class="textarea textarea-bordered h-48"
+            id="settings"
+            name="settings"
             placeholder={`{\n  "description": "...",\n  "context": "...",\n  "positions": ["..."],\n  "areas": ["..."]\n}`}
-          ></textarea>
+            class="textarea textarea-bordered h-48"
+          >
+            {settings}
+          </textarea>
         </label>
         <div class=" space-x-2">
           <button type="submit" class="btn btn-primary">
