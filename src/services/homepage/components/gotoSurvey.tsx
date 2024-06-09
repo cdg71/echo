@@ -3,7 +3,7 @@ interface Props {
 }
 
 export const gotoSurveyComponent = (props?: Props) => (
-  <form id="gotoForm" class="card-body">
+  <form id="gotoForm" class="card-body" hx-history="false">
     <div class="form-control">
       <input
         type="text"
