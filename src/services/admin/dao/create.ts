@@ -1,29 +1,36 @@
 import { db } from "@src/config/database";
 import { getSurveyById } from "@src/entities/survey/dao";
-import type { Survey } from "@src/entities/survey/schema";
+import type { EditSurvey } from "../dto/edit";
 
 // Create a new survey
 interface CreateSurveyProps {
-  data: Survey;
+  data: EditSurvey;
   hash: string;
 }
 export const createSurvey = (props: CreateSurveyProps) => {
   try {
     const {
-      data: { id, name, settings, createdAt },
+      data: { id, name, description, context, areas, positions, questions },
+      hash,
     } = props;
     const query = db.prepare(
-      "INSERT INTO Survey (id, name, settings, hash, createdAt) VALUES ($id, $name, $settings, $hash, $createdAt);"
+      `INSERT INTO Survey  (id,  name,  description,  context,  areas,  positions,   hash, questions,  createdAt)
+       VALUES              ($id, $name, $description, $context, $areas, $positions, $hash, $questions, $createdAt);`
     );
     query.run({
       $id: id,
       $name: name,
-      $settings: settings,
-      $hash: props.hash,
-      $createdAt: createdAt,
+      $description: description,
+      $context: context,
+      $areas: areas,
+      $positions: positions,
+      $questions: questions,
+      $hash: hash,
+      $createdAt: Date.now(),
     });
     query.finalize();
     const survey = getSurveyById(id);
+    // the hash should never leave the database unattended
     delete survey.hash;
     return survey;
   } catch (error) {

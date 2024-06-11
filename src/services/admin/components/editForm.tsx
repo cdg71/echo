@@ -3,7 +3,17 @@ import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 import type { EditFormProps } from "../dto/edit";
 
 export const editFormComponent = async (props: EditFormProps) => {
-  const { id, name, settings, errorCode, validationErrors } = props;
+  const {
+    id,
+    name,
+    description,
+    context,
+    positions,
+    areas,
+    questions,
+    errorCode,
+    validationErrors,
+  } = props;
   const isError = !!errorCode;
 
   const errorIcon = await loadHeroIcons({
@@ -40,15 +50,14 @@ export const editFormComponent = async (props: EditFormProps) => {
         hx-post="/admin/create"
         hx-boost="true"
         hx-target="body"
-        hx-push-url="true"
       >
         <label class="form-control">
+          <span class="label-text">Code du sondage</span>
           <input
             id="id"
             name="id"
             type="text"
-            placeholder="code-du-sondage *"
-            class={`input input-bordered ${fieldHasError({ fieldName: "id", validationErrors })}`}
+            class={`input ${fieldHasError({ fieldName: "id", validationErrors })}`}
             value={id}
             required
           />
@@ -60,25 +69,76 @@ export const editFormComponent = async (props: EditFormProps) => {
           </div>
         </label>
         <label class="form-control">
+          <span class="label-text">Nom du sondage</span>
           <input
             id="name"
             name="name"
             type="text"
-            placeholder="Nom du sondage *"
-            class={`input input-bordered ${fieldHasError({ fieldName: "name", validationErrors })}`}
+            class={`input ${fieldHasError({ fieldName: "name", validationErrors })}`}
             value={name}
             required
           />
         </label>
         <label class="form-control">
+          <span class="label-text">Description</span>
           <textarea
-            id="settings"
-            name="settings"
-            placeholder={`{\n  "description": "...",\n  "context": "...",\n  "positions": ["..."],\n  "areas": ["..."]\n}`}
-            class="textarea textarea-bordered h-48"
+            id="description"
+            name="description"
+            class={`textarea ${fieldHasError({ fieldName: "description", validationErrors, type: "textarea" })}`}
           >
-            {settings}
+            {description}
           </textarea>
+        </label>
+        <label class="form-control">
+          <span class="label-text">Contexte</span>
+          <textarea
+            id="context"
+            name="context"
+            class={`textarea ${fieldHasError({ fieldName: "context", validationErrors, type: "textarea" })}`}
+          >
+            {context}
+          </textarea>
+        </label>
+        <label class="form-control">
+          <span class="label-text">Rôles</span>
+          <textarea
+            id="positions"
+            name="positions"
+            class={`textarea ${fieldHasError({ fieldName: "positions", validationErrors, type: "textarea" })}`}
+          >
+            {positions}
+          </textarea>
+          <span class="label-text-alt">
+            Liste séparée par des points-virgules ";"
+          </span>
+        </label>
+        <label class="form-control">
+          <span class="label-text">Localisations</span>
+          <textarea
+            id="areas"
+            name="areas"
+            class={`textarea ${fieldHasError({ fieldName: "areas", validationErrors, type: "textarea" })}`}
+          >
+            {areas}
+          </textarea>
+          <span class="label-text-alt">
+            Liste séparée par des points-virgules ";"
+          </span>
+        </label>
+        <label class="form-control">
+          <span class="label-text">Questions</span>
+          <textarea
+            id="questions"
+            name="questions"
+            placeholder="code-1;libellé de question 1\ncode-2;libellé de question 2"
+            class={`textarea ${fieldHasError({ fieldName: "questions", validationErrors, type: "textarea" })}`}
+          >
+            {questions}
+          </textarea>
+          <span class="label-text-alt">
+            Une question par ligne. Code et libellé de question séparés par un
+            point virgule";"
+          </span>
         </label>
         <div class=" space-x-2">
           <button type="submit" class="btn btn-primary">

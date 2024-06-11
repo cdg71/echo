@@ -3,16 +3,23 @@ import type { ValidationError } from "elysia";
 interface Props {
   fieldName: string;
   validationErrors?: ValidationError;
+  type?: "input" | "textarea";
 }
+
+const defaultProps = {
+  type: "input",
+};
+
 export const fieldHasError = (props: Props) => {
+  const { fieldName, validationErrors, type } = { ...defaultProps, ...props };
   if (
-    props.validationErrors?.all.find(
-      (x: { path?: string }) => x.path === `/${props.fieldName}`
+    validationErrors?.all.find(
+      (x: { path?: string }) => x.path === `/${fieldName}`
     ) ??
     false
   ) {
-    return "input-error";
+    return type === "input" ? "input-error" : "textarea-error";
   } else {
-    return "";
+    return type === "input" ? "input-bordered" : "textarea-bordered";
   }
 };

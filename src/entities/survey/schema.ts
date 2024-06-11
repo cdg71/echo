@@ -1,44 +1,18 @@
-import { Type, type Static } from "@sinclair/typebox";
-import { Value } from "@sinclair/typebox/value";
-import { notEmptyString, surveyCodeString } from "@src/utils/schemaPatterns";
+import { type Static } from "@sinclair/typebox";
+import { surveyCodeString } from "@src/utils/schemaPatterns";
+import { t } from "elysia";
 
-export const Settings = Type.Object(
-  {
-    description: Type.String(),
-    context: Type.String(),
-    positions: Type.Array(Type.String()),
-    areas: Type.Array(Type.String()),
-  },
-  {
-    default: {
-      description: "",
-      context: "",
-      positions: [""],
-      areas: [""],
-    },
-  }
-);
-export type Settings = Static<typeof Settings>;
-export const defaultSettings = Value.Create(Settings);
-export const defaultJsonSettings = JSON.stringify(defaultSettings);
-export const JsonSettings = Type.Transform(Type.String())
-  .Decode((value) => {
-    const res: unknown = JSON.parse(value);
-    return res as Settings;
-  })
-  .Encode((value) => {
-    if (Value.Check(Settings, value)) return JSON.stringify(value);
-    return defaultJsonSettings;
-  });
-type JsonSettings = Static<typeof JsonSettings>;
+export const stringArray = t.ObjectString({ data: t.Array(t.String()) });
 
-export const Survey = Type.Object({
-  id: Type.String({ pattern: surveyCodeString, default: "" }),
-  name: Type.String({ pattern: notEmptyString, default: "" }),
-  settings: Type.String({
-    default: defaultJsonSettings,
-  }),
-  hash: Type.Optional(Type.String()),
-  createdAt: Type.Number(),
+export const Survey = t.Object({
+  id: t.String({ pattern: surveyCodeString, default: "" }),
+  name: t.String(),
+  description: t.String(),
+  context: t.String(),
+  positions: t.String(),
+  areas: t.String(),
+  questions: t.String(),
+  hash: t.Optional(t.String()),
+  createdAt: t.Number(),
 });
 export type Survey = Static<typeof Survey>;
