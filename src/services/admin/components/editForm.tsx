@@ -4,7 +4,6 @@ import type { EditFormProps } from "../dto/edit";
 
 export const editFormComponent = async (props: EditFormProps) => {
   const { id, name, settings, errorCode, validationErrors } = props;
-
   const isError = !!errorCode;
 
   const errorIcon = await loadHeroIcons({

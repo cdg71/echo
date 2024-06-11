@@ -3,6 +3,11 @@ import { Value } from "@sinclair/typebox/value";
 import { jwtSecret } from "@src/config/jwtSecret";
 import { getHashById, getSurveyById } from "@src/entities/survey/dao";
 import {
+  JsonSettings,
+  Settings,
+  defaultJsonSettings,
+} from "@src/entities/survey/schema";
+import {
   createCredential,
   validatePassword,
 } from "@src/utils/credentialManagement";
@@ -45,9 +50,22 @@ export const adminService = new Elysia()
     "/admin/create",
     async ({ body, cookie: { auth }, authJwt, set }) => {
       if (Value.Check(EditSurvey, body)) {
+        const { id, name, settings: formSettings } = body;
+        console.log(JSON.parse(formSettings));
         const { password, hash } = await createCredential();
+        // convert settings to survey fields
+        const isSettings = Value.Check(
+          Settings,
+          Value.Decode(JsonSettings, formSettings || "{}")
+        );
+        const settings = isSettings ? formSettings : defaultJsonSettings;
         const survey = createSurvey({
-          data: body,
+          data: {
+            id,
+            name,
+            settings,
+            createdAt: Date.now(),
+          },
           hash,
         });
         auth.set({
@@ -57,7 +75,7 @@ export const adminService = new Elysia()
         });
         set.headers["HX-Push-Url"] = `/admin/${survey.id}`;
         set.headers["HX-Replace-Url"] = `/admin/${survey.id}`;
-        return await adminComponent({ ...survey, password, settings: "" });
+        return await adminComponent({ ...survey, password, settings });
       }
       throw new Error("Invalid data");
     },
@@ -65,6 +83,7 @@ export const adminService = new Elysia()
       body: "EditSurvey",
       cookie: AuthCookie,
       async error({ code, set, error, body }) {
+        console.log({ code, error });
         set.status = 200;
         set.headers["HX-Push-Url"] = "false";
         const props: EditFormProps = {
@@ -95,11 +114,11 @@ export const adminService = new Elysia()
           maxAge: 86400, // 1 day
         });
         set.headers["HX-Push-Url"] = `/admin/${id}`;
-        const { name } = getSurveyById(id);
+        const { name, settings } = getSurveyById(id);
         return await adminComponent({
           id,
           name,
-          settings: "",
+          settings,
         });
       }
       throw new Error("Invalid credentials");
@@ -145,12 +164,11 @@ export const adminService = new Elysia()
       if (claim && claim.id === id) {
         //   // If authorized render surveyAdminComponent + HX-Replace-Url header (/admin/:id)
         //   // If not authorized, throw an error : redirect to / + HX-Replace-Url header (/)
-        const { name } = getSurveyById(id);
-
+        const { name, settings } = getSurveyById(id);
         return await adminComponent({
           id,
           name,
-          settings: "",
+          settings,
         });
       } else {
         auth.remove();

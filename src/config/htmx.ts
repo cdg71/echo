@@ -10,10 +10,6 @@ export const htmxPlugin = new Elysia()
     Bun.file("node_modules/htmx.org/dist/htmx.min.js")
   )
   .get(
-    "/static/scripts/head-support.js",
-    Bun.file("node_modules/htmx.org/dist/ext/head-support.js")
-  )
-  .get(
     "/static/scripts/sse.js",
     Bun.file("node_modules/htmx.org/dist/ext/sse.js")
   );

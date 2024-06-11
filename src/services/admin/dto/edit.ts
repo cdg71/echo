@@ -3,12 +3,7 @@ import { Survey } from "@src/entities/survey/schema";
 import { Elysia, ValidationError } from "elysia";
 
 export const EditSurvey = Type.Optional(
-  Type.Intersect([
-    Type.Pick(Survey, ["id", "name"]),
-    Type.Object({
-      settings: Type.String(),
-    }),
-  ])
+  Type.Pick(Survey, ["id", "name", "settings"])
 );
 export type EditSurvey = Static<typeof EditSurvey>;
 export const EditSurveyModel = new Elysia().model({

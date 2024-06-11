@@ -1,27 +1,26 @@
 import { db } from "@src/config/database";
 import { getSurveyById } from "@src/entities/survey/dao";
-import type { EditSurvey } from "../dto/edit";
+import type { Survey } from "@src/entities/survey/schema";
 
 // Create a new survey
 interface CreateSurveyProps {
-  data: EditSurvey;
+  data: Survey;
   hash: string;
 }
 export const createSurvey = (props: CreateSurveyProps) => {
   try {
     const {
-      data: { id, name },
+      data: { id, name, settings, createdAt },
     } = props;
-
     const query = db.prepare(
-      "INSERT INTO Survey (id, name, hash, createdAt) VALUES ($id, $name, $hash, $createdAt);"
+      "INSERT INTO Survey (id, name, settings, hash, createdAt) VALUES ($id, $name, $settings, $hash, $createdAt);"
     );
-    const now = Date.now();
     query.run({
       $id: id,
       $name: name,
+      $settings: settings,
       $hash: props.hash,
-      $createdAt: now,
+      $createdAt: createdAt,
     });
     query.finalize();
     const survey = getSurveyById(id);
