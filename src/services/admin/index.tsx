@@ -44,12 +44,9 @@ export const adminService = new Elysia()
   .post(
     "/admin/create",
     async ({ body, cookie: { auth }, authJwt, set }) => {
-      console.log(body);
-
       if (Value.Check(EditSurvey, body)) {
         const { id, name, description, context, positions, areas, questions } =
           body;
-        console.log([positions]);
         const { password, hash } = await createCredential();
         // convert settings to survey fields
         const survey = createSurvey({
@@ -79,8 +76,6 @@ export const adminService = new Elysia()
       body: "EditSurvey",
       cookie: AuthCookie,
       async error({ code, set, error, body }) {
-        console.log(body);
-
         set.status = 200;
         set.headers["HX-Push-Url"] = "false";
         const props: EditFormProps = {
