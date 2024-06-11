@@ -1,7 +1,7 @@
 import { appShell } from "@src/components/appShell";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
-import type { EditFormValidationError, EditSurvey } from "../dto/edit";
-import { editFormComponent } from "./editForm";
+import type { EditSurvey } from "../dto/edit";
+import { editFormComponent, type EditFormValidationError } from "./editForm";
 
 type Props = EditSurvey & EditFormValidationError & { password?: string };
 
@@ -25,7 +25,27 @@ export const adminComponent = async (props: Props) => {
   const clipboardDocumentCheckIcon = loadHeroIcons({
     iconName: "clipboard-document-check",
     family: "Outline",
-    className: "size-5 float-left",
+    className: "size-3 float-left",
+  });
+  const cameraIcon = loadHeroIcons({
+    iconName: "camera",
+    family: "Outline",
+    className: "size-6 float-left",
+  });
+  const editIcon = loadHeroIcons({
+    iconName: "pencil-square",
+    family: "Outline",
+    className: "size-6 float-left",
+  });
+  const deleteIcon = loadHeroIcons({
+    iconName: "trash",
+    family: "Outline",
+    className: "size-6 float-left",
+  });
+  const warningIcon = loadHeroIcons({
+    iconName: "exclamation-triangle",
+    family: "Outline",
+    className: "size-6 float-left",
   });
 
   const logoutNavButton = (
@@ -79,8 +99,22 @@ export const adminComponent = async (props: Props) => {
     ) : (
       <></>
     );
-
-  const form = editFormComponent(props);
+  const captures = (
+    <div>
+      <button class="btn btn-primary">Capturer maintenant</button>
+    </div>
+  );
+  const form = editFormComponent({ ...props, action: "update" });
+  const deleteSurvey = (
+    <div>
+      <button
+        class="btn btn-error"
+        hx-prompt="Entrez le nom de code du sondage pour confirmer la suppression."
+      >
+        {warningIcon}&nbsp;Supprimer le sondage
+      </button>
+    </div>
+  );
 
   const content = (
     <div class="w-full max-w-lg space-y-4">
@@ -89,7 +123,29 @@ export const adminComponent = async (props: Props) => {
         type="text/javascript"
         defer
       ></script>
-      <main>{form}</main>
+      <div class="w-full space-y-4">
+        <div class="collapse collapse-plus bg-slate-100">
+          <input type="radio" name="admin-accordion" checked />
+          <div class="collapse-title text-lg font-medium">
+            {cameraIcon}&nbsp;Capturer les résultats
+          </div>
+          <div class="collapse-content">{captures}</div>
+        </div>
+        <div class="collapse collapse-plus bg-slate-100">
+          <input type="radio" name="admin-accordion" />
+          <div class="collapse-title text-lg font-medium">
+            {editIcon}&nbsp;Modifier
+          </div>
+          <div class="collapse-content">{form}</div>
+        </div>
+        <div class="collapse collapse-plus bg-slate-100">
+          <input type="radio" name="admin-accordion" />
+          <div class="collapse-title text-lg font-medium">
+            {deleteIcon}&nbsp;Supprimer
+          </div>
+          <div class="collapse-content">{deleteSurvey}</div>
+        </div>
+      </div>
       {password ? getDialogComponent(password) : <></>}
     </div>
   );
@@ -98,6 +154,7 @@ export const adminComponent = async (props: Props) => {
     content,
     navbar: {
       end: logoutNavButton,
+      center: <h1 class="text-2xl font-bold">{props.id}</h1>,
     },
   });
 };

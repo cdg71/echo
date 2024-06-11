@@ -1,6 +1,19 @@
 import { fieldHasError } from "@src/utils/fieldHasErrors";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
-import type { EditFormProps } from "../dto/edit";
+import type { ValidationError } from "elysia";
+import type { EditSurvey } from "../dto/edit";
+
+export interface EditFormValidationError {
+  errorCode?: string;
+  validationErrors?: Readonly<ValidationError>;
+}
+export type EditFormProps = Partial<EditSurvey & EditFormValidationError> & {
+  action?: "create" | "update";
+};
+
+const defaultProps = {
+  action: "create",
+};
 
 export const editFormComponent = async (props: EditFormProps) => {
   const {
@@ -13,7 +26,8 @@ export const editFormComponent = async (props: EditFormProps) => {
     questions,
     errorCode,
     validationErrors,
-  } = props;
+    action,
+  } = { ...defaultProps, ...props };
   const isError = !!errorCode;
 
   const errorIcon = await loadHeroIcons({
@@ -47,7 +61,7 @@ export const editFormComponent = async (props: EditFormProps) => {
       </div>
       <form
         class="space-y-4"
-        hx-post="/admin/create"
+        hx-post={`/admin/${action}`}
         hx-boost="true"
         hx-target="body"
       >
@@ -60,6 +74,7 @@ export const editFormComponent = async (props: EditFormProps) => {
             class={`input ${fieldHasError({ fieldName: "id", validationErrors })}`}
             value={id}
             required
+            disabled={action === "update"}
           />
           <div class="label pt-0">
             <span class="label-text-alt">
@@ -140,7 +155,7 @@ export const editFormComponent = async (props: EditFormProps) => {
             point virgule";"
           </span>
         </label>
-        <div class=" space-x-2">
+        <div class={`space-x-2 ${action === "update" ? "hidden" : ""}`}>
           <button type="submit" class="btn btn-primary">
             Créer un sondage
           </button>
@@ -152,6 +167,11 @@ export const editFormComponent = async (props: EditFormProps) => {
             hx-push-url="false"
           >
             Effacer
+          </button>
+        </div>
+        <div class={`space-x-2 ${action === "create" ? "hidden" : ""}`}>
+          <button type="submit" class="btn btn-primary">
+            Modifier
           </button>
         </div>
       </form>

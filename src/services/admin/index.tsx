@@ -11,10 +11,11 @@ import { Elysia } from "elysia";
 import { gotoAdminComponent } from "../homepage/components/gotoAdmin";
 import { homepageLayoutComponent } from "../homepage/components/layout";
 import { adminComponent } from "./components/admin";
+import type { EditFormProps } from "./components/editForm";
 import { newSurveyComponent } from "./components/new";
 import { createSurvey } from "./dao/create";
 import { AuthCookie, AuthJwt, AuthModel } from "./dto/auth";
-import { EditSurvey, EditSurveyModel, type EditFormProps } from "./dto/edit";
+import { EditSurvey, EditSurveyModel } from "./dto/edit";
 
 export const adminService = new Elysia()
   .use(
