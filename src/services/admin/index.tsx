@@ -7,14 +7,16 @@ import {
   validatePassword,
 } from "@src/utils/credentialManagement";
 import { transpileForBrowsers } from "@src/utils/transpileForBrowsers";
-import { Elysia } from "elysia";
+import { Elysia, t } from "elysia";
 import { gotoAdminComponent } from "../homepage/components/gotoAdmin";
+import { gotoSurveyComponent } from "../homepage/components/gotoSurvey";
 import { homepageLayoutComponent } from "../homepage/components/layout";
 import { adminComponent, type AdminProps } from "./components/admin";
 import type { EditFormProps } from "./components/editForm";
 import { newSurveyComponent } from "./components/new";
-import { createSurvey } from "./dao/create";
-import { updateSurvey } from "./dao/update";
+import { createSurvey } from "./dao/createSurvey";
+import { deleteSurvey } from "./dao/deleteSurvey";
+import { updateSurvey } from "./dao/updateSurvey";
 import { AuthCookie, AuthJwt, AuthModel } from "./dto/auth";
 import { EditSurvey, EditSurveyModel } from "./dto/edit";
 
@@ -203,6 +205,34 @@ export const adminService = new Elysia()
     },
     {
       cookie: AuthCookie,
+    }
+  )
+
+  .post(
+    "/admin/delete",
+    async ({ body, set, cookie: { auth }, authJwt }) => {
+      const { id } = body;
+      const claim = await authJwt.verify(auth.value);
+      if (claim && claim.id === id) {
+        deleteSurvey({ id });
+        auth.remove();
+        set.status = 200;
+        set.headers["HX-Push-Url"] = "/admin";
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent(),
+        });
+      }
+      throw new Error("Cannot delete survey.");
+    },
+    {
+      body: t.Object({
+        id: t.String(),
+      }),
+      cookie: AuthCookie,
+      error: ({ set }) => {
+        set.status = 200;
+        set.headers["HX-Reswap"] = "none";
+      },
     }
   )
 

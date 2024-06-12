@@ -14,4 +14,17 @@
         .catch(() => null);
     });
   }
+
+  // Delete survey dialog
+  const deleteSurveyBtn = document.getElementById("deleteSurveyBtn");
+  const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+  const deleteSurveyModal = document.getElementById("deleteSurveyModal");
+  if (deleteSurveyBtn && cancelDeleteBtn && deleteSurveyModal) {
+    deleteSurveyBtn.addEventListener("click", () => {
+      deleteSurveyModal.classList.toggle("modal-open");
+    });
+    cancelDeleteBtn.addEventListener("click", () => {
+      deleteSurveyModal.classList.toggle("modal-open");
+    });
+  }
 })();

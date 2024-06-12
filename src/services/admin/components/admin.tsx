@@ -64,7 +64,7 @@ export const adminComponent = async (props: AdminProps) => {
     </div>
   );
 
-  const getDialogComponent = (password: string) =>
+  const getPasswordDialogComponent = (password: string) =>
     password ? (
       <dialog id="passwordModal" class="modal modal-open">
         <div class="modal-box prose">
@@ -100,6 +100,7 @@ export const adminComponent = async (props: AdminProps) => {
     ) : (
       <></>
     );
+
   const captures = (
     <div>
       <button class="btn btn-primary">Capturer maintenant</button>
@@ -108,12 +109,48 @@ export const adminComponent = async (props: AdminProps) => {
   const form = editFormComponent({ ...props, action: "update" });
   const deleteSurvey = (
     <div>
-      <button
-        class="btn btn-warning"
-        hx-prompt="Entrez le nom de code du sondage pour confirmer la suppression."
-      >
+      <button class="btn btn-warning" id="deleteSurveyBtn">
         {warningIcon}&nbsp;Supprimer le sondage
       </button>
+      <dialog id="deleteSurveyModal" class="modal">
+        <div class="modal-box">
+          <div class="prose">
+            <h3>{deleteIcon}&nbsp;Supprimer le sondage</h3>
+          </div>
+          <form
+            class="space-y-4"
+            hx-post="/admin/delete"
+            hx-boost="true"
+            hx-target="body"
+          >
+            <label class="form-control space-y-1">
+              <span class="label-text">
+                Pour confirmer, veuillez saisir ci-dessous le code du sondage
+              </span>
+              <input
+                id="id"
+                name="id"
+                type="text"
+                placeholder={props.id}
+                class="input input-bordered"
+                required
+              />
+              <span class="label-text">
+                <strong>Cette action est irréversible.</strong> Une fois la
+                ressource supprimée, vous ne pourrez pas la récupérer.
+              </span>
+            </label>
+            <div class="space-x-2">
+              <button type="submit" class="btn btn-outline btn-error">
+                Supprimer définitivement
+              </button>
+              <button type="reset" class="btn btn-primary" id="cancelDeleteBtn">
+                Annuler la suppression
+              </button>
+            </div>
+          </form>
+        </div>
+      </dialog>
     </div>
   );
 
@@ -155,7 +192,7 @@ export const adminComponent = async (props: AdminProps) => {
           <div class="collapse-content">{deleteSurvey}</div>
         </div>
       </div>
-      {getDialogComponent(password ?? "")}
+      {getPasswordDialogComponent(password ?? "")}
     </div>
   );
 
