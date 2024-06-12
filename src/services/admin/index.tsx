@@ -10,10 +10,11 @@ import { transpileForBrowsers } from "@src/utils/transpileForBrowsers";
 import { Elysia } from "elysia";
 import { gotoAdminComponent } from "../homepage/components/gotoAdmin";
 import { homepageLayoutComponent } from "../homepage/components/layout";
-import { adminComponent } from "./components/admin";
+import { adminComponent, type AdminProps } from "./components/admin";
 import type { EditFormProps } from "./components/editForm";
 import { newSurveyComponent } from "./components/new";
 import { createSurvey } from "./dao/create";
+import { updateSurvey } from "./dao/update";
 import { AuthCookie, AuthJwt, AuthModel } from "./dto/auth";
 import { EditSurvey, EditSurveyModel } from "./dto/edit";
 
@@ -85,6 +86,58 @@ export const adminService = new Elysia()
         };
         if (code === "VALIDATION") props.validationErrors = error;
         return await newSurveyComponent(props);
+      },
+    }
+  )
+
+  .post(
+    "/admin/update",
+    async ({ body, cookie: { auth }, authJwt }) => {
+      const claim = await authJwt.verify(auth.value);
+      if (claim && claim.id === body.id) {
+        if (Value.Check(EditSurvey, body)) {
+          const {
+            id,
+            name,
+            description,
+            context,
+            positions,
+            areas,
+            questions,
+          } = body;
+          const survey = updateSurvey({
+            id,
+            name,
+            description,
+            context,
+            positions,
+            areas,
+            questions,
+          });
+          return await adminComponent({ ...survey });
+        }
+        throw new Error("Invalid data");
+      } else {
+        auth.remove();
+        return homepageLayoutComponent({
+          content: gotoAdminComponent({ id: body.id }),
+        });
+      }
+    },
+    {
+      body: "EditSurvey",
+      cookie: AuthCookie,
+      async error({ code, set, error, body }) {
+        console.log(error);
+
+        set.status = 200;
+        set.headers["HX-Push-Url"] = "false";
+        const props = {
+          ...body,
+          errorCode: code,
+        } as AdminProps;
+        if (code === "VALIDATION") props.validationErrors = error;
+        return await adminComponent(props);
       },
     }
   )

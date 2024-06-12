@@ -74,7 +74,6 @@ export const editFormComponent = async (props: EditFormProps) => {
             class={`input ${fieldHasError({ fieldName: "id", validationErrors })}`}
             value={id}
             required
-            disabled={action === "update"}
           />
           <div class="label pt-0">
             <span class="label-text-alt">

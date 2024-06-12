@@ -3,9 +3,10 @@ import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 import type { EditSurvey } from "../dto/edit";
 import { editFormComponent, type EditFormValidationError } from "./editForm";
 
-type Props = EditSurvey & EditFormValidationError & { password?: string };
+export type AdminProps = EditSurvey &
+  EditFormValidationError & { password?: string };
 
-export const adminComponent = async (props: Props) => {
+export const adminComponent = async (props: AdminProps) => {
   const { password } = props;
 
   const powerIcon = loadHeroIcons({
