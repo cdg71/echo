@@ -1,4 +1,5 @@
 import { cors } from "@elysiajs/cors";
+import { html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
 import { tailwind } from "@gtramontina.com/elysia-tailwind";
 import { htmxPlugin } from "@src/config/htmx";
@@ -11,6 +12,7 @@ import { helmet } from "elysia-helmet";
 new Elysia()
   .use(cors())
   .use(helmet())
+  .use(html())
   .use(staticPlugin({ prefix: "/static", assets: "src/static" }))
   .use(
     staticPlugin({

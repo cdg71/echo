@@ -1,7 +1,7 @@
 import { password } from "bun";
 
 export const dbInitSQLStatements = `-- Table for Survey
-CREATE TABLE Survey (
+CREATE TABLE IF NOT EXISTS Survey (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT,
@@ -14,14 +14,14 @@ CREATE TABLE Survey (
 );
 
 -- Table for Snapshot
-CREATE TABLE Snapshot (
+CREATE TABLE IF NOT EXISTS Snapshot (
   surveyId TEXT,
   createdAt INTEGER NOT NULL,
   FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
 );
 
 -- Table for User
-CREATE TABLE User (
+CREATE TABLE IF NOT EXISTS User (
   id TEXT PRIMARY KEY,
   surveyId TEXT,
   position TEXT NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE User (
 );
 
 -- Table for Response
-CREATE TABLE Response (
+CREATE TABLE IF NOT EXISTS Response (
   id TEXT PRIMARY KEY,
   questionId TEXT,
   userId TEXT,
@@ -42,7 +42,7 @@ CREATE TABLE Response (
 );
 
 -- Table for Result
-CREATE TABLE Result (
+CREATE TABLE IF NOT EXISTS Result (
   id TEXT PRIMARY KEY,
   surveyId TEXT,
   snapshotId TEXT,

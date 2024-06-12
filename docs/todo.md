@@ -9,13 +9,12 @@
   - [-] /admin: gérer un sondage
     - [x] login
     - [x] logout
-    - [ ] JSON Settings to database rows
-    - [ ] Show settings
-    - [ ] Update settings
+    - [x] Show settings
+    - [x] Update settings
+    - [ ] Delete survey
     - [ ] Create snapshot
     - [ ] Show snapshots
     - [ ] Delete snapshot
-    - [ ] Delete survey
     - [ ] open / close quiz
 - [x] feat(backend): enable auth jwt
 - [x] feat(backend): appshell
@@ -30,7 +29,7 @@
 
 - Fixes
 
-  - [ ] Les types Typebox composants devraient être utilisés systématiquement lorsque c'est possible. la fonction getStaticType devrait être réservées aux functions d'origine tierce dont le type ne peut pas être personnalisé, par exemple dans les DAOs juste avant l'accès en base
+  - [ ] Fix: currently, serving build in production causes an error (call stack exceeded). Restore serving build file after <https://github.com/elysiajs/elysia/issues/643> has been fixed.
 
 - Frontend
 
@@ -46,25 +45,26 @@
 
 - Backend
 
-  - [ ] entité respondent
+  - [ ] entité profile
   - [ ] entité response
   - [ ] entité comment
   - [ ] entité result
   - [ ] génération et exploitation des résultats de l'IA
   - [ ] cron: backup (data folder : database dump + assets)
   - [ ] cron: purge des sondages expirés
-  - [ ] error handling
+  - [ ] cleaner error handling
   - [ ] logging
   - [ ] jwtSecret rotation
 
 - Environnement de développement
 
-  - [ ] Architecture applicative : Effect + grokking simplicity
-  - [ ] dev: Live Reload backend / frontend pour une meilleur expérience de développement (NODE_ENV = development + bun --watch + xh header + SSE Trigger Server Callbacks(script nonce + location.reload()))
+  - [ ] Architecture applicative fonctionnelle : (grokking simplicity + Effect ?)
+  - [ ] dev: Live Reload backend / frontend pour une meilleur expérience de développement (NODE_ENV = development + bun --watch + SSE + XH Header full page reload)
   - [ ] CI/CD
     - [ ] Continuous Integration : Github actions : typecheck, lint, test, enforce conventional commit in the PR name and new changesets
     - [ ] Continuous delivery : Github release (changeset version and publish) + publish to ghcr.io
-    - [ ] On-Demand Deployment : docker compose
+    - [ ] On-Demand Deployment level 1 : git pull + systemd daemon <https://bun.sh/guides/ecosystem/systemd>
+    - [ ] On-Demand Deployment level 2 : docker compose
   - [ ] Tests
     - [ ] Tests unitaires
     - [ ] Tests d'intégration
@@ -73,4 +73,4 @@
 
 - Environnement de production
 
-  - [ ] CDG : vm hôte
+  - [x] CDG : vm hôte

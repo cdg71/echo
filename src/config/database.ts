@@ -6,7 +6,7 @@ import { Database } from "bun:sqlite";
 
 export const db =
   import.meta.env.NODE_ENV === "production"
-    ? new Database(`${process.cwd()}/storage/db.sqlite`, { create: true })
+    ? new Database(`${process.cwd()}/data/db.sqlite`, { create: true })
     : new Database(":memory:");
 
 const executeTransaction = db.transaction((statements: string[]) => {

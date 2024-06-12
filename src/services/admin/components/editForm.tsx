@@ -53,11 +53,14 @@ export const editFormComponent = async (props: EditFormProps) => {
         >
           {dismissIcon}
         </button>
-        <span class="prose">
+        <div class={`prose ${action === "update" ? "hidden" : ""}`}>
           <strong>{errorIcon} Échec de la création du sondage.</strong>
           <br />
           <em>Astuce : le code du sondage doit être unique.</em>
-        </span>
+        </div>
+        <div class={`prose ${action === "create" ? "hidden" : ""}`}>
+          <strong>{errorIcon} Échec de la modification du sondage.</strong>
+        </div>
       </div>
       <form
         class="space-y-4"
@@ -65,7 +68,7 @@ export const editFormComponent = async (props: EditFormProps) => {
         hx-boost="true"
         hx-target="body"
       >
-        <label class="form-control">
+        <label class={`form-control ${action === "update" ? "hidden" : ""}`}>
           <span class="label-text">Code du sondage</span>
           <input
             id="id"

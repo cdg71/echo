@@ -32,7 +32,7 @@
     "@tailwindcss/typography": "^0.5.13",
     "@tsconfig/bun": "^1.0.6",
     "@types/eslint__js": "^8.42.3",
-    "bun-types": "^1.1.12",
+    "bun-types": "^1.1.13",
     "daisyui": "^4.12.2",
     "eslint": "^9.4.0",
     "eslint-config-prettier": "^9.1.0",
@@ -50,7 +50,8 @@
   "scripts": {
     "dev": "bun --watch src/index.tsx",
     "build": "NODE_ENV=production bun build src/index.tsx --target bun --outdir ./dist",
-    "serve": "NODE_ENV=production bun run dist/index.js",
+    "serve": "NODE_ENV=production bun run src/index.tsx",
+    "serve:build": "NODE_ENV=production bun run dist/index.js",
     "start": "bun run build && bun run serve",
     "lint": "eslint .",
     "typecheck": "tsc --noemit",

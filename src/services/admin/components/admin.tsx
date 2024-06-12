@@ -26,7 +26,7 @@ export const adminComponent = async (props: AdminProps) => {
   const clipboardDocumentCheckIcon = loadHeroIcons({
     iconName: "clipboard-document-check",
     family: "Outline",
-    className: "size-3 float-left",
+    className: "size-5",
   });
   const cameraIcon = loadHeroIcons({
     iconName: "camera",
@@ -109,7 +109,7 @@ export const adminComponent = async (props: AdminProps) => {
   const deleteSurvey = (
     <div>
       <button
-        class="btn btn-error"
+        class="btn btn-warning"
         hx-prompt="Entrez le nom de code du sondage pour confirmer la suppression."
       >
         {warningIcon}&nbsp;Supprimer le sondage
@@ -126,14 +126,22 @@ export const adminComponent = async (props: AdminProps) => {
       ></script>
       <div class="w-full space-y-4">
         <div class="collapse collapse-plus bg-slate-100">
-          <input type="radio" name="admin-accordion" checked />
+          <input
+            type="radio"
+            name="admin-accordion"
+            checked={!props.errorCode}
+          />
           <div class="collapse-title text-lg font-medium">
             {cameraIcon}&nbsp;Capturer les résultats
           </div>
           <div class="collapse-content">{captures}</div>
         </div>
         <div class="collapse collapse-plus bg-slate-100">
-          <input type="radio" name="admin-accordion" />
+          <input
+            type="radio"
+            name="admin-accordion"
+            checked={!!props.errorCode}
+          />
           <div class="collapse-title text-lg font-medium">
             {editIcon}&nbsp;Modifier
           </div>
@@ -147,7 +155,7 @@ export const adminComponent = async (props: AdminProps) => {
           <div class="collapse-content">{deleteSurvey}</div>
         </div>
       </div>
-      {password ? getDialogComponent(password) : <></>}
+      {getDialogComponent(password ?? "")}
     </div>
   );
 
