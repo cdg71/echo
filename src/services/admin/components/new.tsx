@@ -1,5 +1,5 @@
 import { appShell } from "@src/components/appShell";
-import type { EditFormProps } from "../dto/edit";
+import type { EditFormProps } from "./editForm";
 import { editFormComponent } from "./editForm";
 
 export const newSurveyComponent = async (props: EditFormProps) => {

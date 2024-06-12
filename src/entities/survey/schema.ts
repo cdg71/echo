@@ -2,8 +2,6 @@ import { type Static } from "@sinclair/typebox";
 import { surveyCodeString } from "@src/utils/schemaPatterns";
 import { t } from "elysia";
 
-export const stringArray = t.ObjectString({ data: t.Array(t.String()) });
-
 export const Survey = t.Object({
   id: t.String({ pattern: surveyCodeString, default: "" }),
   name: t.String(),

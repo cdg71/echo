@@ -15,8 +15,11 @@ CREATE TABLE IF NOT EXISTS Survey (
 
 -- Table for Snapshot
 CREATE TABLE IF NOT EXISTS Snapshot (
+  id TEXT PRIMARY KEY,
   surveyId TEXT,
+  result TEXT,
   createdAt INTEGER NOT NULL,
+  readyAt INTEGER,
   FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
 );
 
@@ -24,33 +27,20 @@ CREATE TABLE IF NOT EXISTS Snapshot (
 CREATE TABLE IF NOT EXISTS User (
   id TEXT PRIMARY KEY,
   surveyId TEXT,
-  position TEXT NOT NULL,
-  area TEXT NOT NULL,
+  position TEXT,
+  area TEXT,
   FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
 );
 
--- Table for Response
-CREATE TABLE IF NOT EXISTS Response (
-  id TEXT PRIMARY KEY,
-  questionId TEXT,
-  userId TEXT,
-  value TEXT NOT NULL,
-  comment TEXT,
-  createdAt INTEGER NOT NULL,
-  FOREIGN KEY (questionId) REFERENCES Question(id) ON DELETE CASCADE,
-  FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
-);
-
--- Table for Result
-CREATE TABLE IF NOT EXISTS Result (
+-- Table for ResponseSet
+CREATE TABLE IF NOT EXISTS ResponseSet (
   id TEXT PRIMARY KEY,
   surveyId TEXT,
-  snapshotId TEXT,
-  data TEXT NOT NULL,
+  userId TEXT,
+  responses TEXT,
   createdAt INTEGER NOT NULL,
-  completedAt INTEGER NOT NULL,
   FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE,
-  FOREIGN KEY (snapshotId) REFERENCES Snapshot(surveyId) ON DELETE CASCADE
+  FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
 );
 `;
 

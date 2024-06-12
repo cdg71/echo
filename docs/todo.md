@@ -11,11 +11,10 @@
     - [x] logout
     - [x] Show settings
     - [x] Update settings
-    - [ ] Delete survey
+    - [x] Delete survey
     - [ ] Create snapshot
     - [ ] Show snapshots
     - [ ] Delete snapshot
-    - [ ] open / close quiz
 - [x] feat(backend): enable auth jwt
 - [x] feat(backend): appshell
 - [x] feat(backend): heroicons loader
@@ -33,12 +32,16 @@
 
 - Frontend
 
-  - [ ] /:survey
+  - /:survey
     - [ ] component : homepage
     - [ ] component : profile
-    - [ ] component : comments
+    - [ ] component : quiz
     - [ ] component : results
-  - [ ] /result-webhook
+  - /admin/:id
+    - [ ] open / close quiz
+  - [ ] Cloud
+    - [ ] /webhook/result : updates a snapshot
+    - [ ] On delete survey, cleanup the cloud resources
   - [ ] Autoriser markdown <https://github.com/micromark/micromark> (safe: text formatting, lists, blockquotes, horizontal rules) pour personnaliser les sondages (description du sondage, description des questions) et les résultats
   - [ ] Mentions légales : politique de confidentialité
   - [ ] Téléchargement des résultats en PDF
