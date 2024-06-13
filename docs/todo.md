@@ -4,15 +4,17 @@
 
 ## sprintlog
 
+- /:survey
+  - [ ] component : appshell
+  - [ ] component : homepage
+  - [ ] component : profile
+  - [ ] component : quiz
+  - [ ] component : results
+
 ## Backlog
 
 - Frontend
 
-  - /:survey
-    - [ ] component : homepage
-    - [ ] component : profile
-    - [ ] component : quiz
-    - [ ] component : results
   - /admin/:id
     - [ ] open / close quiz
     - [ ] poll snapshot status dynamically

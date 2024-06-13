@@ -9,6 +9,7 @@ import { streamsService } from "@src/services/streams";
 import { Elysia } from "elysia";
 import { helmet } from "elysia-helmet";
 import { snapshotService } from "./services/snapshot";
+import { surveyService } from "./services/survey";
 
 new Elysia()
   .use(cors())
@@ -39,4 +40,5 @@ new Elysia()
   .use(streamsService)
   .use(adminService)
   .use(snapshotService)
+  .use(surveyService)
   .listen(import.meta.env.PORT);

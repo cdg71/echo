@@ -3,9 +3,18 @@ interface Props {
 }
 
 export const gotoSurveyComponent = (props?: Props) => (
-  <form id="gotoForm" class="card-body" hx-history="false">
+  <form
+    id="gotoForm"
+    hx-get="/survey"
+    class="card-body"
+    hx-history="false"
+    hx-boost="true"
+    hx-target="body"
+  >
     <div class="form-control">
       <input
+        id="id"
+        name="id"
         type="text"
         placeholder="Code du sondage"
         class="input input-bordered"
@@ -13,15 +22,7 @@ export const gotoSurveyComponent = (props?: Props) => (
         required
       />
     </div>
-    <button
-      hx-get="/survey"
-      hx-trigger="click"
-      hx-boost="true"
-      hx-swap="outerHTML"
-      hx-target="body"
-      hx-push-url="true"
-      class="btn btn-primary"
-    >
+    <button type="submit" class="btn btn-primary">
       Se connecter
     </button>
     <div class="text-xs">
