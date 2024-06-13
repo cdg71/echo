@@ -167,13 +167,19 @@ export const adminService = new Elysia()
     "/admin/logout",
     async ({ set, cookie: { auth }, authJwt }) => {
       const claim = await authJwt.verify(auth.value);
-      const id = claim ? claim.id : "";
-      auth.remove();
-      set.status = 200;
-      set.headers["HX-Push-Url"] = `/admin/${id}`;
-      return homepageLayoutComponent({
-        content: gotoAdminComponent({ id: id }),
-      });
+      if (claim) {
+        const { id } = claim;
+        auth.remove();
+        set.status = 200;
+        set.headers["HX-Push-Url"] = `/admin/${id}`;
+        return homepageLayoutComponent({
+          content: gotoAdminComponent({ id }),
+        });
+      } else {
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent(),
+        });
+      }
     },
     {
       cookie: AuthCookie,

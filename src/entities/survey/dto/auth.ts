@@ -1,10 +1,9 @@
-import { Type, type Static } from "@sinclair/typebox";
 import { Survey } from "@src/entities/survey/schema";
-import { Elysia, t } from "elysia";
+import { Elysia, t, type Static } from "elysia";
 
-export const Auth = Type.Object({
-  id: Type.String(),
-  password: Type.String(),
+export const Auth = t.Object({
+  id: t.String(),
+  password: t.String(),
 });
 export type Auth = Static<typeof Auth>;
 export const AuthModel = new Elysia().model({
@@ -12,9 +11,9 @@ export const AuthModel = new Elysia().model({
 });
 
 export const AuthJwt = t.Cookie({
-  id: Type.String(),
+  id: t.String(),
 });
-export const AuthCookie = t.Cookie({ auth: Type.String() });
+export const AuthCookie = t.Cookie({ auth: t.String() });
 
-export const Hash = Type.Pick(Survey, ["hash"]);
+export const Hash = t.Pick(Survey, ["hash"]);
 export type Hash = Static<typeof Hash>;

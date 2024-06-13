@@ -4,27 +4,7 @@
 
 ## sprintlog
 
-- [x] feat: administrer un sondage (Fonctionnalité principale du sprint)
-  - [x] /new: Créer un nouveau sondage
-  - [x] /admin: gérer un sondage
-- [x] feat(backend): enable auth jwt
-- [x] feat(backend): appshell
-- [x] feat(backend): heroicons loader
-- [x] feat(frontend): navbar
-- [x] feat(backend): bun sqlite setup
-- [x] refactor: don't use sync (bun.password, heroicons)
-- [x] dev: enable client side javascript
-- [x] feat(backend): entité survey
-
 ## Backlog
-
-- Fixes / Refactor
-
-  - [ ] Fix: currently, serving build in production causes an error (call stack exceeded). Restore serving build file after <https://github.com/elysiajs/elysia/issues/643> has been fixed.
-  - [ ] Refactor the API to use proper HTTP ACTION VERBS for the entities CRUD actions : (GET POST PUT DELETE) => PUT /resource/:id = update, PUT /resource = POST /resource = create
-  - [ ] auth with access and refresh token instead of just an access token
-  - [ ] refactor API : separate /admin /survey /auth routes
-  - [ ] better components cutting
 
 - Frontend
 
@@ -48,8 +28,6 @@
 
   - [ ] entité profile
   - [ ] entité response
-  - [ ] entité comment
-  - [ ] entité result
   - [ ] génération et exploitation des résultats de l'IA
   - [ ] cron: backup (data folder : database dump + assets)
   - [ ] cron: purge des sondages expirés
@@ -74,4 +52,12 @@
 
 - Environnement de production
 
-  - [x] CDG : vm hôte
+  - [ ] CDG : setup de production
+
+- Fixes / Refactor
+
+  - [ ] Fix: currently, serving build in production causes an error (call stack exceeded). Restore serving build file after <https://github.com/elysiajs/elysia/issues/643> has been fixed.
+  - [ ] Refactor the API to use proper HTTP ACTION VERBS for the entities CRUD actions : (GET POST PUT DELETE) => PUT /resource/:id = update, PUT /resource = POST /resource = create
+  - [ ] auth with access and refresh token instead of just an access token
+  - [ ] refactor API : separate /admin /survey /auth routes
+  - [ ] better components cutting

@@ -2,6 +2,8 @@
   "extends": "@tsconfig/bun/tsconfig.json",
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "typeRoots": ["./node_modules/@types", "./env.d.ts"],
     "paths": {
       "@src/*": ["./src/*"]
