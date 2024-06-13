@@ -5,7 +5,8 @@
 ## sprintlog
 
 - /:survey
-  - [ ] component : appshell
+  - [x] component : appshell
+  - [ ] Autoriser markdown <https://github.com/micromark/micromark> (safe: text formatting, lists, blockquotes, horizontal rules) pour personnaliser les sondages (description du sondage, description des questions) et les résultats
   - [ ] component : homepage
   - [ ] component : profile
   - [ ] component : quiz
@@ -22,7 +23,6 @@
   - [ ] Cloud
     - [ ] /webhook/result : updates a snapshot
     - [ ] On delete survey, cleanup the cloud resources
-  - [ ] Autoriser markdown <https://github.com/micromark/micromark> (safe: text formatting, lists, blockquotes, horizontal rules) pour personnaliser les sondages (description du sondage, description des questions) et les résultats
   - [ ] Mentions légales : politique de confidentialité
   - [ ] Téléchargement des résultats en PDF
 

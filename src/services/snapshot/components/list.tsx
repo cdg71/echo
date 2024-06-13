@@ -19,11 +19,11 @@ export const snapshotsComponent = async (props: Snapshot[]) => {
     <>
       {props.map((snapshot) => (
         <div role="alert" class="alert my-2 bg-white bordered">
-          {snapshot.readyAt ? checkIcon : cloudIcon}
+          {!snapshot.readyAt ? checkIcon : cloudIcon}
           <span>
             {dayjs.unix(snapshot.createdAt).format("DD/MM/YYYY HH:mm:ss")}
           </span>
-          {snapshot.readyAt ? (
+          {!snapshot.readyAt ? (
             <button
               class="text-gray-600 hover:text-gray-800 float-left"
               hx-delete={`/snapshot/${snapshot.id}`}
