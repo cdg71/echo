@@ -1,5 +1,5 @@
 import { type Static } from "@sinclair/typebox";
-import { t } from "elysia";
+import Elysia, { t } from "elysia";
 
 export const Snapshot = t.Object({
   id: t.String(),
@@ -9,3 +9,4 @@ export const Snapshot = t.Object({
   readyAt: t.Optional(t.Number()),
 });
 export type Snapshot = Static<typeof Snapshot>;
+export const SnapshotModel = new Elysia().model({ Snapshot });

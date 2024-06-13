@@ -1,5 +1,6 @@
 import { Patterns, cron } from "@elysiajs/cron";
 import { streamsStore } from "@src/services/streams/store";
+import dayjs from "dayjs";
 import { Elysia } from "elysia";
 
 export const streamCleanerCron = new Elysia().use(streamsStore).use(
@@ -9,7 +10,7 @@ export const streamCleanerCron = new Elysia().use(streamsStore).use(
       import.meta.env.STREAM_CLEANER_CRON_PATTERN
     ] as unknown as string,
     run: () => {
-      const now = Date.now();
+      const now = dayjs().unix();
       for (const [index, client] of streamCleanerCron.store.streams.entries()) {
         if (
           Math.floor((now - client.prevHeartbeat) / 1000) >

@@ -1,9 +1,7 @@
 import { db } from "@src/config/database";
 import type { Survey } from "@src/entities/survey/schema";
 
-type DeleteSurveyProps = Pick<Survey, "id">;
-
-export const deleteSurvey = (props: DeleteSurveyProps) => {
+export const deleteSurvey = (props: Pick<Survey, "id">) => {
   try {
     const { id } = props;
     const query = db.prepare(`DELETE FROM Survey WHERE id = $id;`);
@@ -11,6 +9,6 @@ export const deleteSurvey = (props: DeleteSurveyProps) => {
     query.finalize();
     return true;
   } catch (error) {
-    throw new Error("Cannot create survey.");
+    throw new Error("Cannot delete survey.");
   }
 };

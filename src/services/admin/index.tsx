@@ -1,7 +1,14 @@
 import jwt from "@elysiajs/jwt";
 import { Value } from "@sinclair/typebox/value";
 import { jwtSecret } from "@src/config/jwtSecret";
-import { getHashById, getSurveyById } from "@src/entities/survey/dao";
+import { listSnapshotsBySurveyId } from "@src/entities/snapshot/dao/listBySurveyId";
+import { createSurvey } from "@src/entities/survey/dao/create";
+import { deleteSurvey } from "@src/entities/survey/dao/delete";
+import { getSurveyById } from "@src/entities/survey/dao/getById";
+import { getHashById } from "@src/entities/survey/dao/getHashById";
+import { updateSurvey } from "@src/entities/survey/dao/update";
+import { AuthCookie, AuthJwt, AuthModel } from "@src/entities/survey/dto/auth";
+import { EditSurvey, EditSurveyModel } from "@src/entities/survey/dto/edit";
 import {
   createCredential,
   validatePassword,
@@ -14,11 +21,6 @@ import { homepageLayoutComponent } from "../homepage/components/layout";
 import { adminComponent, type AdminProps } from "./components/admin";
 import type { EditFormProps } from "./components/editForm";
 import { newSurveyComponent } from "./components/new";
-import { createSurvey } from "./dao/createSurvey";
-import { deleteSurvey } from "./dao/deleteSurvey";
-import { updateSurvey } from "./dao/updateSurvey";
-import { AuthCookie, AuthJwt, AuthModel } from "./dto/auth";
-import { EditSurvey, EditSurveyModel } from "./dto/edit";
 
 export const adminService = new Elysia()
   .use(
@@ -38,7 +40,7 @@ export const adminService = new Elysia()
     })
   )
 
-  .get("/static/scripts/general.js", async ({ set }) => {
+  .get("/static/scripts/admin.js", async ({ set }) => {
     set.headers["Content-Type"] = "text/javascript; charset=utf8";
     return await transpileForBrowsers(`${__dirname}/scripts/admin.ts`);
   })
@@ -52,7 +54,6 @@ export const adminService = new Elysia()
         const { id, name, description, context, positions, areas, questions } =
           body;
         const { password, hash } = await createCredential();
-        // convert settings to survey fields
         const survey = createSurvey({
           data: {
             id,
@@ -72,7 +73,7 @@ export const adminService = new Elysia()
         });
         set.headers["HX-Push-Url"] = `/admin/${survey.id}`;
         set.headers["HX-Replace-Url"] = `/admin/${survey.id}`;
-        return await adminComponent({ ...survey, password });
+        return await adminComponent({ survey, password });
       }
       throw new Error("Invalid data");
     },
@@ -98,25 +99,8 @@ export const adminService = new Elysia()
       const claim = await authJwt.verify(auth.value);
       if (claim && claim.id === body.id) {
         if (Value.Check(EditSurvey, body)) {
-          const {
-            id,
-            name,
-            description,
-            context,
-            positions,
-            areas,
-            questions,
-          } = body;
-          const survey = updateSurvey({
-            id,
-            name,
-            description,
-            context,
-            positions,
-            areas,
-            questions,
-          });
-          return await adminComponent({ ...survey });
+          const survey = updateSurvey(body);
+          return await adminComponent({ survey });
         }
         throw new Error("Invalid data");
       } else {
@@ -130,12 +114,10 @@ export const adminService = new Elysia()
       body: "EditSurvey",
       cookie: AuthCookie,
       async error({ code, set, error, body }) {
-        console.log(error);
-
         set.status = 200;
         set.headers["HX-Push-Url"] = "false";
         const props = {
-          ...body,
+          survey: body,
           errorCode: code,
         } as AdminProps;
         if (code === "VALIDATION") props.validationErrors = error;
@@ -148,31 +130,21 @@ export const adminService = new Elysia()
     "/admin/login",
     async ({ body, cookie: { auth }, authJwt, set }) => {
       const { id, password } = body;
-      // Validate survey id and password from the form
-      const hash = getHashById(id) ?? "";
+      const hash = getHashById({ id }) ?? "";
       const isValidCredentials = await validatePassword({
         password,
         hash,
       });
       if (isValidCredentials) {
-        // If authorized, create the session JWT and redirect to /admin/:id
         auth.set({
           value: await authJwt.sign({ id }),
           httpOnly: true,
           maxAge: 86400, // 1 day
         });
         set.headers["HX-Push-Url"] = `/admin/${id}`;
-        const { name, description, context, positions, areas, questions } =
-          getSurveyById(id);
-        return await adminComponent({
-          id,
-          name,
-          description,
-          context,
-          positions,
-          areas,
-          questions,
-        });
+        const survey = getSurveyById({ id });
+        const snapshots = listSnapshotsBySurveyId({ surveyId: id });
+        return await adminComponent({ survey, snapshots });
       }
       throw new Error("Invalid credentials");
     },
@@ -239,23 +211,12 @@ export const adminService = new Elysia()
   .get(
     "/admin/:id",
     async ({ cookie: { auth }, authJwt, params }) => {
-      // Validate the session JWT
       const { id } = params;
       const claim = await authJwt.verify(auth.value);
       if (claim && claim.id === id) {
-        //   // If authorized render surveyAdminComponent + HX-Replace-Url header (/admin/:id)
-        //   // If not authorized, throw an error : redirect to / + HX-Replace-Url header (/)
-        const { name, description, context, positions, areas, questions } =
-          getSurveyById(id);
-        return await adminComponent({
-          id,
-          name,
-          description,
-          context,
-          positions,
-          areas,
-          questions,
-        });
+        const survey = getSurveyById({ id });
+        const snapshots = listSnapshotsBySurveyId({ surveyId: id });
+        return await adminComponent({ survey, snapshots });
       } else {
         auth.remove();
         return homepageLayoutComponent({

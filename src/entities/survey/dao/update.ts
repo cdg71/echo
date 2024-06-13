@@ -1,23 +1,14 @@
 import { db } from "@src/config/database";
-import { getSurveyById } from "@src/entities/survey/dao";
+import { getSurveyById } from "@src/entities/survey/dao/getById";
 import type { Survey } from "@src/entities/survey/schema";
 import type { EditSurvey } from "../dto/edit";
 
 export const updateSurvey = (props: EditSurvey) => {
   try {
     const { id } = props;
-    const prev = getSurveyById(id);
+    const prev = getSurveyById({ id });
     const next = { ...prev, ...props } as Survey;
-    const {
-      name,
-      description,
-      context,
-      areas,
-      positions,
-      questions,
-      hash,
-      createdAt,
-    } = next;
+    const { name, description, context, areas, positions, questions } = next;
     const query = db.prepare(`
       UPDATE Survey
       SET
@@ -26,9 +17,7 @@ export const updateSurvey = (props: EditSurvey) => {
         context = $context,
         areas = $areas,
         positions = $positions,
-        questions = $questions,
-        hash = $hash,
-        createdAt = $createdAt
+        questions = $questions
       WHERE
         id = $id;
     `);
@@ -39,16 +28,14 @@ export const updateSurvey = (props: EditSurvey) => {
       $areas: areas,
       $positions: positions,
       $questions: questions,
-      $hash: hash ?? "",
-      $createdAt: createdAt,
       $id: id,
     });
     query.finalize();
-    const survey = getSurveyById(id);
+    const survey = getSurveyById({ id });
     // the hash should never leave the database unattended
     delete survey.hash;
     return survey;
   } catch (error) {
-    throw new Error("Cannot create survey.");
+    throw new Error("Cannot update survey.");
   }
 };

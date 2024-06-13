@@ -20,6 +20,7 @@
     "@elysiajs/stream": "^1.0.2",
     "@gtramontina.com/elysia-tailwind": "github:jpbourgeon/elysia-tailwind#patch-1",
     "@sinclair/typebox": "^0.32.31",
+    "dayjs": "^1.11.11",
     "elysia": "^1.0.23",
     "elysia-helmet": "^1.0.2",
     "elysia-htmx": "^1.0.9",

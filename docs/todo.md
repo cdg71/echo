@@ -4,17 +4,9 @@
 
 ## sprintlog
 
-- [-] feat: administrer un sondage (Fonctionnalité principale du sprint)
+- [x] feat: administrer un sondage (Fonctionnalité principale du sprint)
   - [x] /new: Créer un nouveau sondage
-  - [-] /admin: gérer un sondage
-    - [x] login
-    - [x] logout
-    - [x] Show settings
-    - [x] Update settings
-    - [x] Delete survey
-    - [ ] Create snapshot
-    - [ ] Show snapshots
-    - [ ] Delete snapshot
+  - [x] /admin: gérer un sondage
 - [x] feat(backend): enable auth jwt
 - [x] feat(backend): appshell
 - [x] feat(backend): heroicons loader
@@ -26,9 +18,13 @@
 
 ## Backlog
 
-- Fixes
+- Fixes / Refactor
 
   - [ ] Fix: currently, serving build in production causes an error (call stack exceeded). Restore serving build file after <https://github.com/elysiajs/elysia/issues/643> has been fixed.
+  - [ ] Refactor the API to use proper HTTP ACTION VERBS for the entities CRUD actions : (GET POST PUT DELETE) => PUT /resource/:id = update, PUT /resource = POST /resource = create
+  - [ ] auth with access and refresh token instead of just an access token
+  - [ ] refactor API : separate /admin /survey /auth routes
+  - [ ] better components cutting
 
 - Frontend
 
@@ -39,6 +35,8 @@
     - [ ] component : results
   - /admin/:id
     - [ ] open / close quiz
+    - [ ] poll snapshot status dynamically
+    - [ ] confirm snapshot delete with a dialog
   - [ ] Cloud
     - [ ] /webhook/result : updates a snapshot
     - [ ] On delete survey, cleanup the cloud resources

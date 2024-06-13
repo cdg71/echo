@@ -1,7 +1,7 @@
+import type { EditSurvey } from "@src/entities/survey/dto/edit";
 import { fieldHasError } from "@src/utils/fieldHasErrors";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 import type { ValidationError } from "elysia";
-import type { EditSurvey } from "../dto/edit";
 
 export interface EditFormValidationError {
   errorCode?: string;
@@ -147,7 +147,8 @@ export const editFormComponent = async (props: EditFormProps) => {
           <textarea
             id="questions"
             name="questions"
-            placeholder="code-1;libellé de question 1\ncode-2;libellé de question 2"
+            placeholder={`q1;libellé de question 1
+q2;libellé de question 2`}
             class={`textarea ${fieldHasError({ fieldName: "questions", validationErrors, type: "textarea" })}`}
           >
             {questions}

@@ -1,8 +1,8 @@
 import { db } from "@src/config/database";
-import { getSurveyById } from "@src/entities/survey/dao";
+import { getSurveyById } from "@src/entities/survey/dao/getById";
+import dayjs from "dayjs";
 import type { EditSurvey } from "../dto/edit";
 
-// Create a new survey
 interface CreateSurveyProps {
   data: EditSurvey;
   hash: string;
@@ -26,10 +26,10 @@ export const createSurvey = (props: CreateSurveyProps) => {
       $positions: positions,
       $questions: questions,
       $hash: hash,
-      $createdAt: Date.now(),
+      $createdAt: dayjs().unix(),
     });
     query.finalize();
-    const survey = getSurveyById(id);
+    const survey = getSurveyById({ id });
     // the hash should never leave the database unattended
     delete survey.hash;
     return survey;

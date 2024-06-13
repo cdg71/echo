@@ -1,48 +1,46 @@
 import { password } from "bun";
 
-export const dbInitSQLStatements = `-- Table for Survey
-CREATE TABLE IF NOT EXISTS Survey (
-  id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  description TEXT,
-  context TEXT,
-  positions TEXT,
-  areas TEXT,
-  questions TEXT,
-  hash TEXT NOT NULL,
-  createdAt INTEGER NOT NULL
-);
-
--- Table for Snapshot
-CREATE TABLE IF NOT EXISTS Snapshot (
-  id TEXT PRIMARY KEY,
-  surveyId TEXT,
-  result TEXT,
-  createdAt INTEGER NOT NULL,
-  readyAt INTEGER,
-  FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
-);
-
--- Table for User
-CREATE TABLE IF NOT EXISTS User (
-  id TEXT PRIMARY KEY,
-  surveyId TEXT,
-  position TEXT,
-  area TEXT,
-  FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
-);
-
--- Table for ResponseSet
-CREATE TABLE IF NOT EXISTS ResponseSet (
-  id TEXT PRIMARY KEY,
-  surveyId TEXT,
-  userId TEXT,
-  responses TEXT,
-  createdAt INTEGER NOT NULL,
-  FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE,
-  FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
-);
-`;
+export const dbSetup = [
+  `-- Table for Survey
+  CREATE TABLE IF NOT EXISTS Survey (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT,
+    context TEXT,
+    positions TEXT,
+    areas TEXT,
+    questions TEXT,
+    hash TEXT NOT NULL,
+    createdAt INTEGER NOT NULL
+  );`,
+  `-- Table for Snapshot
+  CREATE TABLE IF NOT EXISTS Snapshot (
+    id TEXT PRIMARY KEY,
+    surveyId TEXT,
+    result TEXT,
+    createdAt INTEGER NOT NULL,
+    readyAt INTEGER,
+    FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
+  );`,
+  `-- Table for User
+  CREATE TABLE IF NOT EXISTS User (
+    id TEXT PRIMARY KEY,
+    surveyId TEXT,
+    position TEXT,
+    area TEXT,
+    FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
+  );`,
+  `-- Table for ResponseSet
+  CREATE TABLE IF NOT EXISTS ResponseSet (
+    id TEXT PRIMARY KEY,
+    surveyId TEXT,
+    userId TEXT,
+    responses TEXT,
+    createdAt INTEGER NOT NULL,
+    FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+  );`,
+];
 
 export const getSurveyTestDatasetStatement = async () => {
   const hash = await password.hash("test");

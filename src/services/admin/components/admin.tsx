@@ -1,10 +1,13 @@
 import { appShell } from "@src/components/appShell";
+import type { Snapshot } from "@src/entities/snapshot/schema";
+import type { EditSurvey } from "@src/entities/survey/dto/edit";
+import { snapshotsComponent } from "@src/services/snapshot/components/list";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
-import type { EditSurvey } from "../dto/edit";
 import { editFormComponent, type EditFormValidationError } from "./editForm";
 
-export type AdminProps = EditSurvey &
-  EditFormValidationError & { password?: string };
+export type AdminProps = { survey: EditSurvey } & {
+  snapshots?: Snapshot[];
+} & EditFormValidationError & { password?: string };
 
 export const adminComponent = async (props: AdminProps) => {
   const { password } = props;
@@ -101,12 +104,29 @@ export const adminComponent = async (props: AdminProps) => {
       <></>
     );
 
-  const captures = (
+  const snapshots = (
     <div>
-      <button class="btn btn-primary">Capturer maintenant</button>
+      <form
+        class="space-y-4"
+        hx-post="/snapshot"
+        hx-boost="true"
+        hx-target="body"
+      >
+        <button class="btn btn-primary" type="submit">
+          Capturer maintenant
+        </button>
+        <input
+          id="surveyId"
+          name="surveyId"
+          type="hidden"
+          class="hidden"
+          value={`${props.survey.id}`}
+        />
+      </form>
+      {snapshotsComponent(props.snapshots ?? [])}
     </div>
   );
-  const form = editFormComponent({ ...props, action: "update" });
+  const form = editFormComponent({ ...props.survey, action: "update" });
   const deleteSurvey = (
     <div>
       <button class="btn btn-warning" id="deleteSurveyBtn">
@@ -131,7 +151,7 @@ export const adminComponent = async (props: AdminProps) => {
                 id="id"
                 name="id"
                 type="text"
-                placeholder={props.id}
+                placeholder={props.survey.id}
                 class="input input-bordered"
                 required
               />
@@ -157,7 +177,7 @@ export const adminComponent = async (props: AdminProps) => {
   const content = (
     <div class="w-full max-w-lg space-y-4">
       <script
-        src="/static/scripts/general.js"
+        src="/static/scripts/admin.js"
         type="text/javascript"
         defer
       ></script>
@@ -171,7 +191,7 @@ export const adminComponent = async (props: AdminProps) => {
           <div class="collapse-title text-lg font-medium">
             {cameraIcon}&nbsp;Capturer les résultats
           </div>
-          <div class="collapse-content">{captures}</div>
+          <div class="collapse-content">{snapshots}</div>
         </div>
         <div class="collapse collapse-plus bg-slate-100">
           <input
@@ -200,7 +220,7 @@ export const adminComponent = async (props: AdminProps) => {
     content,
     navbar: {
       end: logoutNavButton,
-      center: <h1 class="text-2xl font-bold">{props.id}</h1>,
+      center: <h1 class="text-2xl font-bold">{props.survey.id}</h1>,
     },
   });
 };

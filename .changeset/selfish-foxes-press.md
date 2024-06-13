@@ -1,5 +1,5 @@
 ---
-"echo.cdg71.fr": patch
+"echo.cdg71.fr": minor
 ---
 
 This release includes the initial setup and configuration for the frontend, backend, and development environment, ensuring a solid foundation for the project.

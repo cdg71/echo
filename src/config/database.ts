@@ -1,7 +1,4 @@
-import {
-  dbInitSQLStatements,
-  getSurveyTestDatasetStatement,
-} from "@src/config/sql.ts";
+import { dbSetup, getSurveyTestDatasetStatement } from "@src/config/sql.ts";
 import { Database } from "bun:sqlite";
 
 export const db =
@@ -16,7 +13,6 @@ const executeTransaction = db.transaction((statements: string[]) => {
   }
 });
 
-const dbSetup = [dbInitSQLStatements];
 executeTransaction.exclusive(dbSetup);
 
 if (import.meta.env.NODE_ENV !== "production") {
