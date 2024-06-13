@@ -1,24 +1,26 @@
 interface Props {
-  title?: string;
-  children?: JSX.Element;
+  content?: JSX.Element;
 }
 const defaultProps: Props = {
-  title: "Echo",
-  children: <></>,
+  content: <></>,
 };
 
-export const appshellComponent = (props: Props) => {
-  const { title, children } = { ...defaultProps, ...props };
+export const htmlTemplate = (props?: Props) => {
+  const { content } = { ...defaultProps, ...props };
   return (
     <html data-theme="winter" lang="fr">
       <head>
-        <title>{title}</title>
+        <title>écho</title>
         <meta charset="UTF-8" />
+        <meta
+          name="description"
+          content="Outil d'analyse du sentiment assisté par l'intelligence artificielle."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/public/images/apple-touch-icon.png"
+          href="/static/images/apple-touch-icon.png"
         />
         <meta name="apple-mobile-web-app-title" content="Echo" />
         <meta name="application-name" content="Echo" />
@@ -28,25 +30,25 @@ export const appshellComponent = (props: Props) => {
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="/public/images/favicon-32x32.png"
+          href="/static/images/favicon-32x32.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href="/public/images/favicon-16x16.png"
+          href="/static/images/favicon-16x16.png"
         />
-        <link rel="manifest" href="/public/site.webmanifest" />
-        <link rel="mask-icon" href="/public/images/safari-pinned-tab.svg" />
+        <link rel="manifest" href="/static/site.webmanifest" />
+        <link rel="mask-icon" href="/static/images/safari-pinned-tab.svg" />
         <link
-          href="/public/styles/globals.css"
+          href="/static/styles/globals.css"
           rel="stylesheet"
           type="text/css"
         />
       </head>
-      <body>{children}</body>
-      <script src="/public/scripts/htmx.js"></script>
-      <script src="/public/scripts/sse.js"></script>
+      <script src="/static/scripts/htmx.js"></script>
+      <script src="/static/scripts/sse.js"></script>
+      <body>{content}</body>
     </html>
   );
 };

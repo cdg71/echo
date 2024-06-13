@@ -1,12 +1,13 @@
+import { Stream } from "@elysiajs/stream";
+import dayjs from "dayjs";
 import { Elysia } from "elysia";
 import { streamsStore } from "../store";
-import { Stream } from "@elysiajs/stream";
 
 export const subRoute = new Elysia()
   .use(streamsStore)
   .get("/sub/:streamid", ({ store, params }) => {
     const streamId = params.streamid;
-    const prevHeartbeat = Date.now();
+    const prevHeartbeat = dayjs().unix();
     const stream = new Stream();
     store.streams.push({
       id: streamId,

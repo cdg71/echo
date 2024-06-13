@@ -5,5 +5,6 @@ declare module "bun" {
     PORT: number;
     STREAM_CLEANER_CRON_PATTERN: keyof typeof Patterns;
     STREAM_EXPIRES_AFTER_SECONDS: number;
+    JWT_SECRET_PATH: string;
   }
 }
