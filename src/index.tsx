@@ -42,11 +42,10 @@ new Elysia()
     set.headers["Content-Type"] = "text/html; charset=utf8";
     return htmlTemplate({
       content: (
-        <div class="hero h-screen">
-          <div class="hero-content text-center">
-            <a href="/">
+        <div class="hero min-h-screen">
+          <div class="hero-content text-center flex flex-col">
+            <a href="/" class="mx-auto w-1/3">
               <img
-                class="mx-auto w-3/5 md:w-1/2 lg:w-3/4"
                 src="/static/images/page_not_found.svg"
                 alt="Page not found"
               />
