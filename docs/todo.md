@@ -4,15 +4,16 @@
 
 ## sprintlog
 
-- /:survey
-  - [x] component : appshell
-  - [x] Autoriser markdown <https://github.com/micromark/micromark> (safe: text formatting, lists, blockquotes, horizontal rules) pour personnaliser les sondages (description du sondage, description des questions) et les résultats
-  - [x] component : homepage
-  - [ ] manual seed script
-  - [ ] component : profile
-  - [ ] component : quiz
-  - [ ] component : results
-  - [ ] 404
+- feat(frontend) : survey public pages
+  - [x] feat : appshell
+  - [x] feat(backend) : Autoriser markdown <https://github.com/micromark/micromark> (safe: text formatting, lists, blockquotes, horizontal rules) pour personnaliser les sondages (description du sondage, description des questions) et les résultats
+  - [x] feat(backend) : manual seed script
+  - [x] feat : pages placeholders
+  - [x] feat : survey public home page
+  - [x] feat : 404
+  - [ ] survey public profile page
+  - [ ] survey public quiz page
+  - [ ] survey public results page
 
 ## Backlog
 
