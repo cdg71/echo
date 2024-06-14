@@ -1,6 +1,6 @@
 # Todo
 
-- categories: feat(epic): , feat: feature, feat(backend): backend only feature, feat(frontend): frontend only feature, fix: bugfix, docs: documentation, dev: developer environment, refactor: refactoring, perf: performance, test: test
+- categories: feat(epic): , feat: feature, feat(backend): backend only feature, feat(frontend): frontend only feature, fix: bugfix, docs: documentation, dev: developer, refactor: refactoring, perf: performance, test: test, prod: production
 
 ## sprintlog
 
@@ -10,10 +10,11 @@
   - [x] feat(backend) : manual seed script
   - [x] feat : pages placeholders
   - [x] feat : survey public home page
-  - [x] feat : 404
-  - [ ] survey public profile page
-  - [ ] survey public quiz page
-  - [ ] survey public results page
+  - [x] feat : 404 page
+  - [ ] feat : survey public profile page
+  - [ ] feat : survey public quiz page
+  - [ ] feat : survey public results page
+- [ ] prod: deployment via git pull + systemd daemon <https://bun.sh/guides/ecosystem/systemd>
 
 ## Backlog
 
@@ -47,7 +48,6 @@
   - [ ] CI/CD
     - [ ] Continuous Integration : Github actions : typecheck, lint, test, enforce conventional commit in the PR name and new changesets
     - [ ] Continuous delivery : Github release (changeset version and publish) + publish to ghcr.io
-    - [ ] On-Demand Deployment level 1 : git pull + systemd daemon <https://bun.sh/guides/ecosystem/systemd>
     - [ ] On-Demand Deployment level 2 : docker compose
   - [ ] Tests
     - [ ] Tests unitaires
@@ -66,3 +66,4 @@
   - [ ] auth with access and refresh token instead of just an access token
   - [ ] refactor API : separate /admin /survey /auth routes
   - [ ] better components cutting
+  - [ ] setup process : system dependencies (unzip, gh, bun), create missing folders (data > assets), create .env file (port 80), seed if needed, service registration
