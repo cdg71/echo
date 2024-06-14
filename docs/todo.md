@@ -11,6 +11,7 @@
   - [x] feat : pages placeholders
   - [x] feat : survey public home page
   - [x] feat : 404 page
+  - [x] fix : remove cors & helmet plugin. they are nginx responsibilities
   - [ ] feat : survey public profile page
   - [ ] feat : survey public quiz page
   - [ ] feat : survey public results page

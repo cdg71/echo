@@ -1,4 +1,3 @@
-import { cors } from "@elysiajs/cors";
 import { html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
 import { tailwind } from "@gtramontina.com/elysia-tailwind";
@@ -7,14 +6,11 @@ import { adminService } from "@src/services/admin";
 import { homepageService } from "@src/services/homepage";
 import { streamsService } from "@src/services/streams";
 import { Elysia } from "elysia";
-import { helmet } from "elysia-helmet";
 import { htmlTemplate } from "./components/htmlTemplate";
 import { snapshotService } from "./services/snapshot";
 import { surveyService } from "./services/survey";
 
 new Elysia()
-  .use(cors())
-  .use(helmet())
   .use(html())
   .use(staticPlugin({ prefix: "/static", assets: "src/static" }))
   .use(
