@@ -6,11 +6,13 @@
 
 - /:survey
   - [x] component : appshell
-  - [ ] Autoriser markdown <https://github.com/micromark/micromark> (safe: text formatting, lists, blockquotes, horizontal rules) pour personnaliser les sondages (description du sondage, description des questions) et les résultats
-  - [ ] component : homepage
+  - [x] Autoriser markdown <https://github.com/micromark/micromark> (safe: text formatting, lists, blockquotes, horizontal rules) pour personnaliser les sondages (description du sondage, description des questions) et les résultats
+  - [x] component : homepage
+  - [ ] manual seed script
   - [ ] component : profile
   - [ ] component : quiz
   - [ ] component : results
+  - [ ] 404
 
 ## Backlog
 

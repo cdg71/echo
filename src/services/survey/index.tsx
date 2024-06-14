@@ -4,7 +4,10 @@ import { getSurveyById } from "@src/entities/survey/dao/getById";
 import { AuthJwt, AuthModel } from "@src/entities/survey/dto/auth";
 import { SurveyId } from "@src/entities/survey/dto/id";
 import { Elysia } from "elysia";
+import { gotoSurveyComponent } from "../homepage/components/gotoSurvey";
+import { homepageLayoutComponent } from "../homepage/components/layout";
 import { homeComponent } from "./components/home";
+import { noDataComponent } from "./components/noData";
 import { publicComponent } from "./components/public";
 
 export const surveyService = new Elysia()
@@ -25,17 +28,128 @@ export const surveyService = new Elysia()
     },
     {
       query: SurveyId,
+      error: ({ set }) => {
+        set.headers["Content-Type"] = "text/html; charset=utf8";
+        set.headers["HX-Replace-Url"] = `/`;
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent(),
+        });
+      },
     }
   )
   .get(
     "/:id",
-    ({ params }) => {
-      const { id } = params;
-      const survey = getSurveyById({ id });
-      const content = homeComponent({ survey });
-      return publicComponent({ survey, content });
+    ({ params, set }) => {
+      try {
+        const { id } = params;
+        const survey = getSurveyById({ id });
+
+        const content = homeComponent({ survey });
+        return publicComponent({ survey, content });
+      } catch (error) {
+        set.headers["HX-Replace-Url"] = `/`;
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent({ id: params.id }),
+        });
+      }
     },
     {
       params: SurveyId,
+      error: ({ set }) => {
+        set.headers["Content-Type"] = "text/html; charset=utf8";
+        set.headers["HX-Replace-Url"] = `/`;
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent(),
+        });
+      },
+    }
+  )
+  .get(
+    "/:id/profile",
+    ({ params, set }) => {
+      try {
+        const { id } = params;
+        const survey = getSurveyById({ id });
+
+        return publicComponent({
+          survey,
+          content: noDataComponent({ survey }),
+        });
+      } catch (error) {
+        set.headers["HX-Replace-Url"] = `/`;
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent({ id: params.id }),
+        });
+      }
+    },
+    {
+      params: SurveyId,
+      error: ({ set }) => {
+        set.headers["Content-Type"] = "text/html; charset=utf8";
+        set.headers["HX-Replace-Url"] = `/`;
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent(),
+        });
+      },
+    }
+  )
+  .get(
+    "/:id/quiz",
+    ({ params, set }) => {
+      try {
+        const { id } = params;
+        const survey = getSurveyById({ id });
+
+        return publicComponent({
+          survey,
+          content: noDataComponent({ survey }),
+        });
+      } catch (error) {
+        set.headers["Content-Type"] = "text/html; charset=utf8";
+        set.headers["HX-Replace-Url"] = `/`;
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent({ id: params.id }),
+        });
+      }
+    },
+    {
+      params: SurveyId,
+      error: ({ set }) => {
+        set.headers["Content-Type"] = "text/html; charset=utf8";
+        set.headers["HX-Replace-Url"] = `/`;
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent(),
+        });
+      },
+    }
+  )
+  .get(
+    "/:id/result",
+    ({ params, set }) => {
+      try {
+        const { id } = params;
+        const survey = getSurveyById({ id });
+
+        return publicComponent({
+          survey,
+          content: noDataComponent({ survey }),
+        });
+      } catch (error) {
+        set.headers["Content-Type"] = "text/html; charset=utf8";
+        set.headers["HX-Replace-Url"] = `/`;
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent({ id: params.id }),
+        });
+      }
+    },
+    {
+      params: SurveyId,
+      error: ({ set }) => {
+        set.headers["Content-Type"] = "text/html; charset=utf8";
+        set.headers["HX-Replace-Url"] = `/`;
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent(),
+        });
+      },
     }
   );

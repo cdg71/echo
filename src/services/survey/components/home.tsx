@@ -21,19 +21,37 @@ export const homeComponent = (props: Props) => {
   });
   const { survey } = props;
   return (
-    <div class="hero max-h-screen">
-      <div class="hero-content text-center w-">
+    <div class="hero max-h-screen" style="height: calc(100vh - 8rem);">
+      <div class="hero-content text-center">
         <div class="max-w-md prose prose-sm md:prose-base prose-img:mx-auto prose-img:w-3/5 prose-img:md:w-1/2 prose-img:lg:w-3/4">
           {micromark(survey.description)}
-          <button class="btn btn-primary w-3/4 my-2">
+          <button
+            class="btn btn-primary w-3/4 my-2"
+            hx-get={`/${props.survey.id}/profile`}
+            hx-boost="true"
+            hx-push-url="true"
+            hx-target="body"
+          >
             {profileIcon}&nbsp;Mon profil
           </button>
           <br />
-          <button class="btn btn-secondary w-3/4 my-2">
+          <button
+            class="btn btn-secondary w-3/4 my-2"
+            hx-get={`/${props.survey.id}/quiz`}
+            hx-boost="true"
+            hx-push-url="true"
+            hx-target="body"
+          >
             {quizIcon}&nbsp;Répondre au quiz
           </button>
           <br />
-          <button class="btn btn-accent w-3/4 my-2">
+          <button
+            class="btn btn-accent w-3/4 my-2"
+            hx-get={`/${props.survey.id}/result`}
+            hx-boost="true"
+            hx-push-url="true"
+            hx-target="body"
+          >
             {resultIcon}&nbsp;Résultats
           </button>
         </div>
