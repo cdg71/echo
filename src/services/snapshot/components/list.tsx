@@ -18,23 +18,28 @@ export const snapshotsComponent = async (props: Snapshot[]) => {
   return (
     <>
       {props.map((snapshot) => (
-        <div role="alert" class="alert my-2 bg-white bordered">
-          {!snapshot.readyAt ? checkIcon : cloudIcon}
-          <span>
+        <div
+          role="alert"
+          class="alert my-2 bg-white bordered border-neutral-200 flex flex-row space-x-0"
+        >
+          <div>{!snapshot.readyAt ? checkIcon : cloudIcon}</div>
+          <div>
             {dayjs.unix(snapshot.createdAt).format("DD/MM/YYYY HH:mm:ss")}
-          </span>
-          {!snapshot.readyAt ? (
-            <button
-              class="text-gray-600 hover:text-gray-800 float-left"
-              hx-delete={`/snapshot/${snapshot.id}`}
-              hx-boost="true"
-              hx-target="body"
-            >
-              {dismissIcon}
-            </button>
-          ) : (
-            <></>
-          )}
+          </div>
+          <div class="flex flex-grow flex-row-reverse">
+            {!snapshot.readyAt ? (
+              <button
+                class="text-gray-600 hover:text-gray-800"
+                hx-delete={`/snapshot/${snapshot.id}`}
+                hx-boost="true"
+                hx-target="body"
+              >
+                {dismissIcon}
+              </button>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       ))}
     </>
