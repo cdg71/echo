@@ -6,16 +6,16 @@ interface Props {
   survey: Survey;
 }
 
-export const homeComponent = (props: Props) => {
-  const profileIcon = loadHeroIcons({
+export const homeComponent = async (props: Props) => {
+  const profileIcon = await loadHeroIcons({
     iconName: "user-circle",
     className: "size-6 md:size-8",
   });
-  const quizIcon = loadHeroIcons({
+  const quizIcon = await loadHeroIcons({
     iconName: "queue-list",
     className: "size-6 md:size-8",
   });
-  const resultIcon = loadHeroIcons({
+  const resultIcon = await loadHeroIcons({
     iconName: "chart-pie",
     className: "size-6 md:size-8",
   });
@@ -23,35 +23,28 @@ export const homeComponent = (props: Props) => {
   return (
     <div class="hero max-h-screen lg:pt-10">
       <div class="hero-content text-center">
-        <div class="max-w-md prose prose-sm md:prose-base prose-img:mx-auto prose-img:w-3/5 prose-img:md:w-1/2 prose-img:lg:w-3/4">
+        <div class="min-w-md prose prose-sm md:prose-base prose-img:mx-auto prose-img:w-3/5 prose-img:md:w-1/2 prose-img:lg:w-3/4">
           {micromark(survey.description)}
           <button
             class="btn btn-primary w-3/4 my-2"
-            hx-get={`/${props.survey.id}/profile`}
-            hx-boost="true"
-            hx-push-url="false"
-            hx-target="body"
+            hx-get={`/${props.survey.id}/fragment/profile`}
+            hx-target="#appshellContent"
           >
             {profileIcon}&nbsp;Mon profil
           </button>
           <br />
           <button
             class="btn btn-secondary w-3/4 my-2"
-            hx-get={`/${props.survey.id}/quiz`}
-            hx-boost="true"
-            hx-push-url="false"
-            hx-target="body"
+            hx-get={`/${props.survey.id}/fragment/quiz`}
+            hx-target="#appshellContent"
           >
             {quizIcon}&nbsp;Répondre au quiz
           </button>
           <br />
           <button
             class="btn btn-accent w-3/4 my-2"
-            hx-get={`/${props.survey.id}/result`}
-            hx-boost="false"
-            hx-push-url="false"
+            hx-get={`/${props.survey.id}/fragment/result`}
             hx-target="#appshellContent"
-            hx-swap="innerHTML"
           >
             {resultIcon}&nbsp;Résultats
           </button>

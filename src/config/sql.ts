@@ -21,13 +21,14 @@ export const dbSetup = [
     createdAt INTEGER NOT NULL,
     readyAt INTEGER,
     FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
-  );`,
-  `-- Table for User
-  CREATE TABLE IF NOT EXISTS User (
+    );`,
+  `-- Table for Profile
+  CREATE TABLE IF NOT EXISTS Profile (
     id TEXT PRIMARY KEY,
     surveyId TEXT,
     position TEXT,
     area TEXT,
+    createdAt INTEGER NOT NULL,
     FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
   );`,
   `-- Table for ResponseSet

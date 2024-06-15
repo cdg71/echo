@@ -50,25 +50,24 @@ export const publicComponent = (props: Props) => {
         <ul class="menu menu-sm md:menu-md lg:menu-lg menu-horizontal rounded-box">
           <li>
             <a
-              href={`/${survey.id}/profile`}
-              hx-boost="true"
-              hx-push-url="false"
+              hx-get={`/${survey.id}/fragment/profile`}
+              hx-target="#appshellContent"
             >
               {profileIcon}
             </a>
           </li>
           <li>
-            <a href={`/${survey.id}/quiz`} hx-boost="true" hx-push-url="false">
+            <a
+              hx-get={`/${survey.id}/fragment/quiz`}
+              hx-target="#appshellContent"
+            >
               {quizIcon}
             </a>
           </li>
           <li>
             <a
-              hx-get={`/${survey.id}/result`}
-              hx-boost="false"
+              hx-get={`/${survey.id}/fragment/result`}
               hx-target="#appshellContent"
-              hx-push-url="false"
-              hx-swap="innerHTML"
             >
               {resultIcon}
             </a>
