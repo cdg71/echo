@@ -1,13 +1,18 @@
 import { createProfile } from "@src/entities/profile/dao/create";
 import { getProfileById } from "@src/entities/profile/dao/getById";
+import { updateProfile } from "@src/entities/profile/dao/update";
+import { EditProfile } from "@src/entities/profile/dto/editProfile";
 import { ProfilesCookie } from "@src/entities/profile/dto/profilesCookie";
 import { getSurveyById } from "@src/entities/survey/dao/getById";
 import { SurveyId } from "@src/entities/survey/dto/id";
+import { parseSurvey } from "@src/entities/survey/dto/parsedSurvey";
+import { transpileForBrowsers } from "@src/utils/transpileForBrowsers";
 import { Elysia, redirect } from "elysia";
 import { gotoSurveyComponent } from "../homepage/components/gotoSurvey";
 import { homepageLayoutComponent } from "../homepage/components/layout";
 import { homeComponent } from "./components/home";
 import { noDataComponent } from "./components/noData";
+import { profileComponent } from "./components/profile";
 import { publicComponent } from "./components/public";
 
 export const surveyService = new Elysia()
@@ -73,11 +78,46 @@ export const surveyService = new Elysia()
               }
             },
           })
-          .get("/profile", async ({ params }) => {
+          .get("/profile", async ({ params, cookie: { profiles } }) => {
             const { id } = params;
+            const profile = getProfileById({ id: profiles.value[id] });
             const survey = getSurveyById({ id });
-            return await noDataComponent({ survey });
+            const parsedSurvey = parseSurvey({ survey });
+            return await profileComponent({ parsedSurvey, profile });
           })
+          .post(
+            "/profile",
+            async ({ body, params, cookie: { profiles } }) => {
+              try {
+                const { id } = params;
+                const survey = getSurveyById({ id });
+                const profile = updateProfile({
+                  id: profiles.value[id],
+                  ...body,
+                });
+                console.log(profile);
+                const parsedSurvey = parseSurvey({ survey });
+                return await profileComponent({
+                  parsedSurvey,
+                  profile,
+                  status: "success",
+                });
+              } catch (error) {
+                const { id } = params;
+                const survey = getSurveyById({ id });
+                const profile = getProfileById({ id: profiles.value[id] });
+                const parsedSurvey = parseSurvey({ survey });
+                return await profileComponent({
+                  parsedSurvey,
+                  profile,
+                  status: "error",
+                });
+              }
+            },
+            {
+              body: EditProfile,
+            }
+          )
           .get("/quiz", async ({ params }) => {
             const { id } = params;
             const survey = getSurveyById({ id });
@@ -100,4 +140,8 @@ export const surveyService = new Elysia()
       `${import.meta.env.CLOUD_ENDPOINT_URL}/output/${params["*"]}`
     );
     return result;
+  })
+  .get("/static/scripts/profile.js", async ({ set }) => {
+    set.headers["Content-Type"] = "text/javascript; charset=utf8";
+    return await transpileForBrowsers(`${__dirname}/scripts/profile.ts`);
   });

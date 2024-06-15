@@ -4,7 +4,7 @@ import Elysia, { t } from "elysia";
 export const Profile = t.Object({
   id: t.String(),
   surveyId: t.String(),
-  position: t.Optional(t.Number()),
+  position: t.Optional(t.String()),
   area: t.Optional(t.String()),
   createdAt: t.Number(),
 });

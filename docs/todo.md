@@ -6,18 +6,18 @@
 
 - feat(frontend) : survey public pages
   - [x] prod: setup de l'environnement de production on-prem ; déploiement par git pull + systemd daemon <https://bun.sh/guides/ecosystem/systemd>
-  - [x] feat : appshell
+  - [x] refactor : appshell
   - [x] feat(backend) : Autoriser markdown <https://github.com/micromark/micromark> (safe: text formatting, lists, blockquotes, horizontal rules) pour personnaliser les sondages (description du sondage, description des questions) et les résultats
+  - [x] feat(backend) : entité profile
   - [x] feat(backend) : manual seed script
   - [x] feat : pages placeholders
   - [x] feat : survey public home page
   - [x] feat : 404 page
   - [x] fix : remove cors & helmet plugin. they are nginx responsibilities
-  - [ ] feat: public profil - Lorsque j'arrive sur un sondage, si je n'ai pas de profil on me crée un profil en base et un token associé automatiquement. Si j'ai un token mais pas de profil correspondant il est écrasé par un nouveau profil.
-  - [ ] feat : survey public profile page read / update
-    - je peux compléter mon profil (CRUD)
+  - [x] feat: public profil - Lorsque j'arrive sur un sondage, si je n'ai pas de profil on me crée un profil en base et un token associé automatiquement. Si j'ai un token mais pas de profil correspondant il est écrasé par un nouveau profil.
+  - [x] feat : survey public profile page read / update
   - [ ] feat : survey public quiz page
-  - [ ] feat : survey public results page
+  - [ ] feat : survey public results page => sexy cloud result
 
 ## Backlog
 
@@ -34,7 +34,6 @@
 
 - Backend
 
-  - [ ] entité profile
   - [ ] entité response
   - [ ] génération et exploitation des résultats de l'IA
   - [ ] cron: backup (data folder : database dump + assets)
