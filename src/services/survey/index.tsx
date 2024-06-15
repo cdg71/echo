@@ -123,17 +123,31 @@ export const surveyService = new Elysia()
       },
     }
   )
+  .get("/js/*", async ({ params }) => {
+    const result = await fetch(
+      `${import.meta.env.CLOUD_ENDPOINT_URL}/js/${params["*"]}`
+    );
+    return result;
+  })
+  .get("/output/*", async ({ params }) => {
+    const result = await fetch(
+      `${import.meta.env.CLOUD_ENDPOINT_URL}/output/${params["*"]}`
+    );
+    return result;
+  })
   .get(
     "/:id/result",
-    ({ params, set }) => {
+    async ({ params, set }) => {
       try {
-        const { id } = params;
-        const survey = getSurveyById({ id });
+        // const { id } = params;
+        // const survey = getSurveyById({ id });
 
-        return publicComponent({
-          survey,
-          content: noDataComponent({ survey }),
-        });
+        // return publicComponent({
+        //   survey,
+        //   content: noDataComponent({ survey }),
+        // });
+        const result = await fetch(import.meta.env.CLOUD_ENDPOINT_URL);
+        return result;
       } catch (error) {
         set.headers["Content-Type"] = "text/html; charset=utf8";
         set.headers["HX-Replace-Url"] = `/`;

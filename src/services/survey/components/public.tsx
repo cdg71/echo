@@ -49,17 +49,27 @@ export const publicComponent = (props: Props) => {
       end: (
         <ul class="menu menu-sm md:menu-md lg:menu-lg menu-horizontal rounded-box">
           <li>
-            <a href={`/${survey.id}/profile`} hx-boost="true">
+            <a
+              href={`/${survey.id}/profile`}
+              hx-boost="true"
+              hx-push-url="false"
+            >
               {profileIcon}
             </a>
           </li>
           <li>
-            <a href={`/${survey.id}/quiz`} hx-boost="true">
+            <a href={`/${survey.id}/quiz`} hx-boost="true" hx-push-url="false">
               {quizIcon}
             </a>
           </li>
           <li>
-            <a href={`/${survey.id}/result`} hx-boost="true">
+            <a
+              hx-get={`/${survey.id}/result`}
+              hx-boost="false"
+              hx-target="#appshellContent"
+              hx-push-url="false"
+              hx-swap="innerHTML"
+            >
               {resultIcon}
             </a>
           </li>

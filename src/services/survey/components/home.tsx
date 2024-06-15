@@ -29,7 +29,7 @@ export const homeComponent = (props: Props) => {
             class="btn btn-primary w-3/4 my-2"
             hx-get={`/${props.survey.id}/profile`}
             hx-boost="true"
-            hx-push-url="true"
+            hx-push-url="false"
             hx-target="body"
           >
             {profileIcon}&nbsp;Mon profil
@@ -39,7 +39,7 @@ export const homeComponent = (props: Props) => {
             class="btn btn-secondary w-3/4 my-2"
             hx-get={`/${props.survey.id}/quiz`}
             hx-boost="true"
-            hx-push-url="true"
+            hx-push-url="false"
             hx-target="body"
           >
             {quizIcon}&nbsp;Répondre au quiz
@@ -48,9 +48,10 @@ export const homeComponent = (props: Props) => {
           <button
             class="btn btn-accent w-3/4 my-2"
             hx-get={`/${props.survey.id}/result`}
-            hx-boost="true"
-            hx-push-url="true"
-            hx-target="body"
+            hx-boost="false"
+            hx-push-url="false"
+            hx-target="#appshellContent"
+            hx-swap="innerHTML"
           >
             {resultIcon}&nbsp;Résultats
           </button>
