@@ -73,7 +73,8 @@ export const adminService = new Elysia()
         });
         set.headers["HX-Push-Url"] = `/admin/${survey.id}`;
         set.headers["HX-Replace-Url"] = `/admin/${survey.id}`;
-        return await adminComponent({ survey, password });
+        const snapshots = listSnapshotsBySurveyId({ surveyId: survey.id });
+        return await adminComponent({ survey, password, snapshots });
       }
       throw new Error("Invalid data");
     },
@@ -100,7 +101,8 @@ export const adminService = new Elysia()
       if (claim && claim.id === body.id) {
         if (Value.Check(EditSurvey, body)) {
           const survey = updateSurvey(body);
-          return await adminComponent({ survey });
+          const snapshots = listSnapshotsBySurveyId({ surveyId: survey.id });
+          return await adminComponent({ survey, snapshots });
         }
         throw new Error("Invalid data");
       } else {
@@ -116,9 +118,11 @@ export const adminService = new Elysia()
       async error({ code, set, error, body }) {
         set.status = 200;
         set.headers["HX-Push-Url"] = "false";
+        const snapshots = listSnapshotsBySurveyId({ surveyId: body.id });
         const props = {
           survey: body,
           errorCode: code,
+          snapshots,
         } as AdminProps;
         if (code === "VALIDATION") props.validationErrors = error;
         return await adminComponent(props);
