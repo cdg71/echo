@@ -31,12 +31,12 @@ export const dbSetup = [
     createdAt INTEGER NOT NULL,
     FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
   );`,
-  `-- Table for ResponseSet
-  CREATE TABLE IF NOT EXISTS ResponseSet (
+  `-- Table for Response
+  CREATE TABLE IF NOT EXISTS Response (
     id TEXT PRIMARY KEY,
     surveyId TEXT,
     userId TEXT,
-    responses TEXT,
+    answersJson TEXT,
     createdAt INTEGER NOT NULL,
     FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE,
     FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE

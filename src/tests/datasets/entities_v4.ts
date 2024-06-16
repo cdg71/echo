@@ -20,7 +20,7 @@ export interface Snapshot {
 }
 
 // Utilisateur
-export interface User {
+export interface Profile {
   id: string;
   surveyId: string;
   position: string;
@@ -28,10 +28,10 @@ export interface User {
 }
 
 // Jeu de réponses aux question d'un sondage
-export interface ResponseSet {
+export interface Response {
   id: string;
   surveyId: string;
   userId: string;
-  responses: string; // csv: question;sentiment;commentaire
+  json: string; // csv: question;sentiment;commentaire
   createdAt: string;
 }

@@ -38,7 +38,7 @@ export const homeComponent = async (props: Props) => {
             hx-get={`/${props.survey.id}/fragment/quiz`}
             hx-target="#appshellContent"
           >
-            {quizIcon}&nbsp;Répondre au quiz
+            {quizIcon}&nbsp;Répondre au sondage
           </button>
           <br />
           <button

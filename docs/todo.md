@@ -15,9 +15,13 @@
   - [x] fix : remove cors & helmet plugin. they are nginx responsibilities
   - [x] feat: profile page
     - [x] feat(backend) : entité profile
-    - [x] feat: public profil - Lorsque j'arrive sur un sondage, si je n'ai pas de profil on me crée un profil en base et un token associé automatiquement. Si j'ai un token mais pas de profil correspondant il est écrasé par un nouveau profil.
-    - [x] feat : survey public profile page read / update
+    - [x] feat: cookie for profile tracking
+    - [x] feat : profile read / update
+    - [x] feat(backend) : profile test data
   - [ ] feat : survey public quiz page
+    - [x] feat(backend): entité Response
+    - [ ] feat : response read / update
+    - [ ] feat(backend): Response test data
   - [ ] feat : survey public results page => sexy cloud result
 
 ## Backlog
