@@ -10,7 +10,7 @@ try {
     }
   });
   executeTransaction.exclusive(dbSetup);
-  const testDataset = [await getSurveyTestDatasetStatement()];
+  const testDataset = await getSurveyTestDatasetStatement();
   executeTransaction.exclusive(testDataset);
   console.log({ status: "success" });
 } catch (error) {

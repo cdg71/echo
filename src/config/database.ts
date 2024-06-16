@@ -16,6 +16,6 @@ const executeTransaction = db.transaction((statements: string[]) => {
 executeTransaction.exclusive(dbSetup);
 
 if (import.meta.env.NODE_ENV !== "production") {
-  const testDataset = [await getSurveyTestDatasetStatement()];
+  const testDataset = await getSurveyTestDatasetStatement();
   executeTransaction.exclusive(testDataset);
 }
