@@ -39,6 +39,9 @@ export const profileComponent = async (props: Props) => {
         id="alert"
         role="alert"
         class={`flex flex-row alert ${status === "error" ? "alert-error" : "alert-success"} mb-4 ${!status ? "hidden" : ""}`}
+        hx-get="/empty"
+        hx-trigger="load delay:2s"
+        hx-swap="outerHTML"
       >
         <div class={`flex-grow prose ${status === "error" ? "hidden" : ""}`}>
           <strong>Votre profil a été enregistré avec succès.</strong>

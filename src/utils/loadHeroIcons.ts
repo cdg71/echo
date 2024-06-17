@@ -63,7 +63,6 @@ export const loadHeroIcons = async (props: Props) => {
 
     return svgContent;
   } catch (error) {
-    console.error(`Error loading SVG file ${family}:`, error);
     return ""; // Return empty string in case of error
   }
 };

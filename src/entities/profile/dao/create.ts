@@ -21,8 +21,6 @@ export const createProfile = (props: ProfileSurveyId) => {
     const profile = getProfileById({ id });
     return profile;
   } catch (error) {
-    console.log(error);
-
     throw new Error("Cannot create profile.");
   }
 };

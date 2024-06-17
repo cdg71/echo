@@ -13,7 +13,7 @@ export const updateResponse = (props: UpdateResponse) => {
     const query = db.prepare(`
       UPDATE Response
       SET
-        answersJson = $answersJson,
+        answersJson = $answersJson
       WHERE
         id = $id;
     `);
@@ -25,6 +25,7 @@ export const updateResponse = (props: UpdateResponse) => {
     const res = getResponseById({ id: storedResponse.id });
     return res;
   } catch (error) {
+    console.log(error);
     throw new Error("Cannot update response.");
   }
 };

@@ -35,11 +35,11 @@ export const dbSetup = [
   CREATE TABLE IF NOT EXISTS Response (
     id TEXT PRIMARY KEY,
     surveyId TEXT,
-    userId TEXT,
+    profileId TEXT,
     answersJson TEXT,
     createdAt INTEGER NOT NULL,
     FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE,
-    FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+    FOREIGN KEY (profileId) REFERENCES Profile(id) ON DELETE CASCADE
   );`,
 ];
 

@@ -21,8 +21,6 @@ export const createSnapshot = (props: SnapshotSurveyId) => {
     const snapshot = getSnapshotById({ id });
     return snapshot;
   } catch (error) {
-    console.log(error);
-
     throw new Error("Cannot create snapshot.");
   }
 };
