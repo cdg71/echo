@@ -94,7 +94,7 @@ const responseForm = async (props: ResponseFormProps) => {
       })}
       <div class="space-x-2">
         <button type="submit" class="btn btn-primary">
-          {response ? "Enregistrer les modifications" : "Ajouter"}
+          Enregistrer
         </button>
       </div>
     </>
@@ -145,28 +145,30 @@ const alertComponent = async (props: Pick<QuizComponentProps, "status">) => {
     className: "size-6",
   });
   return (
-    <div
-      id="alert"
-      role="alert"
-      class={`flex flex-row alert ${status === "error" ? "alert-error" : "alert-success"} mb-4 ${!status ? "hidden" : ""}`}
-      hx-get="/empty"
-      hx-trigger="load delay:2s"
-      hx-swap="outerHTML"
-    >
-      <div class={`flex-grow prose ${status === "error" ? "hidden" : ""}`}>
-        <strong>Votre réponse a été enregistrée avec succès.</strong>
-      </div>
-      <div class={`flex-grow prose ${status === "success" ? "hidden" : ""}`}>
-        <strong>L'enregistrement de votre réponse a échoué.</strong>
-      </div>
-      <button
-        class="text-gray-600 hover:text-gray-800"
+    <div class={`${!status ? "hidden" : ""}`}>
+      <div
+        id="alert"
+        role="alert"
+        class={`flex flex-row alert ${status === "error" ? "alert-error" : "alert-success"} mb-4`}
         hx-get="/empty"
-        hx-swap="delete"
-        hx-target="#alert"
+        hx-trigger="load delay:2s"
+        hx-swap="outerHTML"
       >
-        {dismissIcon}
-      </button>
+        <div class={`flex-grow prose ${status === "error" ? "hidden" : ""}`}>
+          <strong>Votre réponse a été enregistrée avec succès.</strong>
+        </div>
+        <div class={`flex-grow prose ${status === "success" ? "hidden" : ""}`}>
+          <strong>L'enregistrement de votre réponse a échoué.</strong>
+        </div>
+        <button
+          class="text-gray-600 hover:text-gray-800"
+          hx-get="/empty"
+          hx-swap="delete"
+          hx-target="#alert"
+        >
+          {dismissIcon}
+        </button>
+      </div>
     </div>
   );
 };

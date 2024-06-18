@@ -34,29 +34,33 @@ export const profileComponent = async (props: Props) => {
   });
 
   return (
-    <div class="space-y-4 w-full md:pt-6 max-w-lg">
-      <div
-        id="alert"
-        role="alert"
-        class={`flex flex-row alert ${status === "error" ? "alert-error" : "alert-success"} mb-4 ${!status ? "hidden" : ""}`}
-        hx-get="/empty"
-        hx-trigger="load delay:2s"
-        hx-swap="outerHTML"
-      >
-        <div class={`flex-grow prose ${status === "error" ? "hidden" : ""}`}>
-          <strong>Votre profil a été enregistré avec succès.</strong>
-        </div>
-        <div class={`flex-grow prose ${status === "success" ? "hidden" : ""}`}>
-          <strong>L'enregistrement du profil a échoué.</strong>
-        </div>
-        <button
-          class="text-gray-600 hover:text-gray-800"
+    <div class={`${!status ? "hidden" : ""}`}>
+      <div class="space-y-4 w-full md:pt-6 max-w-lg">
+        <div
+          id="alert"
+          role="alert"
+          class={`flex flex-row alert ${status === "error" ? "alert-error" : "alert-success"} mb-4`}
           hx-get="/empty"
-          hx-swap="delete"
-          hx-target="#alert"
+          hx-trigger="load delay:2s"
+          hx-swap="outerHTML"
         >
-          {dismissIcon}
-        </button>
+          <div class={`flex-grow prose ${status === "error" ? "hidden" : ""}`}>
+            <strong>Votre profil a été enregistré avec succès.</strong>
+          </div>
+          <div
+            class={`flex-grow prose ${status === "success" ? "hidden" : ""}`}
+          >
+            <strong>L'enregistrement du profil a échoué.</strong>
+          </div>
+          <button
+            class="text-gray-600 hover:text-gray-800"
+            hx-get="/empty"
+            hx-swap="delete"
+            hx-target="#alert"
+          >
+            {dismissIcon}
+          </button>
+        </div>
       </div>
       <form
         class="space-y-4"
