@@ -21,9 +21,9 @@ export const homeComponent = async (props: Props) => {
   });
   const { survey } = props;
   return (
-    <div class="hero max-h-screen lg:pt-10">
+    <div class="hero max-h-screen">
       <div class="hero-content text-center">
-        <div class="min-w-md prose prose-sm md:prose-base prose-img:mx-auto prose-img:w-3/5 prose-img:md:w-1/2 prose-img:lg:w-3/4">
+        <div class="min-w-md prose prose-sm md:prose-base prose-img:mx-auto prose-img:w-3/5 prose-img:md:w-3/12 prose-img:lg:w-3/4">
           {micromark(survey.description)}
           <button
             class="btn btn-primary w-3/4 my-2"

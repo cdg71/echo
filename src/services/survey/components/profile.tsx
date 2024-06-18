@@ -80,7 +80,7 @@ export const profileComponent = async (props: Props) => {
           </select>
         </label>
         <label class="form-control">
-          <span class="label-text">Secteur géographique</span>
+          <span class="label-text">Territoire</span>
           <select id="area" name="area" class="select select-bordered w-full">
             {createOptionsJsx({
               values: survey.areas,

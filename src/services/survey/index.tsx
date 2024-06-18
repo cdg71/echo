@@ -23,6 +23,7 @@ import { homeComponent } from "./components/home";
 import { profileComponent } from "./components/profile";
 import { publicComponent } from "./components/public";
 import { quizComponent } from "./components/quiz";
+import { dummyComponent, resultComponent } from "./components/result";
 
 export const surveyService = new Elysia()
   .get(
@@ -247,8 +248,7 @@ export const surveyService = new Elysia()
             });
           })
           .get("/result", async () => {
-            const result = await fetch(import.meta.env.CLOUD_ENDPOINT_URL);
-            return result;
+            return resultComponent();
           })
       )
   )
@@ -267,4 +267,15 @@ export const surveyService = new Elysia()
   .get("/static/scripts/profile.js", async ({ set }) => {
     set.headers["Content-Type"] = "text/javascript; charset=utf8";
     return await transpileForBrowsers(`${__dirname}/scripts/profile.ts`);
+  })
+  .get("/static/scripts/result.js", ({ set }) => {
+    set.headers["Content-Type"] = "text/javascript; charset=utf8";
+    return Bun.file(`${__dirname}/scripts/result.js`);
+  })
+  .get("/static/scripts/chart.js", ({ set }) => {
+    set.headers["Content-Type"] = "text/javascript; charset=utf8";
+    return Bun.file("node_modules/chart.js/dist/chart.umd.js");
+  })
+  .get("/dummy", async () => {
+    return dummyComponent();
   });
