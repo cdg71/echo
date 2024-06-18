@@ -4,26 +4,6 @@
 
 ## sprintlog
 
-- feat(frontend) : survey public pages
-  - [x] prod: setup de l'environnement de production on-prem ; déploiement par git pull + systemd daemon <https://bun.sh/guides/ecosystem/systemd>
-  - [x] refactor : appshell
-  - [x] feat(backend) : Autoriser markdown <https://github.com/micromark/micromark> (safe: text formatting, lists, blockquotes, horizontal rules) pour personnaliser les sondages (description du sondage, description des questions) et les résultats
-  - [x] feat : 404 page
-  - [x] feat(backend) : manual seed script
-  - [x] feat : nodata component
-  - [x] feat : survey public home page
-  - [x] fix : remove cors & helmet plugin. they are nginx responsibilities
-  - [x] feat: profile page
-    - [x] feat(backend) : entité profile
-    - [x] feat: cookie for profile tracking
-    - [x] feat : profile read / update
-    - [x] feat(backend) : profile test data
-  - [ ] feat : survey public quiz page
-    - [x] feat(backend): entité Response
-    - [ ] feat : response read / update
-    - [ ] feat(backend): Response test data
-  - [ ] feat : survey public results page => sexy cloud result
-
 ## Backlog
 
 - Frontend
