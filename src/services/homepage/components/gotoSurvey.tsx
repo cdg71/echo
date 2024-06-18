@@ -7,7 +7,6 @@ export const gotoSurveyComponent = (props?: Props) => (
     id="gotoForm"
     hx-get="/survey"
     class="card-body"
-    hx-history="false"
     hx-boost="true"
     hx-target="body"
   >

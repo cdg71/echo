@@ -48,7 +48,7 @@ export const htmlTemplate = (props?: Props) => {
       </head>
       <script src="/static/scripts/htmx.js"></script>
       <script src="/static/scripts/sse.js"></script>
-      <body>{content}</body>
+      <body hx-history="false">{content}</body>
     </html>
   );
 };
