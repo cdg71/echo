@@ -4,12 +4,24 @@
 
 ## sprintlog
 
+- [ ] Modifier le sondage de test pour qu'il corresponde au sondage du 21/6
+- [ ] /admin/:id
+  - [x] Simplifier les snapshots - pas de completedAt, pas de cloud
+  - [ ] créer une section indépendante des snapshots pour gérer la génération des résultats dans le cloud. waitingForResults = BOOLEAN or NULL + lastResultsAt = timestamp or NULL
+- [ ] On ne peut pas demander la génération de plus d'un snapshot à la fois pour un sondage donné. Si un sondage est en cours de génération, le bouton de création est désactivé.
+- [ ] Les snapshots constituent une liste chaînée, on ne peut pas supprimer un snapshot
+- [ ] PUT /webhook/complete/:snapshotId : check Key in bearer header, return 200 OK
+- [ ] Résultats :
+  - [ ] Filtres
+  - [ ] Carousel
+  - [ ] Graphique
+  - [ ] Résumé
+
 ## Backlog
 
 - Frontend
 
   - /admin/:id
-    - [ ] On snapshot creation, call the cloud inference
     - [ ] open / close quiz
     - [ ] poll snapshot status dynamically
     - [ ] confirm snapshot delete with a dialog
@@ -19,7 +31,6 @@
 
 - Backend
 
-  - [ ] entité response
   - [ ] génération et exploitation des résultats de l'IA
   - [ ] cron: backup (data folder : database dump + assets)
   - [ ] cron: purge des sondages expirés
@@ -32,12 +43,7 @@
   - [ ] Cloud inference should be orchestrated in parallel
   - [ ] Cloud should have some kind of auth limiting its access to the on-prem server (API KEY ?)
   - [ ] Rationaliser les imports js du cloud : nom de la route, dépendances adaptées (bootstrap ? jquery ?)
-  - [ ] poncer les angles à l'affichage : utiliser daisyUI, padding supérieur pour ménager la navbar
-  - [ ] pas de footer ! cdg71
-  - [ ] /webhook/result : updates a snapshot when it is ready
-  - [ ] On delete survey, cleanup the cloud resources
-  - [ ] IA - Les textes et images générés incluent la thématique mais ne reflètent pas beaucoup l'opinion de la question sélectionnée
-  - [ ] Retravailler l'affichage des résultats
+  - [ ] On survey deletion, cleanup the cloud resources
 
 - Environnement de développement
 

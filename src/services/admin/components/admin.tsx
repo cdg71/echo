@@ -183,29 +183,21 @@ export const adminComponent = async (props: AdminProps) => {
       ></script>
       <div class="w-full space-y-4">
         <div class="collapse collapse-plus bg-slate-100">
-          <input
-            type="radio"
-            name="admin-accordion"
-            checked={!props.errorCode}
-          />
+          <input type="checkbox" checked={!props.errorCode} />
           <div class="collapse-title text-lg font-medium">
             {cameraIcon}&nbsp;Capturer les résultats
           </div>
           <div class="collapse-content">{snapshots}</div>
         </div>
         <div class="collapse collapse-plus bg-slate-100">
-          <input
-            type="radio"
-            name="admin-accordion"
-            checked={!!props.errorCode}
-          />
+          <input type="checkbox" checked={!!props.errorCode} />
           <div class="collapse-title text-lg font-medium">
             {editIcon}&nbsp;Modifier
           </div>
           <div class="collapse-content">{form}</div>
         </div>
         <div class="collapse collapse-plus bg-slate-100">
-          <input type="radio" name="admin-accordion" />
+          <input type="checkbox" />
           <div class="collapse-title text-lg font-medium">
             {deleteIcon}&nbsp;Supprimer
           </div>

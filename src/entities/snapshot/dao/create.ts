@@ -9,8 +9,8 @@ export const createSnapshot = (props: SnapshotSurveyId) => {
     const id = randomUUID() as string;
     const { surveyId } = props;
     const query = db.prepare(
-      `INSERT INTO Snapshot (id,  surveyId,  result,  createdAt)
-       VALUES               ($id, $surveyId, $result, $createdAt);`
+      `INSERT INTO Snapshot (id,  surveyId, createdAt)
+       VALUES               ($id, $surveyId, $createdAt);`
     );
     query.run({
       $id: id,
