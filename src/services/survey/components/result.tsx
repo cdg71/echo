@@ -1,4 +1,7 @@
-export const resultComponent = () => {
+import type { SurveyId } from "@src/entities/survey/dto/id";
+
+export const resultComponent = (props: SurveyId) => {
+  const { id } = props;
   return (
     <div class="w-full max-w-lg space-y-4 sm:mt-5">
       <div class="prose text-center">
@@ -115,7 +118,7 @@ export const resultComponent = () => {
 
       <script src="/static/scripts/chart.js"></script>
       <script src="/static/scripts/chartjs-plugin-datalabels.js"></script>
-      <script src="/static/scripts/result-chart.js"></script>
+      <script src={`/${id}/result/my-chart.js`}></script>
     </div>
   );
 };

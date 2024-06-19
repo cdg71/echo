@@ -1,6 +1,6 @@
 # Todo
 
-- categories: feat(epic): , feat: feature, feat(backend): backend only feature, feat(frontend): frontend only feature, fix: bugfix, docs: documentation, dev: developer, refactor: refactoring, perf: performance, test: test, prod: production
+- categories: feat(epic):, feat: feature, feat(backend): backend only feature, feat(frontend): frontend only feature, fix: bugfix, docs: documentation, dev: developer, refactor: refactoring, perf: performance, test: test, prod: production
 
 ## sprintlog
 
@@ -8,24 +8,28 @@
 - [x] fix alerts glitch
 - [ ] /admin/:id
   - [ ] A la création d'un snapshot, lancer la génération dans le cloud
+  - [ ] Si le cloud est occupé, on ne peut pas ajouter un snapshot
 - [ ] extraire les données d'un snapshot
-- [ ]
 - [ ] PUT /webhook/complete/:snapshotId : marquer le snapshot comme terminé
 - [x] feat(frontend) : page des quiz
   - [x] Adapter l'UI pour 1 seul jeu de réponses avec updates
 - [ ] feat(frontend) : page des résultats
   - [x] maquette
   - [ ] si aucun snapshot nodata sinon on sélectionne le dernier snapshot par défaut
-  - [ ] Carousel
-  - [ ] Graphique dynamique
-  - [ ] Résumé
+  - [ ] Carousel réactif HTMX simple
+  - [ ] Graphique réactif (couleur et légende des points correspondant à l'image du carousel)
+  - [ ] Résumé réactif
+- [ ] Fake cloud service
+  - [ ] POST /:surveyId
+  - [ ] GET /:surveyId?snapshot=xxx&area=yyy&profile=zzz
+  - [ ] PUT /webhook/complete/:surveyId
 
 ## Backlog
 
 - Features
 
   - [ ] PUT /webhook/complete/:snapshotId : check key in bearer header
-  - [ ] On ne peut pas demander la génération de plus d'un snapshot à la fois pour un sondage donné. Si un sondage est en cours d'analyse, le bouton de création de snapshot est désactivé.
+  - [ ] On ne peut pas demander la génération de plus d'un snapshot à la fois pour un sondage donné. Si un sondage est en cours de génération, le bouton de création de snapshot est désactivé.
 
 - Frontend
 

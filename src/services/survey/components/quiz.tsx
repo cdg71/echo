@@ -160,7 +160,7 @@ export const quizComponent = async (props: QuizComponentProps) => {
   return (
     <div class="w-full max-w-lg space-y-4 pt-5">
       <div class="prose">
-        <h2 class="text-center">Quiz</h2>
+        <h2 class="text-center">Sondage</h2>
       </div>
       {await alertComponent({ status })}
       <div class="w-full space-y-4">

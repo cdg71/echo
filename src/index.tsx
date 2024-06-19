@@ -7,6 +7,7 @@ import { homepageService } from "@src/services/homepage";
 import { streamsService } from "@src/services/streams";
 import { Elysia } from "elysia";
 import { htmlTemplate } from "./components/htmlTemplate";
+import { chartjsPlugin } from "./config/chartjs";
 import { snapshotService } from "./services/snapshot";
 import { surveyService } from "./services/survey";
 
@@ -21,6 +22,7 @@ new Elysia()
     })
   )
   .use(htmxPlugin)
+  .use(chartjsPlugin)
   .use(
     tailwind({
       path: "/static/styles/globals.css",

@@ -15,7 +15,6 @@ import {
 import { getSurveyById } from "@src/entities/survey/dao/getById";
 import { SurveyId } from "@src/entities/survey/dto/id";
 import { parseSurvey } from "@src/entities/survey/dto/parsedSurvey";
-import { transpileForBrowsers } from "@src/utils/transpileForBrowsers";
 import { Elysia, redirect, t } from "elysia";
 import { gotoSurveyComponent } from "../homepage/components/gotoSurvey";
 import { homepageLayoutComponent } from "../homepage/components/layout";
@@ -248,38 +247,13 @@ export const surveyService = new Elysia()
               responses,
             });
           })
-          .get("/result", async () => {
-            return resultComponent();
+          .get("/result", ({ params }) => {
+            const { id } = params;
+            return resultComponent({ id });
           })
       )
-  )
-  .get("/js/*", async ({ params }) => {
-    const result = await fetch(
-      `${import.meta.env.CLOUD_ENDPOINT_URL}/js/${params["*"]}`
-    );
-    return result;
-  })
-  .get("/output/*", async ({ params }) => {
-    const result = await fetch(
-      `${import.meta.env.CLOUD_ENDPOINT_URL}/output/${params["*"]}`
-    );
-    return result;
-  })
-  .get("/static/scripts/profile.js", async ({ set }) => {
-    set.headers["Content-Type"] = "text/javascript; charset=utf8";
-    return await transpileForBrowsers(`${__dirname}/scripts/profile.ts`);
-  })
-  .get("/static/scripts/result-chart.js", ({ set }) => {
-    set.headers["Content-Type"] = "text/javascript; charset=utf8";
-    return resultChartScript();
-  })
-  .get("/static/scripts/chart.js", ({ set }) => {
-    set.headers["Content-Type"] = "text/javascript; charset=utf8";
-    return Bun.file("node_modules/chart.js/dist/chart.umd.js");
-  })
-  .get("/static/scripts/chartjs-plugin-datalabels.js", ({ set }) => {
-    set.headers["Content-Type"] = "text/javascript; charset=utf8";
-    return Bun.file(
-      "node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"
-    );
-  });
+      .get("/result/my-chart.js", ({ set }) => {
+        set.headers["Content-Type"] = "text/javascript; charset=utf8";
+        return resultChartScript();
+      })
+  );
