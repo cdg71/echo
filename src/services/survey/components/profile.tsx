@@ -34,8 +34,8 @@ export const profileComponent = async (props: Props) => {
   });
 
   return (
-    <div class={`${!status ? "hidden" : ""}`}>
-      <div class="space-y-4 w-full md:pt-6 max-w-lg">
+    <div class="space-y-4 w-full md:pt-6 max-w-lg">
+      <div class={`${!status ? "hidden" : ""}`}>
         <div
           id="alert"
           role="alert"

@@ -1,10 +1,10 @@
 import jwt from "@elysiajs/jwt";
 import { Value } from "@sinclair/typebox/value";
 import { jwtSecret } from "@src/config/jwtSecret";
+import { allSnapshotsBySurveyId } from "@src/entities/snapshot/dao/allBySurveyId";
 import { createSnapshot } from "@src/entities/snapshot/dao/create";
 import { deleteSnapshot } from "@src/entities/snapshot/dao/delete";
 import { getSnapshotById } from "@src/entities/snapshot/dao/getById";
-import { listSnapshotsBySurveyId } from "@src/entities/snapshot/dao/listBySurveyId";
 import { SnapshotIdModel } from "@src/entities/snapshot/dto/id";
 import {
   SnapshotSurveyId,
@@ -38,7 +38,7 @@ export const snapshotService = new Elysia()
         if (Value.Check(SnapshotSurveyId, body)) {
           createSnapshot(body);
           const survey = getSurveyById({ id: surveyId });
-          const snapshots = listSnapshotsBySurveyId({ surveyId });
+          const snapshots = allSnapshotsBySurveyId({ surveyId });
           return await adminComponent({ survey, snapshots });
         }
         throw new Error("Invalid data");
@@ -63,7 +63,7 @@ export const snapshotService = new Elysia()
       if (claim && claim.id === surveyId) {
         deleteSnapshot({ id });
         const survey = getSurveyById({ id: surveyId });
-        const snapshots = listSnapshotsBySurveyId({ surveyId });
+        const snapshots = allSnapshotsBySurveyId({ surveyId });
         return await adminComponent({ survey, snapshots });
       }
     },

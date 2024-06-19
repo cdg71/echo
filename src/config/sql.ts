@@ -17,7 +17,9 @@ export const dbSetup = [
   CREATE TABLE IF NOT EXISTS Snapshot (
     id TEXT PRIMARY KEY,
     surveyId TEXT,
+    result TEXT,
     createdAt INTEGER NOT NULL,
+    readyAt INTEGER,
     FOREIGN KEY (surveyId) REFERENCES Survey(id) ON DELETE CASCADE
     );`,
   `-- Table for Profile
@@ -59,18 +61,22 @@ export const getSurveyTestDatasetStatement = async () => {
     );
     `,
     ` 
-    INSERT INTO Snapshot (id, surveyId, createdAt)
+    INSERT INTO Snapshot (id, surveyId, result, createdAt, readyAt)
     VALUES (
       'test-snapshot-1',
       'test',
-      '1686736800'
+      '',
+      '1686736800',
+      NULL
     )`,
     ` 
-    INSERT INTO Snapshot (id, surveyId, createdAt)
+    INSERT INTO Snapshot (id, surveyId, result, createdAt, readyAt)
     VALUES (
       'test-snapshot-2',
       'test',
-      '1686726000'
+      '',
+      '1686726000',
+      '1686726120'
     )`,
   ];
 };

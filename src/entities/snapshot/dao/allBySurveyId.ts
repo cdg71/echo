@@ -1,7 +1,7 @@
 import { db } from "@src/config/database";
 import { Snapshot } from "@src/entities/snapshot/schema";
 
-export const listSnapshotsBySurveyId = (props: Pick<Snapshot, "surveyId">) => {
+export const allSnapshotsBySurveyId = (props: Pick<Snapshot, "surveyId">) => {
   try {
     const selectQuery = db.prepare(
       "SELECT * FROM Snapshot WHERE surveyId = $surveyId ORDER BY createdAt ASC"

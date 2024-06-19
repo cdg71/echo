@@ -4,20 +4,26 @@
 
 ## sprintlog
 
-- [ ] Modifier le sondage de test pour qu'il corresponde au sondage du 21/6
+- [ ] Modifier le sondage de test pour qu'il devienne le sondage du 21/6
+- [x] fix alerts glitch
 - [ ] /admin/:id
   - [x] Simplifier les snapshots - pas de completedAt, pas de cloud
-  - [ ] créer une section indépendante des snapshots pour gérer la génération des résultats dans le cloud. waitingForResults = BOOLEAN or NULL + lastResultsAt = timestamp or NULL
-- [ ] On ne peut pas demander la génération de plus d'un snapshot à la fois pour un sondage donné. Si un sondage est en cours de génération, le bouton de création est désactivé.
-- [ ] Les snapshots constituent une liste chaînée, on ne peut pas supprimer un snapshot
-- [ ] PUT /webhook/complete/:snapshotId : check Key in bearer header, return 200 OK
+  - [x] Ajouter à l'entité Survey : waitingForResult = BOOLEAN or NULL + resultReadyAt = timestamp or NULL.
+  - [ ] créer une feat indépendante des snapshots pour gérer l'analyse des résultats dans le cloud.
+- [ ] PUT /webhook/complete/:snapshotId : waitingForResult = false && resultReadyAt = now, return 200 OK
 - [ ] Résultats :
-  - [ ] Filtres
+  - [ ] si aucun snapshot avant resultReadyAt => nodata
+  - [ ] Filtres : si 1 ou plusieurs snapshot avant resultReadyAt on affiche les filtres
   - [ ] Carousel
   - [ ] Graphique
   - [ ] Résumé
 
 ## Backlog
+
+- Features
+
+  - [ ] PUT /webhook/complete/:snapshotId : check Key in bearer header
+  - [ ] On ne peut pas demander la génération de plus d'un snapshot à la fois pour un sondage donné. Si un sondage est en cours d'analyse, le bouton de création est désactivé.
 
 - Frontend
 
