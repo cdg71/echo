@@ -7,23 +7,25 @@
 - [ ] Modifier le sondage de test pour qu'il devienne le sondage du 21/6
 - [x] fix alerts glitch
 - [ ] /admin/:id
-  - [x] Simplifier les snapshots - pas de completedAt, pas de cloud
-  - [x] Ajouter à l'entité Survey : waitingForResult = BOOLEAN or NULL + resultReadyAt = timestamp or NULL.
-  - [ ] créer une feat indépendante des snapshots pour gérer l'analyse des résultats dans le cloud.
-- [ ] PUT /webhook/complete/:snapshotId : waitingForResult = false && resultReadyAt = now, return 200 OK
-- [ ] Résultats :
-  - [ ] si aucun snapshot avant resultReadyAt => nodata
-  - [ ] Filtres : si 1 ou plusieurs snapshot avant resultReadyAt on affiche les filtres
+  - [ ] A la création d'un snapshot, lancer la génération dans le cloud
+- [ ] extraire les données d'un snapshot
+- [ ]
+- [ ] PUT /webhook/complete/:snapshotId : marquer le snapshot comme terminé
+- [ ] feat(frontend) : page des quiz
+  - [ ] Adapter l'UI pour 1 seul jeu de réponses
+- [ ] feat(frontend) : page des résultats
+  - [x] maquette
+  - [ ] si aucun snapshot nodata sinon on sélectionne le dernier snapshot par défaut
   - [ ] Carousel
-  - [ ] Graphique
+  - [ ] Graphique dynamique
   - [ ] Résumé
 
 ## Backlog
 
 - Features
 
-  - [ ] PUT /webhook/complete/:snapshotId : check Key in bearer header
-  - [ ] On ne peut pas demander la génération de plus d'un snapshot à la fois pour un sondage donné. Si un sondage est en cours d'analyse, le bouton de création est désactivé.
+  - [ ] PUT /webhook/complete/:snapshotId : check key in bearer header
+  - [ ] On ne peut pas demander la génération de plus d'un snapshot à la fois pour un sondage donné. Si un sondage est en cours d'analyse, le bouton de création de snapshot est désactivé.
 
 - Frontend
 

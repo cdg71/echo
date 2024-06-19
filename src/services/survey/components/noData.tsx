@@ -11,7 +11,7 @@ export const noDataComponent = (props: Props) => (
         <img src="/static/images/no_data.svg" alt="No data" />
       </a>
       <div class="mx-auto text-center">
-        Il n'y a pas de données à afficher ...
+        Il n'y a pas encore de données à afficher
       </div>
     </div>
   </div>

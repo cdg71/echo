@@ -23,7 +23,8 @@ import { homeComponent } from "./components/home";
 import { profileComponent } from "./components/profile";
 import { publicComponent } from "./components/public";
 import { quizComponent } from "./components/quiz";
-import { dummyComponent, resultComponent } from "./components/result";
+import { resultComponent } from "./components/result";
+import { resultChartScript } from "./scripts/resultChart";
 
 export const surveyService = new Elysia()
   .get(
@@ -268,14 +269,17 @@ export const surveyService = new Elysia()
     set.headers["Content-Type"] = "text/javascript; charset=utf8";
     return await transpileForBrowsers(`${__dirname}/scripts/profile.ts`);
   })
-  .get("/static/scripts/result.js", ({ set }) => {
+  .get("/static/scripts/result-chart.js", ({ set }) => {
     set.headers["Content-Type"] = "text/javascript; charset=utf8";
-    return Bun.file(`${__dirname}/scripts/result.js`);
+    return resultChartScript();
   })
   .get("/static/scripts/chart.js", ({ set }) => {
     set.headers["Content-Type"] = "text/javascript; charset=utf8";
     return Bun.file("node_modules/chart.js/dist/chart.umd.js");
   })
-  .get("/dummy", async () => {
-    return dummyComponent();
+  .get("/static/scripts/chartjs-plugin-datalabels.js", ({ set }) => {
+    set.headers["Content-Type"] = "text/javascript; charset=utf8";
+    return Bun.file(
+      "node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"
+    );
   });

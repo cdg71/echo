@@ -4,7 +4,7 @@ import { Snapshot } from "@src/entities/snapshot/schema";
 export const allSnapshotsBySurveyId = (props: Pick<Snapshot, "surveyId">) => {
   try {
     const selectQuery = db.prepare(
-      "SELECT * FROM Snapshot WHERE surveyId = $surveyId ORDER BY createdAt ASC"
+      "SELECT * FROM Snapshot WHERE surveyId = $surveyId ORDER BY createdAt DESC"
     );
     const snapshot = selectQuery.all({
       $surveyId: props.surveyId,
