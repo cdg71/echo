@@ -11,8 +11,8 @@
 - [ ] extraire les données d'un snapshot
 - [ ]
 - [ ] PUT /webhook/complete/:snapshotId : marquer le snapshot comme terminé
-- [ ] feat(frontend) : page des quiz
-  - [ ] Adapter l'UI pour 1 seul jeu de réponses
+- [x] feat(frontend) : page des quiz
+  - [x] Adapter l'UI pour 1 seul jeu de réponses avec updates
 - [ ] feat(frontend) : page des résultats
   - [x] maquette
   - [ ] si aucun snapshot nodata sinon on sélectionne le dernier snapshot par défaut

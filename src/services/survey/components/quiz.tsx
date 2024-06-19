@@ -6,7 +6,6 @@ import type {
 } from "@src/entities/response/schema";
 import type { ParsedSurvey } from "@src/entities/survey/dto/parsedSurvey";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
-import dayjs from "dayjs";
 
 const questionComponent = (props: {
   question: string[];
@@ -62,27 +61,9 @@ interface ResponseFormProps {
 }
 const responseForm = async (props: ResponseFormProps) => {
   const { survey, profile, response } = props;
-  const addResponseIcon = loadHeroIcons({
-    iconName: "plus-circle",
-    family: "Outline",
-    className: "size-6 float-left",
-  });
-
-  const responseIcon = loadHeroIcons({
-    iconName: "chat-bubble-oval-left-ellipsis",
-    family: "Outline",
-    className: "size-6 float-left",
-  });
 
   const formContent = (
     <>
-      <div class="prose text-justify w-full">
-        <p>
-          Pour chacune des affirmations ci-dessous, sélectionnez le sentiment
-          qu'elle vous inspire, puis saisissez un commentaire qui illustre et/ou
-          explique votre sentiment.
-        </p>
-      </div>
       <input type="hidden" id="surveyId" name="surveyId" value={survey.id} />
       <input type="hidden" id="profileId" name="profileId" value={profile.id} />
       {survey.questions?.map((question) => {
@@ -99,21 +80,15 @@ const responseForm = async (props: ResponseFormProps) => {
       </div>
     </>
   );
+
   return (
-    <div class="collapse collapse-plus bg-slate-100">
-      <input type="checkbox" />
-      <div
-        class={`collapse-title text-lg font-medium ${response ? "hidden" : false}`}
-      >
-        {addResponseIcon}&nbsp;Ajouter une nouvelle réponse
-      </div>
-      <div
-        class={`collapse-title text-lg font-medium ${!response ? "hidden" : false}`}
-      >
-        {responseIcon}&nbsp;Réponse du
-        {response
-          ? dayjs.unix(response.createdAt).format(" DD/MM/YYYY à HH:mm:ss")
-          : ""}
+    <div class="collapse collapse-open bg-slate-100">
+      <div class="prose p-4">
+        <p class="w-full text-justify">
+          Pour chacune des affirmations ci-dessous, sélectionnez le sentiment
+          qu'elle vous inspire, puis saisissez un commentaire qui illustre et/ou
+          explique votre sentiment.
+        </p>
       </div>
       <div class="collapse-content">
         {response ? (
@@ -184,12 +159,17 @@ export const quizComponent = async (props: QuizComponentProps) => {
 
   return (
     <div class="w-full max-w-lg space-y-4 pt-5">
+      <div class="prose">
+        <h2 class="text-center">Quiz</h2>
+      </div>
       {await alertComponent({ status })}
       <div class="w-full space-y-4">
-        {await responseForm({ survey, profile })}
-        {responses.map(
-          async (response) => await responseForm({ survey, profile, response })
-        )}
+        {responses?.length > 0
+          ? responses.map(
+              async (response) =>
+                await responseForm({ survey, profile, response })
+            )
+          : await responseForm({ survey, profile })}
       </div>
     </div>
   );
