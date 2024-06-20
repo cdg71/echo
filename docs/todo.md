@@ -5,6 +5,8 @@
 ## sprintlog
 
 - [ ] Modifier le sondage de test pour qu'il devienne le sondage du 21/6
+- [ ] intro de sondage
+
 - [x] fix alerts glitch
 - [x] /admin/:id
   - [x] A la création d'un snapshot, lancer la génération dans le cloud
@@ -30,6 +32,8 @@
 
 - Features
 
+  - [ ] timeout de snapshot
+  - [ ] fréquence de load polling configurable par variable d'env.
   - [ ] PUT /webhook/complete/:snapshotId : check key in bearer header
   - [ ] On ne peut pas demander la génération de plus d'un snapshot à la fois pour un sondage donné. Si un sondage est en cours de génération, le bouton de création de snapshot est désactivé.
   - [ ] POST /:surveyId Gzip

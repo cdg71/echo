@@ -44,7 +44,7 @@ export const snapshotService = new Elysia()
           const { id: snapshotId } = createSnapshot(body);
           // build the dataset
           const survey = getSurveyById({ id: surveyId });
-          const { questions: quiz, ...parsedSurvey } = parseSurvey({ survey });
+          const { questions, ...parsedSurvey } = parseSurvey({ survey });
           const profiles = allProfilesBySurveyId({ surveyId });
           const users = profiles.map((profile) => {
             const storedResponses = allResponsesBySurveyProfile({
@@ -69,6 +69,18 @@ export const snapshotService = new Elysia()
               responses,
             };
           });
+          interface Question {
+            id: string;
+            label: string;
+          }
+          const quiz =
+            (questions as [string, string][])?.reduce((acc, question) => {
+              acc.push({
+                id: question[0],
+                label: question[1],
+              });
+              return acc;
+            }, [] as Question[]) ?? [];
           const content = {
             ...parsedSurvey,
             quiz,
@@ -76,6 +88,7 @@ export const snapshotService = new Elysia()
             users,
           };
           // call the cloud
+          console.log(JSON.stringify(content, null, 2));
           const jsonContent = JSON.stringify(content);
           const url = `${import.meta.env.CLOUD_ENDPOINT_URL}/${surveyId}`;
           void fetch(url, {

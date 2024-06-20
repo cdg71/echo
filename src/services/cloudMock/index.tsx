@@ -20,7 +20,7 @@ export const cloudMockService = new Elysia()
           }
         );
       };
-      setTimeout(fetchWebhook, 5000);
+      setTimeout(fetchWebhook, import.meta.env.LOAD_POLLING_SEC * 1500);
       return { status: "OK" };
     },
     {

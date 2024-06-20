@@ -5,12 +5,16 @@ import { snapshotsComponent } from "@src/services/snapshot/components/list";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 import { editFormComponent, type EditFormValidationError } from "./editForm";
 
-export type AdminProps = { survey: EditSurvey } & {
-  snapshots?: Snapshot[];
-} & EditFormValidationError & { password?: string };
+export type AdminProps = { survey: EditSurvey } & EditFormValidationError & {
+    password?: string;
+    snapshots?: Snapshot[];
+  };
 
 export const adminComponent = async (props: AdminProps) => {
   const { password } = props;
+
+  const captureIsDisabled =
+    props.snapshots?.some((snapshot) => !snapshot.readyAt) ?? false;
 
   const powerIcon = loadHeroIcons({
     iconName: "power",
@@ -104,7 +108,7 @@ export const adminComponent = async (props: AdminProps) => {
       <></>
     );
 
-  const snapshots = (
+  const snapshotsFragment = (
     <div>
       <form
         class="space-y-4"
@@ -112,7 +116,11 @@ export const adminComponent = async (props: AdminProps) => {
         hx-boost="true"
         hx-target="body"
       >
-        <button class="btn btn-primary" type="submit">
+        <button
+          class="btn btn-primary"
+          type="submit"
+          disabled={captureIsDisabled}
+        >
           Capturer maintenant
         </button>
         <input
@@ -187,7 +195,7 @@ export const adminComponent = async (props: AdminProps) => {
           <div class="collapse-title text-lg font-medium">
             {cameraIcon}&nbsp;Capturer les résultats
           </div>
-          <div class="collapse-content">{snapshots}</div>
+          <div class="collapse-content">{snapshotsFragment}</div>
         </div>
         <div class="collapse collapse-plus bg-slate-100">
           <input type="checkbox" checked={!!props.errorCode} />

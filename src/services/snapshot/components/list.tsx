@@ -16,10 +16,6 @@ export const snapshotComponent = async (props: Snapshot) => {
       id={`snapshot-${props.id}`}
       role="alert"
       class="alert my-2 bg-white bordered border-neutral-200 flex flex-row space-x-0"
-      hx-trigger={!props.readyAt ? "load delay:15s" : ""}
-      hx-get={`/admin/fragment/snapshot/${props.id}`}
-      hx-swap="outerHTML"
-      hx-target={`#snapshot-${props.id}`}
     >
       <div>
         {props.readyAt ? (
@@ -32,7 +28,9 @@ export const snapshotComponent = async (props: Snapshot) => {
         {dayjs.unix(props.createdAt).format("Le DD/MM/YYYY à HH:mm:ss")}
       </div>
       <div class="flex flex-grow flex-row-reverse">
-        {props.readyAt ? (
+        {props.readyAt ??
+        dayjs().unix() - props.createdAt >=
+          import.meta.env.CLOUD_GEN_ABORTABLE_AFTER_SEC ? (
           <button
             class="text-gray-600 hover:text-gray-800"
             hx-delete={`/snapshot/${props.id}`}
