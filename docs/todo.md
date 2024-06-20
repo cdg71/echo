@@ -6,7 +6,7 @@
 
 - [ ] Modifier le sondage de test pour qu'il devienne le sondage du 21/6
 - [x] fix alerts glitch
-- [ ] /admin/:id
+- [x] /admin/:id
   - [x] A la création d'un snapshot, lancer la génération dans le cloud
 - [x] extraire les données d'un snapshot
 - [x] PUT /webhook/complete/:snapshotId : marquer le snapshot comme terminé
@@ -14,6 +14,7 @@
   - [x] Adapter l'UI pour 1 seul jeu de réponses avec updates
 - [ ] feat(frontend) : page des résultats
   - [x] maquette
+  - [ ] load polling
   - [ ] si aucun snapshot nodata sinon on sélectionne le dernier snapshot par défaut
   - [ ] Carousel réactif HTMX simple
   - [ ] Graphique réactif (couleur et légende des points correspondant à l'image du carousel)
@@ -24,6 +25,8 @@
   - [x] GET /webhook/complete/:snapshotId
 
 ## Backlog
+
+- <https://echo.watsnext.fr/get_survey/test_v2?snapshot=1672531200>
 
 - Features
 

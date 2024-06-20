@@ -77,7 +77,7 @@ export const snapshotService = new Elysia()
           };
           // call the cloud
           const jsonContent = JSON.stringify(content);
-          const url = `${import.meta.env.CLOUD_ENDPOINT_URL}/cloud/${surveyId}`;
+          const url = `${import.meta.env.CLOUD_ENDPOINT_URL}/${surveyId}`;
           void fetch(url, {
             method: "POST",
             headers: {

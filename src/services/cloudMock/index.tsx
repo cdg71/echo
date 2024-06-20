@@ -14,7 +14,7 @@ export const cloudMockService = new Elysia()
       const { snapshot } = body;
       const fetchWebhook = () => {
         void fetch(
-          `${import.meta.env.CLOUD_ENDPOINT_URL}/webhook/complete/${snapshot}`,
+          `${import.meta.env.LOCAL_ENDPOINT_URL}/webhook/complete/${snapshot}`,
           {
             method: "GET",
           }
