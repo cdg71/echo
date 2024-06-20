@@ -10,6 +10,7 @@
 - [x] fix alerts glitch
 - [x] /admin/:id
   - [x] A la création d'un snapshot, lancer la génération dans le cloud
+  - [x] snapshot ui load polling
 - [x] extraire les données d'un snapshot
 - [x] PUT /webhook/complete/:snapshotId : marquer le snapshot comme terminé
 - [x] feat(frontend) : page des quiz
@@ -28,7 +29,7 @@
 
 ## Backlog
 
-- <https://echo.watsnext.fr/get_survey/test_v2?snapshot=1672531200>
+- <https://cdg71-echo.watsnext.fr/get_survey/test_v2?snapshot=1672531200?...>
 
 - Features
 

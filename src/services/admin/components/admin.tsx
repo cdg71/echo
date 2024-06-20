@@ -10,11 +10,49 @@ export type AdminProps = { survey: EditSurvey } & EditFormValidationError & {
     snapshots?: Snapshot[];
   };
 
-export const adminComponent = async (props: AdminProps) => {
-  const { password } = props;
-
+export const snapshotsFragment = (props: {
+  snapshots?: Snapshot[];
+  surveyId: string;
+}) => {
+  const { snapshots, surveyId } = props;
   const captureIsDisabled =
     props.snapshots?.some((snapshot) => !snapshot.readyAt) ?? false;
+
+  return (
+    <div
+      id="snapshotsFragment"
+      hx-get={`/admin/fragment/snapshots/${surveyId}`}
+      hx-trigger={`load delay:${import.meta.env.LOAD_POLLING_SEC}s`}
+      hx-swap="outerHTML transition:false"
+    >
+      <form
+        class="space-y-4"
+        hx-post="/snapshot"
+        hx-boost="true"
+        hx-target="body"
+      >
+        <button
+          class="btn btn-primary"
+          type="submit"
+          disabled={captureIsDisabled}
+        >
+          Capturer maintenant
+        </button>
+        <input
+          id="surveyId"
+          name="surveyId"
+          type="hidden"
+          class="hidden"
+          value={`${surveyId}`}
+        />
+      </form>
+      {snapshotsComponent(snapshots ?? [])}
+    </div>
+  );
+};
+
+export const adminComponent = async (props: AdminProps) => {
+  const { password } = props;
 
   const powerIcon = loadHeroIcons({
     iconName: "power",
@@ -108,32 +146,6 @@ export const adminComponent = async (props: AdminProps) => {
       <></>
     );
 
-  const snapshotsFragment = (
-    <div>
-      <form
-        class="space-y-4"
-        hx-post="/snapshot"
-        hx-boost="true"
-        hx-target="body"
-      >
-        <button
-          class="btn btn-primary"
-          type="submit"
-          disabled={captureIsDisabled}
-        >
-          Capturer maintenant
-        </button>
-        <input
-          id="surveyId"
-          name="surveyId"
-          type="hidden"
-          class="hidden"
-          value={`${props.survey.id}`}
-        />
-      </form>
-      {snapshotsComponent(props.snapshots ?? [])}
-    </div>
-  );
   const form = editFormComponent({ ...props.survey, action: "update" });
   const deleteSurvey = (
     <div>
@@ -195,7 +207,12 @@ export const adminComponent = async (props: AdminProps) => {
           <div class="collapse-title text-lg font-medium">
             {cameraIcon}&nbsp;Capturer les résultats
           </div>
-          <div class="collapse-content">{snapshotsFragment}</div>
+          <div class="collapse-content">
+            {snapshotsFragment({
+              surveyId: props.survey.id,
+              snapshots: props.snapshots,
+            })}
+          </div>
         </div>
         <div class="collapse collapse-plus bg-slate-100">
           <input type="checkbox" checked={!!props.errorCode} />

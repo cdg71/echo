@@ -17,7 +17,7 @@ import { getSurveyById } from "@src/entities/survey/dao/getById";
 import { AuthCookie, AuthJwt, AuthModel } from "@src/entities/survey/dto/auth";
 import { parseSurvey } from "@src/entities/survey/dto/parsedSurvey";
 import { Elysia, redirect, t } from "elysia";
-import { adminComponent } from "../admin/components/admin";
+import { adminComponent, snapshotsFragment } from "../admin/components/admin";
 import { gotoAdminComponent } from "../homepage/components/gotoAdmin";
 import { homepageLayoutComponent } from "../homepage/components/layout";
 import { snapshotComponent } from "./components/list";
@@ -88,7 +88,6 @@ export const snapshotService = new Elysia()
             users,
           };
           // call the cloud
-          console.log(JSON.stringify(content, null, 2));
           const jsonContent = JSON.stringify(content);
           const url = `${import.meta.env.CLOUD_ENDPOINT_URL}/${surveyId}`;
           void fetch(url, {
@@ -157,11 +156,20 @@ export const snapshotService = new Elysia()
       })
       .get(
         "/snapshot/:id",
-        ({ params }) => {
+        async ({ params }) => {
           const { id } = params;
           const snapshot = getSnapshotById({ id });
-          return snapshotComponent({ ...snapshot });
+          return await snapshotComponent({ ...snapshot });
         },
         { params: SnapshotId }
+      )
+      .get(
+        "/snapshots/:surveyId",
+        ({ params }) => {
+          const { surveyId } = params;
+          const snapshots = allSnapshotsBySurveyId({ surveyId });
+          return snapshotsFragment({ snapshots, surveyId });
+        },
+        { params: SnapshotSurveyId }
       )
   );
