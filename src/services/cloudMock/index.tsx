@@ -1,4 +1,4 @@
-import { Elysia, t } from "elysia";
+import { Elysia, redirect, t } from "elysia";
 
 const PostBody = t.Object(
   {
@@ -27,7 +27,25 @@ export const cloudMockService = new Elysia()
       body: PostBody,
     }
   )
-  .get("/cloud/:surveyId", ({ query }) => {
-    console.log(query);
-    return query;
-  });
+  .get(
+    "/cloud/:surveyId",
+    ({ params, query }) => {
+      const { surveyId } = params;
+      const { snapshot, area, position } = query;
+      const areaQuery = area ? `&area=${area}` : "";
+      const positionQuery = position ? `&position=${position}` : "";
+      const url = `${import.meta.env.CLOUD_ENDPOINT_URL}/${surveyId}?snapshot=${snapshot}${positionQuery}${areaQuery}`;
+      console.log(url);
+      return redirect(url);
+    },
+    {
+      params: t.Object({
+        surveyId: t.String(),
+      }),
+      query: t.Object({
+        snapshot: t.String(),
+        area: t.Optional(t.String()),
+        position: t.Optional(t.String()),
+      }),
+    }
+  );

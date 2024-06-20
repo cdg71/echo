@@ -29,7 +29,7 @@
 
 ## Backlog
 
-- <https://cdg71-echo.watsnext.fr/get_survey/test_v2?snapshot=1672531200?...>
+- <https://cdg71-echo.watsnext.fr/get_survey/test?snapshot=59134cf4-5e82-47bf-bcfa-1422b58e15f6?...>
 
 - Features
 
