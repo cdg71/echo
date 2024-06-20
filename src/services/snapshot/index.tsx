@@ -8,7 +8,7 @@ import { createSnapshot } from "@src/entities/snapshot/dao/create";
 import { deleteSnapshot } from "@src/entities/snapshot/dao/delete";
 import { getSnapshotById } from "@src/entities/snapshot/dao/getById";
 import { markSnapshotAsReady } from "@src/entities/snapshot/dao/update";
-import { SnapshotIdModel } from "@src/entities/snapshot/dto/id";
+import { SnapshotId, SnapshotIdModel } from "@src/entities/snapshot/dto/id";
 import {
   SnapshotSurveyId,
   SnapshotSurveyIdModel,
@@ -16,10 +16,11 @@ import {
 import { getSurveyById } from "@src/entities/survey/dao/getById";
 import { AuthCookie, AuthJwt, AuthModel } from "@src/entities/survey/dto/auth";
 import { parseSurvey } from "@src/entities/survey/dto/parsedSurvey";
-import { Elysia, t } from "elysia";
+import { Elysia, redirect, t } from "elysia";
 import { adminComponent } from "../admin/components/admin";
 import { gotoAdminComponent } from "../homepage/components/gotoAdmin";
 import { homepageLayoutComponent } from "../homepage/components/layout";
+import { snapshotComponent } from "./components/list";
 
 export const snapshotService = new Elysia()
   .use(
@@ -122,7 +123,6 @@ export const snapshotService = new Elysia()
     "/webhook/complete/:snapshotId",
     ({ params }) => {
       const { snapshotId } = params;
-      // updateSnapshotId
       markSnapshotAsReady({ id: snapshotId });
       return { status: "OK" };
     },
@@ -131,4 +131,24 @@ export const snapshotService = new Elysia()
         snapshotId: t.String(),
       }),
     }
+  )
+  .group("/admin/fragment", (app) =>
+    app
+      .guard({
+        beforeHandle: ({ request, set }) => {
+          set.headers["Vary"] = "hx-request";
+          if (!request.headers.get("hx-request")) {
+            return redirect(`/`);
+          }
+        },
+      })
+      .get(
+        "/snapshot/:id",
+        ({ params }) => {
+          const { id } = params;
+          const snapshot = getSnapshotById({ id });
+          return snapshotComponent({ ...snapshot });
+        },
+        { params: SnapshotId }
+      )
   );
