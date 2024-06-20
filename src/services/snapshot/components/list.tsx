@@ -25,7 +25,10 @@ export const snapshotComponent = async (props: Snapshot) => {
         )}
       </div>
       <div>
-        {dayjs.unix(props.createdAt).format("Le DD/MM/YYYY à HH:mm:ss")}
+        <div>
+          {dayjs.unix(props.createdAt).format("Le DD/MM/YYYY à HH:mm:ss")}
+        </div>
+        <div class="label-text">{props.id}</div>
       </div>
       <div class="flex flex-grow flex-row-reverse">
         {props.readyAt ??

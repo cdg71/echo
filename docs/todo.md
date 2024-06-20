@@ -17,7 +17,7 @@
   - [x] Adapter l'UI pour 1 seul jeu de réponses avec updates
 - [ ] feat(frontend) : page des résultats
   - [x] maquette
-  - [ ] load polling
+  - [ ] menu load polling
   - [ ] si aucun snapshot nodata sinon on sélectionne le dernier snapshot par défaut
   - [ ] Carousel réactif HTMX simple
   - [ ] Graphique réactif (couleur et légende des points correspondant à l'image du carousel)
