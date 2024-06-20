@@ -8,6 +8,7 @@ import { streamsService } from "@src/services/streams";
 import { Elysia } from "elysia";
 import { htmlTemplate } from "./components/htmlTemplate";
 import { chartjsPlugin } from "./config/chartjs";
+import { cloudMockService } from "./services/cloudMock";
 import { snapshotService } from "./services/snapshot";
 import { surveyService } from "./services/survey";
 
@@ -35,6 +36,7 @@ new Elysia()
     })
   )
   .get("/empty", () => <></>)
+  .use(cloudMockService)
   .use(homepageService)
   .use(streamsService)
   .use(adminService)

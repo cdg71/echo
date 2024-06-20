@@ -1,10 +1,10 @@
 import { db } from "@src/config/database";
 import { Profile } from "@src/entities/profile/schema";
 
-export const listProfilesBySurveyId = (props: Pick<Profile, "surveyId">) => {
+export const allProfilesBySurveyId = (props: Pick<Profile, "surveyId">) => {
   try {
     const selectQuery = db.prepare(
-      "SELECT * FROM Profile WHERE surveyId = $surveyId ORDER BY createdAt ASC"
+      "SELECT * FROM Profile WHERE surveyId = $surveyId"
     );
     const profile = selectQuery.all({
       $surveyId: props.surveyId,

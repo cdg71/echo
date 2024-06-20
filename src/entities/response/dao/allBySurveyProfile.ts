@@ -3,7 +3,7 @@ import { convertFromStoredResponse, type StoredResponse } from "../dto/stored";
 import type { ResponseSurveyProfile } from "../dto/surveyProfile";
 import type { Response } from "../schema";
 
-export const allBySurveyProfile = (
+export const allResponsesBySurveyProfile = (
   props: ResponseSurveyProfile
 ): Response[] => {
   try {

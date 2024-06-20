@@ -1,10 +1,13 @@
 import jwt from "@elysiajs/jwt";
 import { Value } from "@sinclair/typebox/value";
 import { jwtSecret } from "@src/config/jwtSecret";
+import { allProfilesBySurveyId } from "@src/entities/profile/dao/allBySurveyId";
+import { allResponsesBySurveyProfile } from "@src/entities/response/dao/allBySurveyProfile";
 import { allSnapshotsBySurveyId } from "@src/entities/snapshot/dao/allBySurveyId";
 import { createSnapshot } from "@src/entities/snapshot/dao/create";
 import { deleteSnapshot } from "@src/entities/snapshot/dao/delete";
 import { getSnapshotById } from "@src/entities/snapshot/dao/getById";
+import { markSnapshotAsReady } from "@src/entities/snapshot/dao/update";
 import { SnapshotIdModel } from "@src/entities/snapshot/dto/id";
 import {
   SnapshotSurveyId,
@@ -12,7 +15,8 @@ import {
 } from "@src/entities/snapshot/dto/surveyId";
 import { getSurveyById } from "@src/entities/survey/dao/getById";
 import { AuthCookie, AuthJwt, AuthModel } from "@src/entities/survey/dto/auth";
-import { Elysia } from "elysia";
+import { parseSurvey } from "@src/entities/survey/dto/parsedSurvey";
+import { Elysia, t } from "elysia";
 import { adminComponent } from "../admin/components/admin";
 import { gotoAdminComponent } from "../homepage/components/gotoAdmin";
 import { homepageLayoutComponent } from "../homepage/components/layout";
@@ -36,8 +40,50 @@ export const snapshotService = new Elysia()
       const claim = await authJwt.verify(auth.value);
       if (claim && claim.id === surveyId) {
         if (Value.Check(SnapshotSurveyId, body)) {
-          createSnapshot(body);
+          const { id: snapshotId } = createSnapshot(body);
+          // build the dataset
           const survey = getSurveyById({ id: surveyId });
+          const { questions: quiz, ...parsedSurvey } = parseSurvey({ survey });
+          const profiles = allProfilesBySurveyId({ surveyId });
+          const users = profiles.map((profile) => {
+            const storedResponses = allResponsesBySurveyProfile({
+              surveyId,
+              profileId: profile.id,
+            });
+            const responses = storedResponses.map((storedResponse) => {
+              const values = Object.keys(storedResponse.answers).map(
+                (questionId) => ({
+                  questionId,
+                  value: storedResponse.answers[questionId].value,
+                  comment: storedResponse.answers[questionId].comment,
+                })
+              );
+              return {
+                createdAt: storedResponse.createdAt,
+                values,
+              };
+            });
+            return {
+              ...profile,
+              responses,
+            };
+          });
+          const content = {
+            ...parsedSurvey,
+            quiz,
+            snapshot: snapshotId,
+            users,
+          };
+          // call the cloud
+          const jsonContent = JSON.stringify(content);
+          const url = `${import.meta.env.CLOUD_ENDPOINT_URL}/cloud/${surveyId}`;
+          void fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: jsonContent,
+          });
           const snapshots = allSnapshotsBySurveyId({ surveyId });
           return await adminComponent({ survey, snapshots });
         }
@@ -70,5 +116,19 @@ export const snapshotService = new Elysia()
     {
       params: "SnapshotId",
       cookie: AuthCookie,
+    }
+  )
+  .get(
+    "/webhook/complete/:snapshotId",
+    ({ params }) => {
+      const { snapshotId } = params;
+      // updateSnapshotId
+      markSnapshotAsReady({ id: snapshotId });
+      return { status: "OK" };
+    },
+    {
+      params: t.Object({
+        snapshotId: t.String(),
+      }),
     }
   );

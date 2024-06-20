@@ -3,7 +3,7 @@ import { getProfileById } from "@src/entities/profile/dao/getById";
 import { updateProfile } from "@src/entities/profile/dao/update";
 import { EditProfile } from "@src/entities/profile/dto/editProfile";
 import { ProfilesCookie } from "@src/entities/profile/dto/profilesCookie";
-import { allBySurveyProfile } from "@src/entities/response/dao/allBySurveyProfile";
+import { allResponsesBySurveyProfile } from "@src/entities/response/dao/allBySurveyProfile";
 import { createResponse } from "@src/entities/response/dao/create";
 import { updateResponse } from "@src/entities/response/dao/update";
 import { CreateResponse } from "@src/entities/response/dto/create";
@@ -66,8 +66,7 @@ export const surveyService = new Elysia()
             };
           }
         },
-        error: ({ set, error }) => {
-          console.log(error);
+        error: ({ set }) => {
           set.headers["Content-Type"] = "text/html; charset=utf8";
           set.headers["HX-Replace-Url"] = `/`;
           return redirect("/");
@@ -152,7 +151,7 @@ export const surveyService = new Elysia()
                   profileId: profile.id,
                   answers: body.answers,
                 });
-                const responses = allBySurveyProfile({
+                const responses = allResponsesBySurveyProfile({
                   surveyId: survey.id,
                   profileId: profile.id,
                 });
@@ -167,7 +166,7 @@ export const surveyService = new Elysia()
                 const survey = getSurveyById({ id });
                 const parsedSurvey = parseSurvey({ survey });
                 const profile = getProfileById({ id: profiles.value[id] });
-                const responses = allBySurveyProfile({
+                const responses = allResponsesBySurveyProfile({
                   surveyId: survey.id,
                   profileId: profile.id,
                 });
@@ -195,7 +194,7 @@ export const surveyService = new Elysia()
                 const survey = getSurveyById({ id });
                 const parsedSurvey = parseSurvey({ survey });
                 const profile = getProfileById({ id: profiles.value[id] });
-                const responses = allBySurveyProfile({
+                const responses = allResponsesBySurveyProfile({
                   surveyId: survey.id,
                   profileId: profile.id,
                 });
@@ -210,7 +209,7 @@ export const surveyService = new Elysia()
                 const survey = getSurveyById({ id });
                 const parsedSurvey = parseSurvey({ survey });
                 const profile = getProfileById({ id: profiles.value[id] });
-                const responses = allBySurveyProfile({
+                const responses = allResponsesBySurveyProfile({
                   surveyId: survey.id,
                   profileId: profile.id,
                 });
@@ -237,7 +236,7 @@ export const surveyService = new Elysia()
             });
             const survey = getSurveyById({ id });
             const parsedSurvey = parseSurvey({ survey });
-            const responses = allBySurveyProfile({
+            const responses = allResponsesBySurveyProfile({
               surveyId: survey.id,
               profileId: profile.id,
             });

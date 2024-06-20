@@ -25,7 +25,6 @@ export const updateResponse = (props: UpdateResponse) => {
     const res = getResponseById({ id: storedResponse.id });
     return res;
   } catch (error) {
-    console.log(error);
     throw new Error("Cannot update response.");
   }
 };
