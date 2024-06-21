@@ -42,7 +42,7 @@ export const questionResult = (props: {
         <input id="question" name="question" type="hidden" value={`${index}`} />
         <button
           type="submit"
-          class={`btn btn-xs md:btn-sm ${selected.question === index ? "btn-disabled" : ""}`}
+          class={`btn btn-xs md:btn-sm ${selected.question === index ? "btn-primary" : ""}`}
         >
           {index + 1}
         </button>

@@ -13,7 +13,6 @@ export const resultChartScript = (props: {
   selectedDataset: ChartDataset;
   otherDataset: ChartDataset;
 }) => {
-  console.log(props);
   return `
 (() => {
   // Données pour le graphique
