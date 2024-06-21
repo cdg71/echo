@@ -43,7 +43,7 @@ export const homeComponent = async (props: Props) => {
           <br />
           <button
             class="btn btn-accent w-3/4 my-2"
-            hx-get={`/${props.survey.id}/fragment/result`}
+            hx-post={`/${props.survey.id}/fragment/get-result`}
             hx-target="#appshellContent"
           >
             {resultIcon}&nbsp;Résultats

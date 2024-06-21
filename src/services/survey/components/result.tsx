@@ -1,124 +1,173 @@
-import type { SurveyId } from "@src/entities/survey/dto/id";
+import type { Result } from "@src/entities/result/schema";
+import type { Snapshot } from "@src/entities/snapshot/schema";
+import type { ParsedSurvey } from "@src/entities/survey/dto/parsedSurvey";
+import dayjs from "dayjs";
+import { micromark } from "micromark";
+import { noDataComponent } from "./noData";
 
-export const resultComponent = (props: SurveyId) => {
-  const { id } = props;
+interface Selected {
+  question?: number;
+  snapshot?: string;
+  area?: string;
+  profile?: string;
+}
+
+export const questionResult = (props: {
+  surveyId: string;
+  result: Result;
+  selected: Selected;
+}) => {
+  const { surveyId, result, selected } = props;
+  const currentQuestion = selected.question ?? 0;
+  const links = result.map((_, index) => {
+    return (
+      <form
+        id={`resultForm-${index}`}
+        hx-post={`${surveyId}/fragment/get-result`}
+        hx-target="#appshellContent"
+      >
+        <input
+          id="snapshot"
+          name="snapshot"
+          type="hidden"
+          value={selected.snapshot}
+        />
+        <input id="area" name="area" type="hidden" value={selected.area} />
+        <input
+          id="profile"
+          name="profile"
+          type="hidden"
+          value={selected.profile}
+        />
+        <input id="question" name="question" type="hidden" value={`${index}`} />
+        <button
+          type="submit"
+          class={`btn btn-xs md:btn-sm ${selected.question === index ? "btn-disabled" : ""}`}
+        >
+          {index + 1}
+        </button>
+      </form>
+    );
+  });
+  if (result[0].question === "Filters don't match any retrieved data") {
+    return noDataComponent({});
+  }
+
+  const chartUrl = `/${surveyId}/result/chart.js?snapshot=${selected.snapshot}${selected.area ? `&area=${selected.area}` : ""}${selected.profile ? `&profile=${selected.profile}` : ""}${selected.question ? `&selectedQuestion=${selected.question}` : ""}`;
+  return (
+    <div class="questionResult">
+      <div>
+        <div class="flex justify-center w-full py-2 gap-2">{links}</div>
+
+        <div class="collapse collapse-open bg-slate-100 mt-4">
+          <div class="collapse-title">
+            <div class="prose text-center text-base-content">
+              <h3>{result[currentQuestion].question}</h3>
+            </div>
+          </div>
+          <div class="collapse-content">
+            <img
+              src={result[currentQuestion].imageUrl}
+              class="w-full h-auto rounded-xl"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full rounded-xl bg-slate-100 mt-4">
+        <canvas
+          id="myQuadrantChart"
+          width="400"
+          height="400"
+          style=" width: auto !important; height: 100% !important;"
+        ></canvas>
+      </div>
+
+      <div class="collapse collapse-open bg-slate-100 mt-4">
+        <div class="collapse-title">
+          <div class="prose text-base-content text-center">
+            <h3>Analyse</h3>
+          </div>
+        </div>
+        <div class="collapse-content space-4">
+          <div class="prose text-justify text-base-content">
+            <p>{micromark(result[currentQuestion].analyse)}</p>
+          </div>
+        </div>
+        <script src="/static/scripts/chart.js"></script>
+        <script src={chartUrl}></script>
+      </div>
+    </div>
+  );
+};
+
+export const resultComponent = (props: {
+  survey: ParsedSurvey;
+  snapshots: Snapshot[];
+  result: Result;
+  selected: Selected;
+}) => {
+  const { survey, snapshots, selected, result } = props;
   return (
     <div class="w-full max-w-lg space-y-4 sm:mt-5">
       <div class="prose text-center">
         <h2>Résultats du sondage</h2>
       </div>
-
-      <form class="join flex max-w-full">
-        <select class="select select-secondary select-bordered join-item flex-grow">
-          <option disabled selected>
-            Données
-          </option>
-          <option>Sci-fi</option>
-          <option>Drama</option>
-          <option>Action</option>
+      <form
+        id="resultForm"
+        class="join join-vertical sm:join-horizontal flex max-w-full"
+        hx-post={`${survey.id}/fragment/get-result`}
+        hx-trigger="change"
+        hx-target="#appshellContent"
+      >
+        <select
+          id="snapshot"
+          name="snapshot"
+          class="select select-secondary select-bordered join-item flex-grow"
+        >
+          {snapshots.map((snapshot) => (
+            <option
+              value={snapshot.id}
+              selected={snapshot.id === selected.snapshot}
+            >
+              {dayjs.unix(snapshot.createdAt).format("DD/MM/YYYY (HH:mm)")}
+            </option>
+          ))}
         </select>
-        <select class="select select-secondary select-bordered join-item flex-grow">
-          <option disabled selected>
-            Territoire
+        <select
+          id="area"
+          name="area"
+          class="select select-secondary select-bordered join-item flex-grow"
+        >
+          <option value="" selected>
+            Tout territoire
           </option>
-          <option>Sci-fi</option>
-          <option>Drama</option>
-          <option>Action</option>
+          {survey.areas?.map((area) => (
+            <option value={area} selected={area === selected.area}>
+              {area}
+            </option>
+          ))}
         </select>
-        <select class="select select-secondary select-bordered join-item flex-grow">
-          <option disabled selected>
-            Service
+        <select
+          id="profile"
+          name="profile"
+          class="select select-secondary select-bordered join-item flex-grow"
+        >
+          <option value="" selected>
+            Tout service
           </option>
-          <option>Sci-fi</option>
-          <option>Drama</option>
-          <option>Action</option>
+          {survey.positions?.map((profile) => (
+            <option value={profile} selected={profile === selected.profile}>
+              {profile}
+            </option>
+          ))}
         </select>
       </form>
-
-      <div>
-        <div class="flex justify-center w-full py-2 gap-2">
-          <a href="#item1" class="btn btn-xs md:btn-sm">
-            1
-          </a>
-          <a href="#item2" class="btn btn-xs md:btn-sm">
-            2
-          </a>
-          <a href="#item3" class="btn btn-xs md:btn-sm">
-            3
-          </a>
-          <a href="#item4" class="btn btn-xs md:btn-sm">
-            4
-          </a>
-        </div>
-        <div class="carousel w-full">
-          <div id="item1" class="carousel-item w-full">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.jpg"
-              class="w-full h-56 rounded-lg"
-            />
-          </div>
-          <div id="item2" class="carousel-item w-full">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.jpg"
-              class="w-full h-56 rounded-lg"
-            />
-          </div>
-          <div id="item3" class="carousel-item w-full">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.jpg"
-              class="w-full h-56 rounded-lg"
-            />
-          </div>
-          <div id="item4" class="carousel-item w-full">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.jpg"
-              class="w-full h-56 rounded-lg"
-            />
-          </div>
-        </div>
-      </div>
-
-      <canvas
-        id="myQuadrantChart"
-        width="400"
-        height="400"
-        style=" width: auto !important; height: 100% !important;"
-      ></canvas>
-      <div class="prose text-justify text-base-content">
-        <div class="text-center">
-          <h3>Analyse détaillée</h3>
-        </div>
-
-        <p>
-          Les répondants (DGS, DSI, DRH) se montrent enthousiastes quant à
-          l'utilisation de l'IA dans les services publics territoriaux. Ils
-          perçoivent un fort potentiel pour améliorer l'efficacité, transformer
-          positivement les services et apporter de grandes améliorations. Les
-          principales causes de cet enthousiasme semblent être les bénéfices
-          attendus de l'IA, tels que :
-        </p>
-        <ol>
-          <li>
-            Amélioration de l'efficacité et de l'optimisation des services
-            publics (gestion des ressources, réactivité, etc.)
-          </li>
-          <li>
-            Aide à la prise de décision grâce à l'analyse avancée de données
-          </li>
-          <li>
-            Personnalisation et adaptation des services aux besoins des citoyens
-          </li>
-          <li>
-            Gestion intelligente des infrastructures urbaines (transports,
-            énergie, etc.)
-          </li>
-          <li>Amélioration de la sécurité et de la surveillance</li>
-        </ol>
-      </div>
-
-      <script src="/static/scripts/chart.js"></script>
-      <script src="/static/scripts/chartjs-plugin-datalabels.js"></script>
-      <script src={`/${id}/result/my-chart.js`}></script>
+      {questionResult({
+        surveyId: survey.id,
+        result,
+        selected,
+      })}
     </div>
   );
 };

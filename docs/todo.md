@@ -17,12 +17,12 @@
   - [x] Adapter l'UI pour 1 seul jeu de réponses avec updates
 - [ ] feat(frontend) : page des résultats
   - [x] maquette
-  - [ ] menu load polling
-  - [ ] si aucun snapshot nodata sinon on sélectionne le dernier snapshot par défaut
-  - [ ] Carousel réactif HTMX simple
-  - [ ] Graphique réactif (couleur et légende des points correspondant à l'image du carousel)
-  - [ ] Résumé réactif
-- [ ] Mock cloud service
+  - [x] menu load polling
+  - [x] si aucun snapshot nodata sinon on sélectionne le dernier snapshot par défaut
+  - [x] Carousel réactif HTMX simple
+  - [x] Graphique réactif (couleur et légende des points correspondant à l'image du carousel)
+  - [x] Résumé réactif
+- [x] Mock cloud service
   - [x] POST /cloud/:surveyId
   - [x] GET /cloud/:surveyId?snapshot=xxx&area=yyy&profile=zzz
   - [x] GET /webhook/complete/:snapshotId

@@ -1,28 +1,36 @@
-export const resultChartScript = () =>
-  `
-  /* eslint-disable */
-// @ts-nocheck
+import { t, type Static } from "elysia";
+
+export const ChartDataset = t.Array(
+  t.Object({
+    label: t.String(),
+    x: t.Number(),
+    y: t.Number(),
+  })
+);
+export type ChartDataset = Static<typeof ChartDataset>;
+
+export const resultChartScript = (props: {
+  selectedDataset: ChartDataset;
+  otherDataset: ChartDataset;
+}) => {
+  console.log(props);
+  return `
 (() => {
   // Données pour le graphique
   const data = {
     datasets: [
       {
-        label: "21/06/2024 09:15",
-        data: [
-          { x: -0.5, y: -0.5, label: "Prudence" },
-          { x: 0.5, y: -0.5, label: "Inquiétude" },
-          { x: -0.5, y: 0.5, label: "Confiance" },
-          { x: 0.5, y: 0.5, label: "Enthousiasme" },
-        ],
+        label: "selectedDataset",
+        data: ${JSON.stringify(props.selectedDataset)},
         backgroundColor: "oklch(0.5686 0.255 257.57)",
-        datalabels: {
-          labels: {
-            title: {
-              color: "oklch(0.5686 0.255 257.57)",
-            },
-          },
-        },
-        pointRadius: 10,
+        pointRadius: 12,
+        showLine: false,
+      },
+      {
+        label: "otherDataset",
+        data: ${JSON.stringify(props.otherDataset)},
+        backgroundColor: "oklch(0.418869 0.053885 255.825)",
+        pointRadius: 12,
         showLine: false,
       },
     ],
@@ -32,7 +40,6 @@ export const resultChartScript = () =>
     type: "scatter",
     data: data,
     options: {
-      events: [],
       scales: {
         x: {
           type: "linear",
@@ -71,26 +78,25 @@ export const resultChartScript = () =>
       },
       plugins: {
         tooltip: {
-          enabled: false,
+          enabled: true,
+          callbacks: {
+            label: function (context) {
+              return context.raw.label; // Return only the point label
+            },
+          },
+          padding: 10, // Add padding inside the tooltip
+          caretPadding: 10, // Add padding between the tooltip and the caret
+          position: 'nearest', // Ensure the tooltip stays near the point
+          xAlign: 'center', // Align the tooltip horizontally
+          yAlign: 'center', // Align the tooltip vertically
+          intersect: true, // Tooltip will only appear when hovering directly over a point
         },
         legend: {
           display: false,
         },
-        datalabels: {
-          align: "top",
-          anchor: "end",
-          font: {
-            size: 14,
-          },
-          formatter: (value, context) => {
-            return value.label;
-          },
-          color: "black", // Set the color of the data labels
-        },
       },
     },
     plugins: [
-      ChartDataLabels,
       {
         id: "backgroundText",
         beforeDraw: (chart) => {
@@ -123,3 +129,4 @@ export const resultChartScript = () =>
   );
 })();
 `;
+};

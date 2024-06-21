@@ -66,7 +66,7 @@ export const publicComponent = (props: Props) => {
           </li>
           <li>
             <a
-              hx-get={`/${survey.id}/fragment/result`}
+              hx-post={`/${survey.id}/fragment/get-result`}
               hx-target="#appshellContent"
             >
               {resultIcon}

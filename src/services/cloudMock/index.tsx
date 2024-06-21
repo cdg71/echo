@@ -30,12 +30,16 @@ export const cloudMockService = new Elysia()
   .get(
     "/cloud/:surveyId",
     ({ params, query }) => {
-      const { surveyId } = params;
-      const { snapshot, area, position } = query;
+      const surveyId =
+        import.meta.env.NODE_ENV === "production" ? params.surveyId : "test";
+      const snapshot =
+        import.meta.env.NODE_ENV === "production"
+          ? query.snapshot
+          : "59134cf4-5e82-47bf-bcfa-1422b58e15f6";
+      const { area, profile } = query;
       const areaQuery = area ? `&area=${area}` : "";
-      const positionQuery = position ? `&position=${position}` : "";
-      const url = `${import.meta.env.CLOUD_ENDPOINT_URL}/${surveyId}?snapshot=${snapshot}${positionQuery}${areaQuery}`;
-      console.log(url);
+      const profileQuery = profile ? `&profile=${profile}` : "";
+      const url = `${import.meta.env.CLOUD_ENDPOINT_URL}/${surveyId}?snapshot=${snapshot}${profileQuery}${areaQuery}`;
       return redirect(url);
     },
     {
@@ -45,7 +49,7 @@ export const cloudMockService = new Elysia()
       query: t.Object({
         snapshot: t.String(),
         area: t.Optional(t.String()),
-        position: t.Optional(t.String()),
+        profile: t.Optional(t.String()),
       }),
     }
   );

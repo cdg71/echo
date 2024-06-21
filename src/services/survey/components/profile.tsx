@@ -70,32 +70,41 @@ export const profileComponent = async (props: Props) => {
         <div class="prose text-center w-full">
           <h2>Mon profil</h2>
         </div>
-        <label class="form-control">
-          <span class="label-text">Service</span>
-          <select
-            id="position"
-            name="position"
-            class="select select-bordered w-full"
-          >
-            {createOptionsJsx({
-              values: survey.positions,
-              selected: profile.position,
-            })}
-          </select>
-        </label>
-        <label class="form-control">
-          <span class="label-text">Territoire</span>
-          <select id="area" name="area" class="select select-bordered w-full">
-            {createOptionsJsx({
-              values: survey.areas,
-              selected: profile.area,
-            })}
-          </select>
-        </label>
-        <div class="space-x-2">
-          <button type="submit" class="btn btn-primary">
-            Enregistrer
-          </button>
+        <div class="collapse collapse-open bg-slate-100">
+          <div class="collapse-content space-y-4 mt-4">
+            <label class="form-control">
+              <span class="label-text">Fonction</span>
+              <select
+                id="position"
+                name="position"
+                class="select select-bordered w-full"
+              >
+                {createOptionsJsx({
+                  values: survey.positions,
+                  selected: profile.position,
+                })}
+              </select>
+              <span class="label-text-alt">Ou fonction la plus proche</span>
+            </label>
+            <label class="form-control">
+              <span class="label-text">Territoire</span>
+              <select
+                id="area"
+                name="area"
+                class="select select-bordered w-full"
+              >
+                {createOptionsJsx({
+                  values: survey.areas,
+                  selected: profile.area,
+                })}
+              </select>
+            </label>
+            <div class="space-x-2">
+              <button type="submit" class="btn btn-primary">
+                Enregistrer
+              </button>
+            </div>
+          </div>
         </div>
       </form>
     </div>
