@@ -310,8 +310,8 @@ export const surveyService = new Elysia()
             if (parseInt(selectedQuestion ?? "0") === index) {
               acc.push({
                 label: item.question_id,
-                x: parseInt(item.label_x),
-                y: parseInt(item.label_y),
+                x: parseFloat(item.label_x),
+                y: parseFloat(item.label_y),
               });
             }
             return acc;
@@ -320,8 +320,8 @@ export const surveyService = new Elysia()
             if (parseInt(selectedQuestion ?? "0") !== index) {
               acc.push({
                 label: item.question_id,
-                x: parseInt(item.label_x),
-                y: parseInt(item.label_y),
+                x: parseFloat(item.label_x),
+                y: parseFloat(item.label_y),
               });
             }
             return acc;
