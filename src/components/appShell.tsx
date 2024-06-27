@@ -55,7 +55,9 @@ export const appShell = async (props?: Props) => {
           <div class="navbar-center">{navbar.center}</div>
           <div class="navbar-end">{navbar.end}</div>
         </nav>
-        <div class="flex justify-center pt-20">{content}</div>
+        <div id="appshellContent" class="flex justify-center pt-20">
+          {content}
+        </div>
       </div>
     </div>
   );

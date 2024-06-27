@@ -1,21 +1,27 @@
 import jwt from "@elysiajs/jwt";
 import { Value } from "@sinclair/typebox/value";
 import { jwtSecret } from "@src/config/jwtSecret";
+import { allProfilesBySurveyId } from "@src/entities/profile/dao/allBySurveyId";
+import { allResponsesBySurveyProfile } from "@src/entities/response/dao/allBySurveyProfile";
+import { allSnapshotsBySurveyId } from "@src/entities/snapshot/dao/allBySurveyId";
 import { createSnapshot } from "@src/entities/snapshot/dao/create";
 import { deleteSnapshot } from "@src/entities/snapshot/dao/delete";
 import { getSnapshotById } from "@src/entities/snapshot/dao/getById";
-import { listSnapshotsBySurveyId } from "@src/entities/snapshot/dao/listBySurveyId";
-import { SnapshotIdModel } from "@src/entities/snapshot/dto/id";
+import { markSnapshotAsReady } from "@src/entities/snapshot/dao/update";
+import { SnapshotId, SnapshotIdModel } from "@src/entities/snapshot/dto/id";
 import {
   SnapshotSurveyId,
   SnapshotSurveyIdModel,
 } from "@src/entities/snapshot/dto/surveyId";
 import { getSurveyById } from "@src/entities/survey/dao/getById";
 import { AuthCookie, AuthJwt, AuthModel } from "@src/entities/survey/dto/auth";
-import { Elysia } from "elysia";
-import { adminComponent } from "../admin/components/admin";
+import { parseSurvey } from "@src/entities/survey/dto/parsedSurvey";
+import { Elysia, redirect, t } from "elysia";
+import path from "path";
+import { adminComponent, snapshotsFragment } from "../admin/components/admin";
 import { gotoAdminComponent } from "../homepage/components/gotoAdmin";
 import { homepageLayoutComponent } from "../homepage/components/layout";
+import { snapshotComponent } from "./components/list";
 
 export const snapshotService = new Elysia()
   .use(
@@ -36,9 +42,65 @@ export const snapshotService = new Elysia()
       const claim = await authJwt.verify(auth.value);
       if (claim && claim.id === surveyId) {
         if (Value.Check(SnapshotSurveyId, body)) {
-          createSnapshot(body);
+          const { id: snapshotId } = createSnapshot(body);
+          // build the dataset
           const survey = getSurveyById({ id: surveyId });
-          const snapshots = listSnapshotsBySurveyId({ surveyId });
+          const { questions, ...parsedSurvey } = parseSurvey({ survey });
+          const profiles = allProfilesBySurveyId({ surveyId });
+          const users = profiles.map((profile) => {
+            const storedResponses = allResponsesBySurveyProfile({
+              surveyId,
+              profileId: profile.id,
+            });
+            const responses = storedResponses.map((storedResponse) => {
+              const values = Object.keys(storedResponse.answers).map(
+                (questionId) => ({
+                  questionId,
+                  value: storedResponse.answers[questionId].value,
+                  comment: storedResponse.answers[questionId].comment,
+                })
+              );
+              return {
+                createdAt: storedResponse.createdAt,
+                values,
+              };
+            });
+            return {
+              ...profile,
+              responses,
+            };
+          });
+          interface Question {
+            id: string;
+            label: string;
+          }
+          const quiz =
+            (questions as [string, string][])?.reduce((acc, question) => {
+              acc.push({
+                id: question[0],
+                label: question[1],
+              });
+              return acc;
+            }, [] as Question[]) ?? [];
+          const content = {
+            ...parsedSurvey,
+            quiz,
+            snapshot: snapshotId,
+            users,
+          };
+          // call the cloud
+          const jsonContent = JSON.stringify(content);
+          const jsonPath = path.join(process.cwd(), `/data/${snapshotId}.json`);
+          await Bun.write(jsonPath, jsonContent);
+          const url = `${import.meta.env.REMOTE_ENDPOINT_URL}/${surveyId}`;
+          void fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: jsonContent,
+          });
+          const snapshots = allSnapshotsBySurveyId({ surveyId });
           return await adminComponent({ survey, snapshots });
         }
         throw new Error("Invalid data");
@@ -63,7 +125,7 @@ export const snapshotService = new Elysia()
       if (claim && claim.id === surveyId) {
         deleteSnapshot({ id });
         const survey = getSurveyById({ id: surveyId });
-        const snapshots = listSnapshotsBySurveyId({ surveyId });
+        const snapshots = allSnapshotsBySurveyId({ surveyId });
         return await adminComponent({ survey, snapshots });
       }
     },
@@ -71,4 +133,46 @@ export const snapshotService = new Elysia()
       params: "SnapshotId",
       cookie: AuthCookie,
     }
+  )
+  .get(
+    "/webhook/complete/:snapshotId",
+    ({ params }) => {
+      const { snapshotId } = params;
+      markSnapshotAsReady({ id: snapshotId });
+      return { status: "OK" };
+    },
+    {
+      params: t.Object({
+        snapshotId: t.String(),
+      }),
+    }
+  )
+  .group("/admin/fragment", (app) =>
+    app
+      .guard({
+        beforeHandle: ({ request, set }) => {
+          set.headers["Vary"] = "hx-request";
+          if (!request.headers.get("hx-request")) {
+            return redirect(`/`);
+          }
+        },
+      })
+      .get(
+        "/snapshot/:id",
+        async ({ params }) => {
+          const { id } = params;
+          const snapshot = getSnapshotById({ id });
+          return await snapshotComponent({ ...snapshot });
+        },
+        { params: SnapshotId }
+      )
+      .get(
+        "/snapshots/:surveyId",
+        ({ params }) => {
+          const { surveyId } = params;
+          const snapshots = allSnapshotsBySurveyId({ surveyId });
+          return snapshotsFragment({ snapshots, surveyId });
+        },
+        { params: SnapshotSurveyId }
+      )
   );

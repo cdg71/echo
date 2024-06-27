@@ -1,7 +1,7 @@
 import jwt from "@elysiajs/jwt";
 import { Value } from "@sinclair/typebox/value";
 import { jwtSecret } from "@src/config/jwtSecret";
-import { listSnapshotsBySurveyId } from "@src/entities/snapshot/dao/listBySurveyId";
+import { allSnapshotsBySurveyId } from "@src/entities/snapshot/dao/allBySurveyId";
 import { createSurvey } from "@src/entities/survey/dao/create";
 import { deleteSurvey } from "@src/entities/survey/dao/delete";
 import { getSurveyById } from "@src/entities/survey/dao/getById";
@@ -51,19 +51,9 @@ export const adminService = new Elysia()
     "/admin/create",
     async ({ body, cookie: { auth }, authJwt, set }) => {
       if (Value.Check(EditSurvey, body)) {
-        const { id, name, description, context, positions, areas, questions } =
-          body;
         const { password, hash } = await createCredential();
         const survey = createSurvey({
-          data: {
-            id,
-            name,
-            description,
-            context,
-            positions,
-            areas,
-            questions,
-          },
+          data: body,
           hash,
         });
         auth.set({
@@ -73,7 +63,8 @@ export const adminService = new Elysia()
         });
         set.headers["HX-Push-Url"] = `/admin/${survey.id}`;
         set.headers["HX-Replace-Url"] = `/admin/${survey.id}`;
-        return await adminComponent({ survey, password });
+        const snapshots = allSnapshotsBySurveyId({ surveyId: survey.id });
+        return await adminComponent({ survey, password, snapshots });
       }
       throw new Error("Invalid data");
     },
@@ -100,7 +91,8 @@ export const adminService = new Elysia()
       if (claim && claim.id === body.id) {
         if (Value.Check(EditSurvey, body)) {
           const survey = updateSurvey(body);
-          return await adminComponent({ survey });
+          const snapshots = allSnapshotsBySurveyId({ surveyId: survey.id });
+          return await adminComponent({ survey, snapshots });
         }
         throw new Error("Invalid data");
       } else {
@@ -116,9 +108,11 @@ export const adminService = new Elysia()
       async error({ code, set, error, body }) {
         set.status = 200;
         set.headers["HX-Push-Url"] = "false";
+        const snapshots = allSnapshotsBySurveyId({ surveyId: body.id });
         const props = {
           survey: body,
           errorCode: code,
+          snapshots,
         } as AdminProps;
         if (code === "VALIDATION") props.validationErrors = error;
         return await adminComponent(props);
@@ -143,7 +137,7 @@ export const adminService = new Elysia()
         });
         set.headers["HX-Push-Url"] = `/admin/${id}`;
         const survey = getSurveyById({ id });
-        const snapshots = listSnapshotsBySurveyId({ surveyId: id });
+        const snapshots = allSnapshotsBySurveyId({ surveyId: id });
         return await adminComponent({ survey, snapshots });
       }
       throw new Error("Invalid credentials");
@@ -167,13 +161,19 @@ export const adminService = new Elysia()
     "/admin/logout",
     async ({ set, cookie: { auth }, authJwt }) => {
       const claim = await authJwt.verify(auth.value);
-      const id = claim ? claim.id : "";
-      auth.remove();
-      set.status = 200;
-      set.headers["HX-Push-Url"] = `/admin/${id}`;
-      return homepageLayoutComponent({
-        content: gotoAdminComponent({ id: id }),
-      });
+      if (claim) {
+        const { id } = claim;
+        auth.remove();
+        set.status = 200;
+        set.headers["HX-Push-Url"] = `/admin/${id}`;
+        return homepageLayoutComponent({
+          content: gotoAdminComponent({ id }),
+        });
+      } else {
+        return homepageLayoutComponent({
+          content: gotoSurveyComponent(),
+        });
+      }
     },
     {
       cookie: AuthCookie,
@@ -215,7 +215,7 @@ export const adminService = new Elysia()
       const claim = await authJwt.verify(auth.value);
       if (claim && claim.id === id) {
         const survey = getSurveyById({ id });
-        const snapshots = listSnapshotsBySurveyId({ surveyId: id });
+        const snapshots = allSnapshotsBySurveyId({ surveyId: id });
         return await adminComponent({ survey, snapshots });
       } else {
         auth.remove();

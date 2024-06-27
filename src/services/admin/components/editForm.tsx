@@ -39,7 +39,7 @@ export const editFormComponent = async (props: EditFormProps) => {
   });
 
   return (
-    <div hx-history="false">
+    <div>
       <div
         id="dismiss"
         role="alert"

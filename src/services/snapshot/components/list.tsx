@@ -2,7 +2,7 @@ import { Snapshot } from "@src/entities/snapshot/schema";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 import dayjs from "dayjs";
 
-export const snapshotsComponent = async (props: Snapshot[]) => {
+export const snapshotComponent = async (props: Snapshot) => {
   const dismissIcon = await loadHeroIcons({
     iconName: "x-mark",
     className: "size-6",
@@ -11,32 +11,44 @@ export const snapshotsComponent = async (props: Snapshot[]) => {
     iconName: "check-circle",
     className: "size-6",
   });
-  const cloudIcon = await loadHeroIcons({
-    iconName: "cloud",
-    className: "size-6",
-  });
   return (
-    <>
-      {props.map((snapshot) => (
-        <div role="alert" class="alert my-2 bg-white bordered">
-          {snapshot.readyAt ? checkIcon : cloudIcon}
-          <span>
-            {dayjs.unix(snapshot.createdAt).format("DD/MM/YYYY HH:mm:ss")}
-          </span>
-          {snapshot.readyAt ? (
-            <button
-              class="text-gray-600 hover:text-gray-800 float-left"
-              hx-delete={`/snapshot/${snapshot.id}`}
-              hx-boost="true"
-              hx-target="body"
-            >
-              {dismissIcon}
-            </button>
-          ) : (
-            <></>
-          )}
+    <div
+      id={`snapshot-${props.id}`}
+      role="alert"
+      class="alert my-2 bg-white bordered border-neutral-200 flex flex-row space-x-0"
+    >
+      <div>
+        {props.readyAt ? (
+          checkIcon
+        ) : (
+          <span class="loading loading-spinner loading-sm"></span>
+        )}
+      </div>
+      <div>
+        <div>
+          {dayjs.unix(props.createdAt).format("Le DD/MM/YYYY à HH:mm:ss")}
         </div>
-      ))}
-    </>
+        <div class="label-text">{props.id}</div>
+      </div>
+      <div class="flex flex-grow flex-row-reverse">
+        {props.readyAt ??
+        dayjs().unix() - props.createdAt >=
+          import.meta.env.CLOUD_GEN_ABORTABLE_AFTER_SEC ? (
+          <button
+            class="text-gray-600 hover:text-gray-800"
+            hx-delete={`/snapshot/${props.id}`}
+            hx-boost="true"
+            hx-target="body"
+          >
+            {dismissIcon}
+          </button>
+        ) : (
+          <></>
+        )}
+      </div>
+    </div>
   );
 };
+
+export const snapshotsComponent = (props: Snapshot[]) =>
+  props.map((snapshot) => snapshotComponent(snapshot));

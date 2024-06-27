@@ -5,9 +5,51 @@ import { snapshotsComponent } from "@src/services/snapshot/components/list";
 import { loadHeroIcons } from "@src/utils/loadHeroIcons";
 import { editFormComponent, type EditFormValidationError } from "./editForm";
 
-export type AdminProps = { survey: EditSurvey } & {
+export type AdminProps = { survey: EditSurvey } & EditFormValidationError & {
+    password?: string;
+    snapshots?: Snapshot[];
+  };
+
+export const snapshotsFragment = (props: {
   snapshots?: Snapshot[];
-} & EditFormValidationError & { password?: string };
+  surveyId: string;
+}) => {
+  const { snapshots, surveyId } = props;
+  const captureIsDisabled =
+    props.snapshots?.some((snapshot) => !snapshot.readyAt) ?? false;
+
+  return (
+    <div
+      id="snapshotsFragment"
+      hx-get={`/admin/fragment/snapshots/${surveyId}`}
+      hx-trigger={`load delay:${import.meta.env.LOAD_POLLING_SEC}s`}
+      hx-swap="outerHTML transition:false"
+    >
+      <form
+        class="space-y-4"
+        hx-post="/snapshot"
+        hx-boost="true"
+        hx-target="body"
+      >
+        <button
+          class="btn btn-primary"
+          type="submit"
+          disabled={captureIsDisabled}
+        >
+          Capturer maintenant
+        </button>
+        <input
+          id="surveyId"
+          name="surveyId"
+          type="hidden"
+          class="hidden"
+          value={`${surveyId}`}
+        />
+      </form>
+      {snapshotsComponent(snapshots ?? [])}
+    </div>
+  );
+};
 
 export const adminComponent = async (props: AdminProps) => {
   const { password } = props;
@@ -104,28 +146,6 @@ export const adminComponent = async (props: AdminProps) => {
       <></>
     );
 
-  const snapshots = (
-    <div>
-      <form
-        class="space-y-4"
-        hx-post="/snapshot"
-        hx-boost="true"
-        hx-target="body"
-      >
-        <button class="btn btn-primary" type="submit">
-          Capturer maintenant
-        </button>
-        <input
-          id="surveyId"
-          name="surveyId"
-          type="hidden"
-          class="hidden"
-          value={`${props.survey.id}`}
-        />
-      </form>
-      {snapshotsComponent(props.snapshots ?? [])}
-    </div>
-  );
   const form = editFormComponent({ ...props.survey, action: "update" });
   const deleteSurvey = (
     <div>
@@ -183,29 +203,26 @@ export const adminComponent = async (props: AdminProps) => {
       ></script>
       <div class="w-full space-y-4">
         <div class="collapse collapse-plus bg-slate-100">
-          <input
-            type="radio"
-            name="admin-accordion"
-            checked={!props.errorCode}
-          />
+          <input type="checkbox" checked={!props.errorCode} />
           <div class="collapse-title text-lg font-medium">
             {cameraIcon}&nbsp;Capturer les résultats
           </div>
-          <div class="collapse-content">{snapshots}</div>
+          <div class="collapse-content">
+            {snapshotsFragment({
+              surveyId: props.survey.id,
+              snapshots: props.snapshots,
+            })}
+          </div>
         </div>
         <div class="collapse collapse-plus bg-slate-100">
-          <input
-            type="radio"
-            name="admin-accordion"
-            checked={!!props.errorCode}
-          />
+          <input type="checkbox" checked={!!props.errorCode} />
           <div class="collapse-title text-lg font-medium">
             {editIcon}&nbsp;Modifier
           </div>
           <div class="collapse-content">{form}</div>
         </div>
         <div class="collapse collapse-plus bg-slate-100">
-          <input type="radio" name="admin-accordion" />
+          <input type="checkbox" />
           <div class="collapse-title text-lg font-medium">
             {deleteIcon}&nbsp;Supprimer
           </div>

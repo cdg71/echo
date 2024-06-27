@@ -2,13 +2,7 @@ interface Props {
   id: string;
 }
 export const gotoAdminComponent = (props?: Props) => (
-  <form
-    id="gotoForm"
-    class="card-body"
-    hx-post="/admin/login"
-    hx-target="body"
-    hx-history="false"
-  >
+  <form id="gotoForm" class="card-body" hx-post="/admin/login" hx-target="body">
     <div class="form-control">
       <input
         id="id"

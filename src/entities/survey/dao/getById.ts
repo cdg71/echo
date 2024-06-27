@@ -6,6 +6,7 @@ export const getSurveyById = (props: Pick<Survey, "id">) => {
     const selectQuery = db.prepare("SELECT * FROM Survey WHERE id = $id");
     const survey = selectQuery.get({ $id: props.id }) as Survey;
     selectQuery.finalize();
+    delete survey.hash;
     return survey;
   } catch (error) {
     throw new Error("Cannot get survey by id.");
