@@ -17,6 +17,7 @@ import { getSurveyById } from "@src/entities/survey/dao/getById";
 import { AuthCookie, AuthJwt, AuthModel } from "@src/entities/survey/dto/auth";
 import { parseSurvey } from "@src/entities/survey/dto/parsedSurvey";
 import { Elysia, redirect, t } from "elysia";
+import path from "path";
 import { adminComponent, snapshotsFragment } from "../admin/components/admin";
 import { gotoAdminComponent } from "../homepage/components/gotoAdmin";
 import { homepageLayoutComponent } from "../homepage/components/layout";
@@ -89,6 +90,8 @@ export const snapshotService = new Elysia()
           };
           // call the cloud
           const jsonContent = JSON.stringify(content);
+          const jsonPath = path.join(process.cwd(), `/data/${snapshotId}.json`);
+          await Bun.write(jsonPath, jsonContent);
           const url = `${import.meta.env.REMOTE_ENDPOINT_URL}/${surveyId}`;
           void fetch(url, {
             method: "POST",
